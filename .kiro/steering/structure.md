@@ -46,3 +46,4 @@ Based on Phase One requirements, the expected structure will be:
 - Client-side routing if needed (React Router)
 - Responsive design for various screen sizes
 - Always build when you're running the tests. Any errors when building should be resolved. 
+- DO NOT allow warnings when you build. Warnings should be considered errors and investigated. 

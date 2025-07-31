@@ -45,7 +45,7 @@
   - Write integration tests for filtering and search behavior
   - _Requirements: 1.1, 1.4, 5.1, 5.2_
 
-- [ ] 7. Create QuizQuestion component with immediate feedback
+- [x] 7. Create QuizQuestion component with immediate feedback
   - Build QuizQuestion component with multiple choice options
   - Implement answer selection with immediate correctness feedback
   - Add proper ARIA labels for screen reader accessibility
