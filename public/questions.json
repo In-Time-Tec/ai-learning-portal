@@ -1,0 +1,148 @@
+{
+  "questions": [
+    {
+      "id": "artificial-intelligence-001",
+      "term": "Artificial Intelligence (AI)",
+      "question": "What are systems that perform tasks normally requiring human intelligence called?",
+      "options": ["Machine Learning", "Artificial Intelligence", "Neural Networks", "Deep Learning"],
+      "correctAnswer": "Artificial Intelligence",
+      "glossaryLink": "#artificial-intelligence"
+    },
+    {
+      "id": "machine-learning-001",
+      "term": "Machine Learning (ML)",
+      "question": "What is a subset of AI where models learn patterns from data?",
+      "options": ["Deep Learning", "Machine Learning", "Neural Networks", "Computer Vision"],
+      "correctAnswer": "Machine Learning",
+      "glossaryLink": "#machine-learning"
+    },
+    {
+      "id": "dataset-001",
+      "term": "Dataset",
+      "question": "What is a collection of structured or unstructured data used to train and test models called?",
+      "options": ["Feature", "Dataset", "Model", "Algorithm"],
+      "correctAnswer": "Dataset",
+      "glossaryLink": "#dataset"
+    },
+    {
+      "id": "feature-001",
+      "term": "Feature",
+      "question": "What is an individual measurable property or characteristic used as input to a model?",
+      "options": ["Dataset", "Model", "Feature", "Parameter"],
+      "correctAnswer": "Feature",
+      "glossaryLink": "#feature"
+    },
+    {
+      "id": "model-001",
+      "term": "Model",
+      "question": "What is a mathematical representation trained to make predictions?",
+      "options": ["Dataset", "Feature", "Algorithm", "Model"],
+      "correctAnswer": "Model",
+      "glossaryLink": "#model"
+    },
+    {
+      "id": "training-001",
+      "term": "Training",
+      "question": "What is the process of teaching a model from labeled data called?",
+      "options": ["Inference", "Training", "Testing", "Validation"],
+      "correctAnswer": "Training",
+      "glossaryLink": "#training"
+    },
+    {
+      "id": "inference-001",
+      "term": "Inference",
+      "question": "Which term describes running a trained model to generate predictions on new data?",
+      "options": ["Training", "Inference", "Prompt", "Token"],
+      "correctAnswer": "Inference",
+      "glossaryLink": "#inference"
+    },
+    {
+      "id": "prompt-001",
+      "term": "Prompt",
+      "question": "What is instruction text that guides generative AI outputs called?",
+      "options": ["Token", "Prompt", "Feature", "Parameter"],
+      "correctAnswer": "Prompt",
+      "glossaryLink": "#prompt"
+    },
+    {
+      "id": "token-001",
+      "term": "Token",
+      "question": "What is a unit of text (word piece) processed by an LLM called?",
+      "options": ["Prompt", "Feature", "Token", "Embedding"],
+      "correctAnswer": "Token",
+      "glossaryLink": "#token"
+    },
+    {
+      "id": "latency-001",
+      "term": "Latency",
+      "question": "What is the time taken for a model to respond to a request called?",
+      "options": ["Throughput", "Latency", "Bandwidth", "Performance"],
+      "correctAnswer": "Latency",
+      "glossaryLink": "#latency"
+    },
+    {
+      "id": "overfitting-001",
+      "term": "Overfitting",
+      "question": "What occurs when a model learns noise instead of signal and performs poorly on new data?",
+      "options": ["Underfitting", "Overfitting", "Bias", "Variance"],
+      "correctAnswer": "Overfitting",
+      "glossaryLink": "#overfitting"
+    },
+    {
+      "id": "bias-001",
+      "term": "Bias",
+      "question": "What is systematic error leading to unfair model outcomes called?",
+      "options": ["Variance", "Bias", "Overfitting", "Drift"],
+      "correctAnswer": "Bias",
+      "glossaryLink": "#bias"
+    },
+    {
+      "id": "llm-001",
+      "term": "Large Language Model (LLM)",
+      "question": "What is a transformer-based model trained on massive text corpora called?",
+      "options": ["Neural Network", "Large Language Model", "Deep Learning Model", "Generative Model"],
+      "correctAnswer": "Large Language Model",
+      "glossaryLink": "#large-language-model"
+    },
+    {
+      "id": "embedding-001",
+      "term": "Embedding",
+      "question": "What is a numeric vector representation of text or data items called?",
+      "options": ["Feature", "Token", "Embedding", "Parameter"],
+      "correctAnswer": "Embedding",
+      "glossaryLink": "#embedding"
+    },
+    {
+      "id": "fine-tuning-001",
+      "term": "Fine-Tuning",
+      "question": "What is the process of adapting a pretrained model on new data for specific tasks?",
+      "options": ["Training", "Fine-Tuning", "Transfer Learning", "Optimization"],
+      "correctAnswer": "Fine-Tuning",
+      "glossaryLink": "#fine-tuning"
+    },
+    {
+      "id": "hyperparameter-001",
+      "term": "Hyperparameter",
+      "question": "What are configuration settings for model training (e.g., learning rate) called?",
+      "options": ["Parameters", "Hyperparameters", "Features", "Variables"],
+      "correctAnswer": "Hyperparameters",
+      "glossaryLink": "#hyperparameter"
+    },
+    {
+      "id": "neural-network-001",
+      "term": "Neural Network",
+      "question": "What is a series of interconnected nodes mimicking brain neurons for learning patterns?",
+      "options": ["Decision Tree", "Neural Network", "Linear Regression", "Support Vector Machine"],
+      "correctAnswer": "Neural Network",
+      "glossaryLink": "#neural-network"
+    },
+    {
+      "id": "drift-001",
+      "term": "Drift",
+      "question": "What is the change in data distribution or model performance over time called?",
+      "options": ["Bias", "Variance", "Drift", "Noise"],
+      "correctAnswer": "Drift",
+      "glossaryLink": "#drift"
+    }
+  ]
+}

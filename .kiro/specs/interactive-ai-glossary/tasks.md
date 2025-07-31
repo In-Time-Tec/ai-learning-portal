@@ -21,7 +21,7 @@
   - Write comprehensive unit tests for all storage scenarios including edge cases
   - _Requirements: 3.1, 3.2, 3.3, 3.5_
 
-- [ ] 4. Create static data files and loading services
+- [x] 4. Create static data files and loading services
   - Generate questions.json file with all 16 AI terms from Phase One specification
   - Generate glossary.json file with term definitions and role-specific context
   - Implement QuizDataService for question loading and selection logic

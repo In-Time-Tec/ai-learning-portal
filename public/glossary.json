@@ -1,0 +1,220 @@
+{
+  "terms": [
+    {
+      "id": "artificial-intelligence",
+      "term": "Artificial Intelligence (AI)",
+      "definition": "Systems that perform tasks normally requiring human intelligence.",
+      "externalLink": "https://www.ibm.com/topics/artificial-intelligence",
+      "roleContext": {
+        "business": "Understand automation potential",
+        "pm-designer": "Scope AI features",
+        "engineer": "Implement AI integrations",
+        "data-scientist": "Concept context"
+      }
+    },
+    {
+      "id": "machine-learning",
+      "term": "Machine Learning (ML)",
+      "definition": "A subset of AI where models learn patterns from data.",
+      "externalLink": "https://cloud.google.com/learn/what-is-machine-learning",
+      "roleContext": {
+        "business": "Recognize data-driven insights",
+        "pm-designer": "Understand ML capabilities",
+        "engineer": "Integrate ML APIs",
+        "data-scientist": "Model-building foundation"
+      }
+    },
+    {
+      "id": "dataset",
+      "term": "Dataset",
+      "definition": "A collection of structured or unstructured data used to train and test models.",
+      "externalLink": "https://en.wikipedia.org/wiki/Dataset",
+      "roleContext": {
+        "business": "Supply domain data contexts",
+        "pm-designer": "Understand data requirements",
+        "engineer": "Manage data pipelines",
+        "data-scientist": "Prepare and clean data"
+      }
+    },
+    {
+      "id": "feature",
+      "term": "Feature",
+      "definition": "An individual measurable property or characteristic used as input to a model.",
+      "externalLink": "https://en.wikipedia.org/wiki/Feature_engineering",
+      "roleContext": {
+        "business": "Identify relevant business metrics",
+        "pm-designer": "Understand data needs",
+        "engineer": "Extract features in pipelines",
+        "data-scientist": "Design predictive inputs"
+      }
+    },
+    {
+      "id": "model",
+      "term": "Model",
+      "definition": "A mathematical representation trained to make predictions.",
+      "externalLink": "https://learn.microsoft.com/azure/ai-fundamentals/what-are-models",
+      "roleContext": {
+        "business": "Understand prediction capabilities",
+        "pm-designer": "Define model requirements",
+        "engineer": "Deploy & call models",
+        "data-scientist": "Train & evaluate models"
+      }
+    },
+    {
+      "id": "training",
+      "term": "Training",
+      "definition": "The process of teaching a model from labeled data.",
+      "externalLink": "https://mlflow.org/docs/latest/tracking.html",
+      "roleContext": {
+        "business": "Understand model development time",
+        "pm-designer": "Plan training requirements",
+        "engineer": "Automate training pipelines",
+        "data-scientist": "Core workflow"
+      }
+    },
+    {
+      "id": "inference",
+      "term": "Inference",
+      "definition": "Running a trained model to generate predictions on new data.",
+      "externalLink": "https://aws.amazon.com/machine-learning/what-is-inference/",
+      "roleContext": {
+        "business": "Interpret AI outputs",
+        "pm-designer": "Monitor UX performance",
+        "engineer": "Manage inference endpoints",
+        "data-scientist": "Validate model performance"
+      }
+    },
+    {
+      "id": "prompt",
+      "term": "Prompt",
+      "definition": "Instruction text guiding generative AI outputs.",
+      "externalLink": "https://platform.openai.com/docs/guides/prompting",
+      "roleContext": {
+        "business": "Write effective prompts",
+        "pm-designer": "Craft user instructions",
+        "engineer": "Optimize prompt structure",
+        "data-scientist": "Design prompt strategies"
+      }
+    },
+    {
+      "id": "token",
+      "term": "Token",
+      "definition": "A unit of text (word piece) processed by an LLM.",
+      "externalLink": "https://platform.openai.com/tokenizer",
+      "roleContext": {
+        "business": "Understand cost implications",
+        "pm-designer": "Plan content limits",
+        "engineer": "Manage cost & usage",
+        "data-scientist": "Understand model inputs"
+      }
+    },
+    {
+      "id": "latency",
+      "term": "Latency",
+      "definition": "Time taken for a model to respond to a request.",
+      "externalLink": "https://en.wikipedia.org/wiki/Latency_%28engineering%29",
+      "roleContext": {
+        "business": "Understand response times",
+        "pm-designer": "Ensure smooth UX",
+        "engineer": "Optimize performance",
+        "data-scientist": "Monitor model speed"
+      }
+    },
+    {
+      "id": "overfitting",
+      "term": "Overfitting",
+      "definition": "When a model learns noise instead of signal and performs poorly on new data.",
+      "externalLink": "https://en.wikipedia.org/wiki/Overfitting",
+      "roleContext": {
+        "business": "Understand model limitations",
+        "pm-designer": "Assess feature scope",
+        "engineer": "Validate models in staging",
+        "data-scientist": "Monitor generalization"
+      }
+    },
+    {
+      "id": "bias",
+      "term": "Bias",
+      "definition": "Systematic error leading to unfair model outcomes.",
+      "externalLink": "https://en.wikipedia.org/wiki/Bias_in_machine_learning",
+      "roleContext": {
+        "business": "Mitigate ethical risks",
+        "pm-designer": "Ensure fair UX",
+        "engineer": "Implement bias checks",
+        "data-scientist": "Test fairness metrics"
+      }
+    },
+    {
+      "id": "large-language-model",
+      "term": "Large Language Model (LLM)",
+      "definition": "A transformer-based model trained on massive text corpora.",
+      "externalLink": "https://en.wikipedia.org/wiki/Large_language_model",
+      "roleContext": {
+        "business": "Understand text AI capabilities",
+        "pm-designer": "Assess UX capabilities",
+        "engineer": "Select appropriate model size",
+        "data-scientist": "Understand scale implications"
+      }
+    },
+    {
+      "id": "embedding",
+      "term": "Embedding",
+      "definition": "A numeric vector representation of text or data items.",
+      "externalLink": "https://developers.google.com/machine-learning/crash-course/embeddings/what-are-embeddings",
+      "roleContext": {
+        "business": "Concept of similarity queries",
+        "pm-designer": "Understand search capabilities",
+        "engineer": "Build search/scoring pipelines",
+        "data-scientist": "Feature representation"
+      }
+    },
+    {
+      "id": "fine-tuning",
+      "term": "Fine-Tuning",
+      "definition": "Adapting a pretrained model on new data for specific tasks.",
+      "externalLink": "https://platform.openai.com/docs/guides/fine-tuning",
+      "roleContext": {
+        "business": "Understand customization options",
+        "pm-designer": "Tailor UX for domain needs",
+        "engineer": "Implement training pipelines",
+        "data-scientist": "Customize models"
+      }
+    },
+    {
+      "id": "hyperparameter",
+      "term": "Hyperparameter",
+      "definition": "Configuration settings for model training (e.g., learning rate).",
+      "externalLink": "https://en.wikipedia.org/wiki/Hyperparameter_%28machine_learning%29",
+      "roleContext": {
+        "business": "Understand training complexity",
+        "pm-designer": "Plan optimization time",
+        "engineer": "Automate hyperparameter search",
+        "data-scientist": "Tune model performance"
+      }
+    },
+    {
+      "id": "neural-network",
+      "term": "Neural Network",
+      "definition": "A series of interconnected nodes mimicking brain neurons for learning patterns.",
+      "externalLink": "https://en.wikipedia.org/wiki/Artificial_neural_network",
+      "roleContext": {
+        "business": "Recognize deep learning use cases",
+        "pm-designer": "Understand AI capabilities",
+        "engineer": "Deploy scalable architectures",
+        "data-scientist": "Build deep learning models"
+      }
+    },
+    {
+      "id": "drift",
+      "term": "Drift",
+      "definition": "Change in data distribution or model performance over time.",
+      "externalLink": "https://evidently.ai/blog/detecting-data-drift",
+      "roleContext": {
+        "business": "Understand model maintenance needs",
+        "pm-designer": "Ensure model reliability",
+        "engineer": "Set up monitoring",
+        "data-scientist": "Trigger retraining pipelines"
+      }
+    }
+  ]
+}
