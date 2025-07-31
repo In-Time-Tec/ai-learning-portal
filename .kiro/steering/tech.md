@@ -24,6 +24,10 @@
 ## Common Commands
 Since this is early stage, specific build commands are TBD, but typical React TypeScript setup would include:
 
+'Example.tsx' cannot be compiled under '--isolatedModules' because it is considered a global script file. Add an import, export, or an empty 'export {}' statement to make it a module.
+
+TypeError: _userEvent.default.setup is not a function
+
 ```bash
 # Install dependencies
 npm install
