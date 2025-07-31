@@ -35,7 +35,8 @@ npm start
 npm run build
 
 # Run tests
-npm test
+npm test -- --testPathPattern=exampleFile.test.tsx --watchAll=false
+
 ```
 
 ## Architecture Constraints

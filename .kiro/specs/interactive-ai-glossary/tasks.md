@@ -53,7 +53,7 @@
   - Write component tests covering all interaction scenarios
   - _Requirements: 2.5, 5.1, 5.2, 5.5_
 
-- [ ] 8. Build QuizContainer with question rotation logic
+- [x] 8. Build QuizContainer with question rotation logic
   - Create QuizContainer managing quiz flow and question selection
   - Implement random question selection avoiding recent repeats
   - Add quiz completion detection and score calculation
