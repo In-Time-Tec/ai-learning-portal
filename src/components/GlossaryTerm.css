@@ -1,0 +1,276 @@
+/* GlossaryTerm Component Styles - WCAG AAA Compliant */
+
+.glossary-term {
+  border: 2px solid #2c3e50;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background-color: #ffffff;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.glossary-term:hover {
+  border-color: #3498db;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2);
+}
+
+.glossary-term:focus {
+  outline: 3px solid #3498db;
+  outline-offset: 2px;
+  border-color: #3498db;
+}
+
+.glossary-term:focus-visible {
+  outline: 3px solid #3498db;
+  outline-offset: 2px;
+}
+
+/* Header Section */
+.glossary-term__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.glossary-term__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2c3e50;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  flex: 1;
+}
+
+.glossary-term__expand-icon {
+  font-size: 0.875rem;
+  transition: transform 0.2s ease-in-out;
+  color: #6c757d;
+}
+
+.glossary-term__expand-icon.expanded {
+  transform: rotate(180deg);
+}
+
+/* External Link */
+.glossary-term__external-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  background-color: #3498db;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  border: 2px solid transparent;
+}
+
+.glossary-term__external-link:hover {
+  background-color: #2980b9;
+  transform: translateY(-1px);
+}
+
+.glossary-term__external-link:focus {
+  outline: 3px solid #f39c12;
+  outline-offset: 2px;
+  background-color: #2980b9;
+}
+
+.glossary-term__external-link:focus-visible {
+  outline: 3px solid #f39c12;
+  outline-offset: 2px;
+}
+
+.glossary-term__link-icon {
+  font-size: 1rem;
+}
+
+.glossary-term__link-text {
+  font-size: 0.875rem;
+}
+
+/* Content Section */
+.glossary-term__content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.glossary-term__content.expanded {
+  max-height: 1000px;
+  padding: 1rem;
+}
+
+.glossary-term__definition {
+  margin: 0 0 1.5rem 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #2c3e50;
+}
+
+/* Role Section */
+.glossary-term__role-section {
+  border-top: 1px solid #e9ecef;
+  padding-top: 1rem;
+}
+
+.glossary-term__role-title {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.glossary-term__role-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.glossary-term__role-button {
+  padding: 0.5rem 1rem;
+  border: 2px solid #6c757d;
+  background-color: #ffffff;
+  color: #2c3e50;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  min-height: 44px; /* WCAG AAA touch target size */
+  min-width: 44px;
+}
+
+.glossary-term__role-button:hover {
+  border-color: #3498db;
+  background-color: #e3f2fd;
+}
+
+.glossary-term__role-button:focus {
+  outline: 3px solid #f39c12;
+  outline-offset: 2px;
+  border-color: #3498db;
+}
+
+.glossary-term__role-button:focus-visible {
+  outline: 3px solid #f39c12;
+  outline-offset: 2px;
+}
+
+.glossary-term__role-button.active {
+  background-color: #3498db;
+  color: #ffffff;
+  border-color: #3498db;
+}
+
+.glossary-term__role-button.active:hover {
+  background-color: #2980b9;
+  border-color: #2980b9;
+}
+
+/* Role Context */
+.glossary-term__role-context {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-top: 0.5rem;
+}
+
+.glossary-term__context-text {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #2c3e50;
+}
+
+.glossary-term__context-text strong {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .glossary-term__header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+  
+  .glossary-term__title {
+    justify-content: center;
+  }
+  
+  .glossary-term__external-link {
+    align-self: center;
+  }
+  
+  .glossary-term__role-buttons {
+    flex-direction: column;
+  }
+  
+  .glossary-term__role-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .glossary-term {
+    border-width: 3px;
+  }
+  
+  .glossary-term__external-link {
+    border: 2px solid #ffffff;
+  }
+  
+  .glossary-term__role-button {
+    border-width: 3px;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .glossary-term,
+  .glossary-term__expand-icon,
+  .glossary-term__external-link,
+  .glossary-term__role-button,
+  .glossary-term__content {
+    transition: none;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .glossary-term {
+    border: 1px solid #000000;
+    break-inside: avoid;
+    margin-bottom: 1rem;
+  }
+  
+  .glossary-term__content {
+    max-height: none;
+    padding: 1rem;
+  }
+  
+  .glossary-term__external-link {
+    background-color: transparent;
+    color: #000000;
+    border: 1px solid #000000;
+  }
+  
+  .glossary-term__external-link::after {
+    content: " (" attr(href) ")";
+    font-size: 0.75rem;
+  }
+}

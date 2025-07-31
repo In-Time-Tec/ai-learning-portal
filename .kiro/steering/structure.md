@@ -45,3 +45,4 @@ Based on Phase One requirements, the expected structure will be:
 - Static data management (no external APIs)
 - Client-side routing if needed (React Router)
 - Responsive design for various screen sizes
+- Always build when you're running the tests. Any errors when building should be resolved. 

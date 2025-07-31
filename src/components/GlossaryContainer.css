@@ -1,0 +1,407 @@
+/* GlossaryContainer Styles */
+
+.glossary-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  line-height: 1.6;
+}
+
+/* Header */
+.glossary-container__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.glossary-container__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0 0 1rem 0;
+}
+
+.glossary-container__description {
+  font-size: 1.125rem;
+  color: #4a5568;
+  margin: 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Controls Section */
+.glossary-container__controls {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: #f7fafc;
+  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+/* Search */
+.glossary-container__search {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.glossary-container__search-label {
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 1rem;
+}
+
+.glossary-container__search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.glossary-container__search-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  padding-right: 2.5rem;
+  border: 2px solid #cbd5e0;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  background: white;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glossary-container__search-input:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+}
+
+.glossary-container__clear-search {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: #718096;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.glossary-container__clear-search:hover {
+  color: #2d3748;
+  background-color: #edf2f7;
+}
+
+.glossary-container__clear-search:focus {
+  outline: 2px solid #3182ce;
+  outline-offset: 2px;
+}
+
+.glossary-container__search-help {
+  font-size: 0.875rem;
+  color: #718096;
+  font-style: italic;
+}
+
+/* Role Filter */
+.glossary-container__role-filter {
+  display: flex;
+  flex-direction: column;
+}
+
+.glossary-container__role-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.glossary-container__role-legend {
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.glossary-container__role-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.glossary-container__role-button {
+  padding: 0.5rem 1rem;
+  border: 2px solid #cbd5e0;
+  border-radius: 0.375rem;
+  background: white;
+  color: #4a5568;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.glossary-container__role-button:hover {
+  border-color: #a0aec0;
+  background: #edf2f7;
+}
+
+.glossary-container__role-button:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+}
+
+.glossary-container__role-button.active,
+.glossary-container__role-button[aria-pressed="true"] {
+  background: #3182ce;
+  border-color: #3182ce;
+  color: white;
+}
+
+.glossary-container__role-button.active:hover,
+.glossary-container__role-button[aria-pressed="true"]:hover {
+  background: #2c5aa0;
+  border-color: #2c5aa0;
+}
+
+/* Results Summary */
+.glossary-container__results {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #edf2f7;
+  border-radius: 0.375rem;
+  border-left: 4px solid #3182ce;
+}
+
+.glossary-container__results-text {
+  margin: 0;
+  color: #2d3748;
+  font-weight: 500;
+}
+
+/* Terms List */
+.glossary-container__terms {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.glossary-container__term {
+  /* Individual term styling handled by GlossaryTerm component */
+}
+
+/* No Results */
+.glossary-container__no-results {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: #f7fafc;
+  border-radius: 0.5rem;
+  border: 2px dashed #cbd5e0;
+}
+
+.glossary-container__no-results h3 {
+  font-size: 1.5rem;
+  color: #2d3748;
+  margin: 0 0 1rem 0;
+}
+
+.glossary-container__no-results p {
+  color: #718096;
+  margin: 0 0 1.5rem 0;
+}
+
+.glossary-container__clear-button {
+  padding: 0.75rem 1.5rem;
+  background: #3182ce;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.glossary-container__clear-button:hover {
+  background: #2c5aa0;
+}
+
+.glossary-container__clear-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.3);
+}
+
+/* Loading State */
+.glossary-container__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.glossary-container__spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 4px solid #e2e8f0;
+  border-top: 4px solid #3182ce;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.glossary-container__loading p {
+  color: #4a5568;
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+/* Error State */
+.glossary-container__error {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: #fed7d7;
+  border: 2px solid #fc8181;
+  border-radius: 0.5rem;
+  color: #742a2a;
+}
+
+.glossary-container__error h2 {
+  font-size: 1.5rem;
+  margin: 0 0 1rem 0;
+  color: #742a2a;
+}
+
+.glossary-container__error p {
+  margin: 0 0 1.5rem 0;
+  color: #9b2c2c;
+}
+
+.glossary-container__retry-button {
+  padding: 0.75rem 1.5rem;
+  background: #e53e3e;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.glossary-container__retry-button:hover:not(:disabled) {
+  background: #c53030;
+}
+
+.glossary-container__retry-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.glossary-container__retry-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.3);
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  .glossary-container {
+    padding: 3rem 2rem;
+  }
+
+  .glossary-container__controls {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 3rem;
+  }
+
+  .glossary-container__search {
+    flex: 1;
+  }
+
+  .glossary-container__role-filter {
+    flex: 1;
+  }
+
+  .glossary-container__role-buttons {
+    justify-content: flex-start;
+  }
+}
+
+@media (min-width: 1024px) {
+  .glossary-container__title {
+    font-size: 3rem;
+  }
+
+  .glossary-container__description {
+    font-size: 1.25rem;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .glossary-container__search-input {
+    border-width: 3px;
+  }
+
+  .glossary-container__role-button {
+    border-width: 3px;
+  }
+
+  .glossary-container__role-button.active {
+    border-width: 3px;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .glossary-container__spinner {
+    animation: none;
+  }
+
+  .glossary-container__search-input,
+  .glossary-container__role-button,
+  .glossary-container__clear-search,
+  .glossary-container__clear-button,
+  .glossary-container__retry-button {
+    transition: none;
+  }
+}
+
+/* Focus Visible Support */
+.glossary-container__search-input:focus-visible,
+.glossary-container__role-button:focus-visible,
+.glossary-container__clear-search:focus-visible,
+.glossary-container__clear-button:focus-visible,
+.glossary-container__retry-button:focus-visible {
+  outline: 2px solid #3182ce;
+  outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+  .glossary-container__controls {
+    display: none;
+  }
+
+  .glossary-container__results {
+    background: none;
+    border: 1px solid #000;
+  }
+
+  .glossary-container__loading,
+  .glossary-container__error {
+    display: none;
+  }
+}

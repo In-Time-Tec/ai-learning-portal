@@ -29,7 +29,7 @@
   - Write unit tests for data loading and question selection algorithms
   - _Requirements: 6.1, 6.2, 6.4, 2.1, 2.4_
 
-- [ ] 5. Build GlossaryTerm component with accessibility features
+- [x] 5. Build GlossaryTerm component with accessibility features
   - Create GlossaryTerm component displaying term, definition, and external link
   - Implement role-specific context display with proper ARIA labels
   - Add keyboard navigation support and focus management
@@ -37,7 +37,7 @@
   - Write component tests including accessibility testing with axe-core
   - _Requirements: 1.1, 1.2, 1.3, 5.1, 5.2, 5.3, 5.5_
 
-- [ ] 6. Implement GlossaryContainer with filtering and search
+- [x] 6. Implement GlossaryContainer with filtering and search
   - Create GlossaryContainer component managing multiple GlossaryTerm components
   - Add role filtering functionality for different business personas
   - Implement search functionality with keyboard accessibility
