@@ -1,0 +1,77 @@
+name: Test Deployment Pipeline
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ test-deployment ]
+
+jobs:
+  test-pipeline:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run build
+      run: npm run build
+      
+    - name: Verify build output
+      run: |
+        echo "Checking build directory..."
+        ls -la build/
+        echo "Checking static assets..."
+        ls -la build/static/
+        echo "Verifying index.html exists..."
+        if [ -f "build/index.html" ]; then
+          echo "✅ index.html found"
+        else
+          echo "❌ index.html not found"
+          exit 1
+        fi
+        
+    - name: Test bundle size
+      run: |
+        BUNDLE_SIZE=$(du -sk build/static/js/*.js | awk '{sum += $1} END {print sum}')
+        echo "Bundle size: ${BUNDLE_SIZE}KB"
+        if [ $BUNDLE_SIZE -gt 1000 ]; then
+          echo "⚠️  Bundle size ${BUNDLE_SIZE}KB exceeds recommended 1MB"
+        else
+          echo "✅ Bundle size ${BUNDLE_SIZE}KB is acceptable"
+        fi
+        
+    - name: Test static file serving
+      run: |
+        echo "Testing if build can be served statically..."
+        cd build
+        python3 -m http.server 8000 &
+        SERVER_PID=$!
+        sleep 3
+        
+        # Test if index.html is accessible
+        if curl -f http://localhost:8000/ > /dev/null 2>&1; then
+          echo "✅ Static serving works"
+        else
+          echo "❌ Static serving failed"
+          kill $SERVER_PID
+          exit 1
+        fi
+        
+        kill $SERVER_PID
+        
+    - name: Simulate GitHub Pages deployment
+      run: |
+        echo "Simulating GitHub Pages deployment structure..."
+        mkdir -p gh-pages-test
+        cp -r build/* gh-pages-test/
+        echo "✅ Deployment simulation complete"
+        ls -la gh-pages-test/

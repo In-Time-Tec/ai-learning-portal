@@ -69,7 +69,7 @@
   - Write component tests for all progress display scenarios
   - _Requirements: 3.1, 3.3, 3.4, 3.5_
 
-- [ ] 10. Create main App component with routing and state management
+- [x] 10. Create main App component with routing and state management
   - Build App component orchestrating all major components
   - Implement simple routing between glossary and quiz views
   - Add global error boundary for graceful error handling
@@ -101,7 +101,7 @@
   - Write visual regression tests for different screen sizes
   - _Requirements: 5.4, 1.4_
 
-- [ ] 14. Set up GitHub Actions for automated deployment
+- [x] 14. Set up GitHub Actions for automated deployment
   - Create GitHub Actions workflow for building and testing
   - Configure automatic deployment to gh-pages branch on merge
   - Add performance budgets and accessibility testing to CI pipeline

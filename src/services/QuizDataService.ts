@@ -13,7 +13,9 @@ export class QuizDataService {
         }
 
         try {
-            const response = await fetch('/questions.json');
+            // Use process.env.PUBLIC_URL to handle different deployment paths
+            const publicUrl = process.env.PUBLIC_URL || '';
+            const response = await fetch(`${publicUrl}/questions.json`);
             if (!response.ok) {
                 throw new Error(`Failed to load questions: ${response.status} ${response.statusText}`);
             }

@@ -2,7 +2,7 @@
   "name": "interactive-ai-glossary",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/In-Time-Tec/ai-learning-portal",
+  "homepage": ".",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
@@ -42,11 +42,15 @@
     ]
   },
   "devDependencies": {
+    "@axe-core/cli": "^4.8.2",
     "@axe-core/react": "^4.10.2",
     "@types/jest-axe": "^3.5.9",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
+    "audit-ci": "^6.6.1",
     "eslint-plugin-jsx-a11y": "^6.6.1",
-    "jest-axe": "^10.0.0"
+    "jest-axe": "^10.0.0",
+    "serve": "^14.2.1",
+    "webpack-bundle-analyzer": "^4.9.1"
   }
 }

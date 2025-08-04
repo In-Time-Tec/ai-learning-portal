@@ -1,20 +1,305 @@
-.App {
+/**
+ * Main App Component Styles
+ * 
+ * Provides styling for the root application component including
+ * navigation, layout, and responsive design
+ */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8f9fa;
+}
+
+/* Loading and Error States */
+.app--loading,
+.app--error {
+  justify-content: center;
+  align-items: center;
   text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  padding: 20px;
+.app__loading,
+.app__error {
+  max-width: 400px;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.app__spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e9ecef;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.app__error-button {
+  background-color: #007bff;
   color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
-.App-header h1 {
-  margin: 0 0 10px 0;
-  font-size: 2rem;
+.app__error-button:hover {
+  background-color: #0056b3;
 }
 
-.App-header p {
+.app__error-button:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Header */
+.app__header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.app__header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.app__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.2;
+}
+
+.app__description {
+  font-size: 1.2rem;
+  margin: 0 0 2rem 0;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+/* Navigation */
+.app__navigation {
+  margin-top: 1rem;
+}
+
+.app__nav-container {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.app__nav-button {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.app__nav-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.app__nav-button:focus {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+.app__nav-button.active {
+  background: white;
+  color: #667eea;
+  border-color: white;
+  font-weight: 600;
+}
+
+.app__nav-button.active:hover {
+  background: #f8f9fa;
+  transform: none;
+}
+
+/* Main Content */
+.app__main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  width: 100%;
+}
+
+.app__view-content {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Footer */
+.app__footer {
+  background-color: #343a40;
+  color: white;
+  padding: 1rem 0;
+  margin-top: auto;
+}
+
+.app__footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.app__footer-text {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   opacity: 0.8;
+}
+
+.app__footer-warning {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.85rem;
+  color: #ffc107;
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .app__header {
+    padding: 1.5rem 0;
+  }
+  
+  .app__title {
+    font-size: 2rem;
+  }
+  
+  .app__description {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .app__nav-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .app__nav-button {
+    width: 200px;
+    max-width: 90%;
+  }
+  
+  .app__main {
+    padding: 1rem;
+  }
+  
+  .app__footer-text {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+}
+
+@media (max-width: 480px) {
+  .app__title {
+    font-size: 1.75rem;
+  }
+  
+  .app__description {
+    font-size: 1rem;
+  }
+  
+  .app__nav-button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .app__header {
+    background: #000;
+  }
+  
+  .app__nav-button {
+    border-width: 3px;
+  }
+  
+  .app__nav-button.active {
+    background: #fff;
+    color: #000;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .app__nav-button {
+    transition: none;
+  }
+  
+  .app__nav-button:hover {
+    transform: none;
+  }
+  
+  .app__view-content {
+    animation: none;
+  }
+  
+  .app__spinner {
+    animation: none;
+  }
+}
+
+/* Focus management for keyboard navigation */
+.app__nav-button:focus-visible {
+  outline: 3px solid #ffc107;
+  outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+  .app__header,
+  .app__navigation,
+  .app__footer {
+    display: none;
+  }
+  
+  .app__main {
+    max-width: none;
+    padding: 0;
+  }
 }

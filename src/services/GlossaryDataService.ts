@@ -13,7 +13,9 @@ export class GlossaryDataService {
     }
 
     try {
-      const response = await fetch('/glossary.json');
+      // Use process.env.PUBLIC_URL to handle different deployment paths
+      const publicUrl = process.env.PUBLIC_URL || '';
+      const response = await fetch(`${publicUrl}/glossary.json`);
       if (!response.ok) {
         throw new Error(`Failed to load glossary: ${response.status} ${response.statusText}`);
       }

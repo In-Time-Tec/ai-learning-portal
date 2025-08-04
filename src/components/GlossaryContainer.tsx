@@ -150,7 +150,7 @@ export const GlossaryContainer: React.FC<GlossaryContainerProps> = ({
   // Loading state
   if (isLoading) {
     return (
-      <div className={`glossary-container ${className}`} role="main">
+      <div className={`glossary-container ${className}`}>
         <div className="glossary-container__loading" aria-live="polite">
           <div className="glossary-container__spinner" aria-hidden="true"></div>
           <p>Loading AI glossary terms...</p>
@@ -162,7 +162,7 @@ export const GlossaryContainer: React.FC<GlossaryContainerProps> = ({
   // Error state
   if (error) {
     return (
-      <div className={`glossary-container ${className}`} role="main">
+      <div className={`glossary-container ${className}`}>
         <div className="glossary-container__error" role="alert">
           <h2>Unable to Load Glossary</h2>
           <p>{error}</p>
@@ -179,7 +179,7 @@ export const GlossaryContainer: React.FC<GlossaryContainerProps> = ({
   }
 
   return (
-    <div className={`glossary-container ${className}`} role="main">
+    <div className={`glossary-container ${className}`}>
       <div className="glossary-container__header">
         <h1 className="glossary-container__title">AI Glossary</h1>
         <p className="glossary-container__description">

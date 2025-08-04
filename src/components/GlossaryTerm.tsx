@@ -98,18 +98,18 @@ export const GlossaryTerm: React.FC<GlossaryTermProps> = ({
     <article 
       className={`glossary-term ${className}`}
       ref={termRef}
-      tabIndex={0}
-      role="article"
       aria-labelledby={`term-${term.id}`}
       aria-describedby={`definition-${term.id}`}
-      onKeyDown={handleTermKeyDown}
     >
       <header className="glossary-term__header">
-        <h2 
+        <button 
           id={`term-${term.id}`}
           className="glossary-term__title"
           onClick={toggleExpanded}
+          onKeyDown={handleTermKeyDown}
           aria-expanded={isExpanded}
+          aria-controls={`content-${term.id}`}
+          type="button"
         >
           {term.term}
           <span 
@@ -118,7 +118,7 @@ export const GlossaryTerm: React.FC<GlossaryTermProps> = ({
           >
             ▼
           </span>
-        </h2>
+        </button>
         
         <a
           href={term.externalLink}
@@ -135,7 +135,9 @@ export const GlossaryTerm: React.FC<GlossaryTermProps> = ({
       </header>
 
       <div 
+        id={`content-${term.id}`}
         className={`glossary-term__content ${isExpanded ? 'expanded' : ''}`}
+        aria-hidden={!isExpanded}
       >
         <p 
           id={`definition-${term.id}`}
