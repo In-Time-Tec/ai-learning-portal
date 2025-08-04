@@ -101,7 +101,7 @@
   - Write visual regression tests for different screen sizes
   - _Requirements: 5.4, 1.4_
 
-- [x] 14. Set up GitHub Actions for automated deployment
+- [ ] 14. Set up GitHub Actions for automated deployment
   - Create GitHub Actions workflow for building and testing
   - Configure automatic deployment to gh-pages branch on merge
   - Add performance budgets and accessibility testing to CI pipeline
