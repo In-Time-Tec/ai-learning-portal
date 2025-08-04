@@ -1,0 +1,282 @@
+/**
+ * ErrorMessage Component Styles
+ */
+
+.error-message {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.error-message__container {
+  padding: 2rem;
+}
+
+/* Error type variants */
+.error-message--network {
+  background: #fef5e7;
+  border: 2px solid #f6ad55;
+  color: #744210;
+}
+
+.error-message--data {
+  background: #fed7d7;
+  border: 2px solid #fc8181;
+  color: #742a2a;
+}
+
+.error-message--storage {
+  background: #e6fffa;
+  border: 2px solid #4fd1c7;
+  color: #234e52;
+}
+
+.error-message--validation {
+  background: #fef5e7;
+  border: 2px solid #f6ad55;
+  color: #744210;
+}
+
+.error-message--generic {
+  background: #edf2f7;
+  border: 2px solid #a0aec0;
+  color: #2d3748;
+}
+
+/* Header */
+.error-message__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.error-message__icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.error-message__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* Content */
+.error-message__content {
+  margin-bottom: 2rem;
+}
+
+.error-message__message {
+  margin: 0 0 1.5rem 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.error-message__suggestions {
+  margin-top: 1rem;
+}
+
+.error-message__suggestions-title {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+}
+
+.error-message__suggestions-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  list-style-type: disc;
+}
+
+.error-message__suggestion {
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.error-message__suggestion:last-child {
+  margin-bottom: 0;
+}
+
+/* Actions */
+.error-message__actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.error-message__button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 100px;
+}
+
+.error-message__button:focus {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.error-message__button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Button variants */
+.error-message__button--primary {
+  background-color: #3182ce;
+  color: white;
+}
+
+.error-message__button--primary:hover:not(:disabled) {
+  background-color: #2c5aa0;
+}
+
+.error-message__button--secondary {
+  background-color: transparent;
+  color: currentColor;
+  border: 2px solid currentColor;
+}
+
+.error-message__button--secondary:hover:not(:disabled) {
+  background-color: currentColor;
+  color: white;
+}
+
+/* Error type specific button colors */
+.error-message--network .error-message__button--primary {
+  background-color: #d69e2e;
+}
+
+.error-message--network .error-message__button--primary:hover:not(:disabled) {
+  background-color: #b7791f;
+}
+
+.error-message--data .error-message__button--primary {
+  background-color: #e53e3e;
+}
+
+.error-message--data .error-message__button--primary:hover:not(:disabled) {
+  background-color: #c53030;
+}
+
+.error-message--storage .error-message__button--primary {
+  background-color: #319795;
+}
+
+.error-message--storage .error-message__button--primary:hover:not(:disabled) {
+  background-color: #2c7a7b;
+}
+
+.error-message--validation .error-message__button--primary {
+  background-color: #d69e2e;
+}
+
+.error-message--validation .error-message__button--primary:hover:not(:disabled) {
+  background-color: #b7791f;
+}
+
+/* Details */
+.error-message__details {
+  margin-top: 1.5rem;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.error-message__details-summary {
+  padding: 0.75rem;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.875rem;
+  border-bottom: 1px solid currentColor;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.error-message__details-summary:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.error-message__details-content {
+  padding: 1rem;
+  margin: 0;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .error-message {
+    margin: 1rem;
+  }
+  
+  .error-message__container {
+    padding: 1.5rem;
+  }
+  
+  .error-message__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .error-message__button {
+    width: 100%;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .error-message {
+    border-width: 3px;
+  }
+  
+  .error-message__button {
+    border-width: 2px;
+  }
+  
+  .error-message__button--secondary {
+    border-width: 3px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .error-message__button {
+    transition: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .error-message__actions {
+    display: none;
+  }
+  
+  .error-message__details {
+    border: 1px solid #000;
+  }
+  
+  .error-message__details-summary {
+    background: none;
+    border-bottom: 1px solid #000;
+  }
+}

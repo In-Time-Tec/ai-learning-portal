@@ -1,0 +1,102 @@
+/**
+ * LoadingSpinner Component Styles
+ */
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.loading-spinner--small {
+  padding: 1rem;
+}
+
+.loading-spinner--large {
+  padding: 3rem;
+}
+
+.loading-spinner__spinner {
+  border-radius: 50%;
+  border-style: solid;
+  border-color: #e2e8f0;
+  border-top-color: #3182ce;
+  animation: loading-spinner-spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+/* Size variants */
+.loading-spinner--small .loading-spinner__spinner {
+  width: 24px;
+  height: 24px;
+  border-width: 3px;
+  margin-bottom: 0.5rem;
+}
+
+.loading-spinner--medium .loading-spinner__spinner {
+  width: 40px;
+  height: 40px;
+  border-width: 4px;
+  margin-bottom: 1rem;
+}
+
+.loading-spinner--large .loading-spinner__spinner {
+  width: 60px;
+  height: 60px;
+  border-width: 5px;
+  margin-bottom: 1.5rem;
+}
+
+.loading-spinner__message {
+  margin: 0;
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.loading-spinner--small .loading-spinner__message {
+  font-size: 0.875rem;
+}
+
+.loading-spinner--medium .loading-spinner__message {
+  font-size: 1rem;
+}
+
+.loading-spinner--large .loading-spinner__message {
+  font-size: 1.125rem;
+}
+
+@keyframes loading-spinner-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .loading-spinner__spinner {
+    border-color: #000;
+    border-top-color: #000;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .loading-spinner__spinner {
+    animation: none;
+    border-top-color: #3182ce;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .loading-spinner__message {
+    color: #a0aec0;
+  }
+  
+  .loading-spinner__spinner {
+    border-color: #4a5568;
+    border-top-color: #63b3ed;
+  }
+}

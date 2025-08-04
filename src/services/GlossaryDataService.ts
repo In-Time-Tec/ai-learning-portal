@@ -15,15 +15,44 @@ export class GlossaryDataService {
     try {
       // Use process.env.PUBLIC_URL to handle different deployment paths
       const publicUrl = process.env.PUBLIC_URL || '';
-      const response = await fetch(`${publicUrl}/glossary.json`);
+      const url = `${publicUrl}/glossary.json`;
+      
+      // Add timeout to prevent hanging requests
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      
+      const response = await fetch(url, { 
+        signal: controller.signal,
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      });
+      
+      clearTimeout(timeoutId);
+      
       if (!response.ok) {
-        throw new Error(`Failed to load glossary: ${response.status} ${response.statusText}`);
+        if (response.status === 404) {
+          throw new Error('Glossary data file not found. Please check if glossary.json exists in the public folder.');
+        } else if (response.status >= 500) {
+          throw new Error('Server error while loading glossary data. Please try again later.');
+        } else {
+          throw new Error(`Failed to load glossary: ${response.status} ${response.statusText}`);
+        }
       }
 
-      const data = await response.json();
+      let data;
+      try {
+        data = await response.json();
+      } catch (parseError) {
+        throw new Error('Invalid glossary data format: file contains malformed JSON');
+      }
+      
+      if (!data || typeof data !== 'object') {
+        throw new Error('Invalid glossary data format: expected JSON object');
+      }
       
       if (!data.terms || !Array.isArray(data.terms)) {
-        throw new Error('Invalid glossary data format: missing terms array');
+        throw new Error('Invalid glossary data format: missing or invalid terms array');
       }
 
       // Validate each term has required fields
@@ -32,7 +61,12 @@ export class GlossaryDataService {
       );
 
       if (validTerms.length === 0) {
-        throw new Error('No valid terms found in data file');
+        throw new Error('No valid terms found in data file. Please check the glossary data format.');
+      }
+
+      // Log warning if some terms were invalid
+      if (validTerms.length < data.terms.length) {
+        console.warn(`${data.terms.length - validTerms.length} invalid terms were skipped`);
       }
 
       this.terms = validTerms;
@@ -40,6 +74,14 @@ export class GlossaryDataService {
       return this.terms;
     } catch (error) {
       console.error('Error loading glossary terms:', error);
+      
+      // Provide more specific error messages
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        throw new Error('Network error: Unable to connect to load glossary data. Please check your internet connection.');
+      } else if (error instanceof DOMException && error.name === 'AbortError') {
+        throw new Error('Request timeout: Loading glossary data took too long. Please try again.');
+      }
+      
       throw error;
     }
   }

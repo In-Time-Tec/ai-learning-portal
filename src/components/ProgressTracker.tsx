@@ -8,6 +8,8 @@
 import React, { useState, useEffect } from 'react';
 import { UserProgress, QuizAttempt } from '../types';
 import { localStorageService } from '../services/LocalStorageService';
+import { SkeletonLoader } from './SkeletonLoader';
+import { ErrorMessage } from './ErrorMessage';
 import './ProgressTracker.css';
 
 interface ProgressTrackerProps {
@@ -42,6 +44,8 @@ export const ProgressTracker: React.FC<ProgressTrackerProps> = ({
   });
   const [showResetConfirmation, setShowResetConfirmation] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Use external progress if provided, otherwise use internal state
   const currentProgress = externalProgress || internalProgress;
@@ -49,8 +53,18 @@ export const ProgressTracker: React.FC<ProgressTrackerProps> = ({
   useEffect(() => {
     if (!externalProgress) {
       // Update internal progress from localStorage
-      const updatedProgress = localStorageService.getProgress();
-      setInternalProgress(updatedProgress);
+      try {
+        setIsLoading(true);
+        setError(null);
+        const updatedProgress = localStorageService.getProgress();
+        setInternalProgress(updatedProgress);
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'Failed to load progress data';
+        setError(errorMessage);
+        console.error('Error loading progress:', err);
+      } finally {
+        setIsLoading(false);
+      }
     }
   }, [externalProgress]);
 
@@ -141,6 +155,37 @@ export const ProgressTracker: React.FC<ProgressTrackerProps> = ({
   const completionPercentage = getCompletionPercentage();
   const averageScore = getAverageScore();
   const recentAttempts = getRecentAttempts();
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className={`progress-tracker ${className}`}>
+        <SkeletonLoader type="progress" />
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className={`progress-tracker ${className}`}>
+        <ErrorMessage
+          title="Unable to Load Progress"
+          message={error}
+          type="storage"
+          onRetry={() => window.location.reload()}
+          actions={[
+            {
+              label: 'Continue Without Progress',
+              onClick: () => setError(null),
+              variant: 'secondary'
+            }
+          ]}
+          details={error}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className={`progress-tracker ${className}`} role="region" aria-labelledby="progress-heading">

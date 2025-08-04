@@ -3,6 +3,8 @@ import { QuizQuestion as QuizQuestionComponent } from './QuizQuestion';
 import { quizDataService } from '../services/QuizDataService';
 import { localStorageService } from '../services/LocalStorageService';
 import { QuizQuestion, QuizResults, QuizAttempt } from '../types';
+import { SkeletonLoader } from './SkeletonLoader';
+import { ErrorMessage } from './ErrorMessage';
 import './QuizContainer.css';
 
 interface QuizContainerProps {
@@ -22,6 +24,7 @@ interface QuizState {
   }>;
   isLoading: boolean;
   error: string | null;
+  errorType: 'network' | 'data' | 'storage' | 'generic';
   isCompleted: boolean;
 }
 
@@ -38,6 +41,7 @@ export const QuizContainer: React.FC<QuizContainerProps> = ({
     answers: [],
     isLoading: true,
     error: null,
+    errorType: 'generic',
     isCompleted: false
   });
 
@@ -72,15 +76,32 @@ export const QuizContainer: React.FC<QuizContainerProps> = ({
         answers: [],
         isLoading: false,
         error: null,
+        errorType: 'generic',
         isCompleted: false
       }));
 
     } catch (error) {
       console.error('Error initializing quiz:', error);
+      
+      const errorMessage = error instanceof Error ? error.message : 'Failed to load quiz questions';
+      let errorType: 'network' | 'data' | 'storage' | 'generic' = 'generic';
+      
+      // Determine error type for better user experience
+      if (errorMessage.includes('Network error') || errorMessage.includes('fetch') || errorMessage.includes('timeout')) {
+        errorType = 'network';
+      } else if (errorMessage.includes('Invalid questions data') || errorMessage.includes('format') || errorMessage.includes('malformed')) {
+        errorType = 'data';
+      } else if (errorMessage.includes('localStorage')) {
+        errorType = 'storage';
+      } else if (errorMessage.includes('No questions available')) {
+        errorType = 'data';
+      }
+      
       setQuizState(prev => ({
         ...prev,
         isLoading: false,
-        error: error instanceof Error ? error.message : 'Failed to load quiz questions'
+        error: errorMessage,
+        errorType
       }));
     }
   }, [questionsPerQuiz]);
@@ -107,22 +128,23 @@ export const QuizContainer: React.FC<QuizContainerProps> = ({
       term: currentQuestion.term
     };
 
+    // Add the answer to state immediately
     setQuizState(prev => ({
       ...prev,
       answers: [...prev.answers, newAnswer]
     }));
 
     // Move to next question after a brief delay for user to see feedback
-    setTimeout(() => {
+    const progressToNext = () => {
       setQuizState(prev => {
         const nextIndex = prev.currentQuestionIndex + 1;
         const isQuizComplete = nextIndex >= prev.questions.length;
 
         if (isQuizComplete) {
           // Calculate and record quiz results
-          const score = [...prev.answers, newAnswer].filter(a => a.isCorrect).length;
+          const score = prev.answers.filter(a => a.isCorrect).length;
           const totalQuestions = prev.questions.length;
-          const questionsAnswered = [...prev.answers, newAnswer].map(a => a.term);
+          const questionsAnswered = prev.answers.map(a => a.term);
           
           const results: QuizResults = {
             score,
@@ -158,7 +180,14 @@ export const QuizContainer: React.FC<QuizContainerProps> = ({
           currentQuestionIndex: nextIndex
         };
       });
-    }, answerDelayMs); // Configurable delay to show feedback
+    };
+
+    if (answerDelayMs === 0) {
+      // For testing - immediate progression
+      progressToNext();
+    } else {
+      setTimeout(progressToNext, answerDelayMs);
+    }
 
   }, [quizState.questions, quizState.currentQuestionIndex, onQuizComplete, answerDelayMs]);
 
@@ -212,11 +241,8 @@ export const QuizContainer: React.FC<QuizContainerProps> = ({
   // Loading state
   if (quizState.isLoading) {
     return (
-      <div className="quiz-container quiz-container--loading" role="status" aria-live="polite">
-        <div className="quiz-container__loading">
-          <div className="quiz-container__spinner" aria-hidden="true"></div>
-          <p>Loading quiz questions...</p>
-        </div>
+      <div className="quiz-container quiz-container--loading">
+        <SkeletonLoader type="quiz" />
       </div>
     );
   }
@@ -224,18 +250,22 @@ export const QuizContainer: React.FC<QuizContainerProps> = ({
   // Error state
   if (quizState.error) {
     return (
-      <div className="quiz-container quiz-container--error" role="alert">
-        <div className="quiz-container__error">
-          <h3>Unable to Load Quiz</h3>
-          <p>{quizState.error}</p>
-          <button 
-            type="button"
-            className="quiz-container__retry-button"
-            onClick={startNewQuiz}
-          >
-            Try Again
-          </button>
-        </div>
+      <div className="quiz-container quiz-container--error">
+        <ErrorMessage
+          title="Unable to Load Quiz"
+          message={quizState.error}
+          type={quizState.errorType}
+          onRetry={startNewQuiz}
+          isRetrying={quizState.isLoading}
+          actions={[
+            {
+              label: 'View Glossary',
+              onClick: () => window.location.hash = '#glossary',
+              variant: 'secondary'
+            }
+          ]}
+          details={quizState.error}
+        />
       </div>
     );
   }
@@ -348,6 +378,7 @@ export const QuizContainer: React.FC<QuizContainerProps> = ({
 
       <div className="quiz-container__question">
         <QuizQuestionComponent
+          key={currentQuestion.id}
           question={currentQuestion}
           onAnswerSelected={handleAnswerSelected}
           disabled={false}

@@ -15,15 +15,44 @@ export class QuizDataService {
         try {
             // Use process.env.PUBLIC_URL to handle different deployment paths
             const publicUrl = process.env.PUBLIC_URL || '';
-            const response = await fetch(`${publicUrl}/questions.json`);
+            const url = `${publicUrl}/questions.json`;
+            
+            // Add timeout to prevent hanging requests
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+            
+            const response = await fetch(url, { 
+                signal: controller.signal,
+                headers: {
+                    'Cache-Control': 'no-cache'
+                }
+            });
+            
+            clearTimeout(timeoutId);
+            
             if (!response.ok) {
-                throw new Error(`Failed to load questions: ${response.status} ${response.statusText}`);
+                if (response.status === 404) {
+                    throw new Error('Quiz questions file not found. Please check if questions.json exists in the public folder.');
+                } else if (response.status >= 500) {
+                    throw new Error('Server error while loading quiz questions. Please try again later.');
+                } else {
+                    throw new Error(`Failed to load questions: ${response.status} ${response.statusText}`);
+                }
             }
 
-            const data = await response.json();
+            let data;
+            try {
+                data = await response.json();
+            } catch (parseError) {
+                throw new Error('Invalid questions data format: file contains malformed JSON');
+            }
+
+            if (!data || typeof data !== 'object') {
+                throw new Error('Invalid questions data format: expected JSON object');
+            }
 
             if (!data.questions || !Array.isArray(data.questions)) {
-                throw new Error('Invalid questions data format: missing questions array');
+                throw new Error('Invalid questions data format: missing or invalid questions array');
             }
 
             // Validate each question has required fields
@@ -32,7 +61,12 @@ export class QuizDataService {
             );
 
             if (validQuestions.length === 0) {
-                throw new Error('No valid questions found in data file');
+                throw new Error('No valid questions found in data file. Please check the questions data format.');
+            }
+
+            // Log warning if some questions were invalid
+            if (validQuestions.length < data.questions.length) {
+                console.warn(`${data.questions.length - validQuestions.length} invalid questions were skipped`);
             }
 
             this.questions = validQuestions;
@@ -40,6 +74,14 @@ export class QuizDataService {
             return this.questions;
         } catch (error) {
             console.error('Error loading quiz questions:', error);
+            
+            // Provide more specific error messages
+            if (error instanceof TypeError && error.message.includes('fetch')) {
+                throw new Error('Network error: Unable to connect to load quiz questions. Please check your internet connection.');
+            } else if (error instanceof DOMException && error.name === 'AbortError') {
+                throw new Error('Request timeout: Loading quiz questions took too long. Please try again.');
+            }
+            
             throw error;
         }
     }

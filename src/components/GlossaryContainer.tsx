@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { GlossaryTerm as GlossaryTermType, UserRole } from '../types';
 import { glossaryDataService } from '../services/GlossaryDataService';
 import { GlossaryTerm } from './GlossaryTerm';
+import { SkeletonLoader } from './SkeletonLoader';
+import { ErrorMessage } from './ErrorMessage';
 import './GlossaryContainer.css';
 
 interface GlossaryContainerProps {
@@ -29,6 +31,7 @@ export const GlossaryContainer: React.FC<GlossaryContainerProps> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isRetrying, setIsRetrying] = useState(false);
+  const [errorType, setErrorType] = useState<'network' | 'data' | 'generic'>('generic');
 
   const searchInputRef = useRef<HTMLInputElement>(null);
   const roleFilterRef = useRef<HTMLDivElement>(null);
@@ -69,6 +72,16 @@ export const GlossaryContainer: React.FC<GlossaryContainerProps> = ({
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to load glossary data';
       setError(errorMessage);
+      
+      // Determine error type for better user experience
+      if (errorMessage.includes('Network error') || errorMessage.includes('fetch') || errorMessage.includes('timeout')) {
+        setErrorType('network');
+      } else if (errorMessage.includes('Invalid glossary data') || errorMessage.includes('format') || errorMessage.includes('malformed')) {
+        setErrorType('data');
+      } else {
+        setErrorType('generic');
+      }
+      
       console.error('Error loading glossary:', err);
     } finally {
       setIsLoading(false);
@@ -151,10 +164,7 @@ export const GlossaryContainer: React.FC<GlossaryContainerProps> = ({
   if (isLoading) {
     return (
       <div className={`glossary-container ${className}`}>
-        <div className="glossary-container__loading" aria-live="polite">
-          <div className="glossary-container__spinner" aria-hidden="true"></div>
-          <p>Loading AI glossary terms...</p>
-        </div>
+        <SkeletonLoader type="glossary" count={5} />
       </div>
     );
   }
@@ -163,17 +173,21 @@ export const GlossaryContainer: React.FC<GlossaryContainerProps> = ({
   if (error) {
     return (
       <div className={`glossary-container ${className}`}>
-        <div className="glossary-container__error" role="alert">
-          <h2>Unable to Load Glossary</h2>
-          <p>{error}</p>
-          <button
-            onClick={handleRetry}
-            disabled={isRetrying}
-            className="glossary-container__retry-button"
-          >
-            {isRetrying ? 'Retrying...' : 'Try Again'}
-          </button>
-        </div>
+        <ErrorMessage
+          title="Unable to Load Glossary"
+          message={error}
+          type={errorType}
+          onRetry={handleRetry}
+          isRetrying={isRetrying}
+          actions={[
+            {
+              label: 'Go to Quiz',
+              onClick: () => window.location.hash = '#quiz',
+              variant: 'secondary'
+            }
+          ]}
+          details={error}
+        />
       </div>
     );
   }

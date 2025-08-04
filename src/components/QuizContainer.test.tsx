@@ -68,8 +68,8 @@ describe('QuizContainer', () => {
     it('should render loading state initially', async () => {
       render(<QuizContainer />);
       
-      expect(screen.getByText('Loading quiz questions...')).toBeInTheDocument();
       expect(screen.getByRole('status')).toBeInTheDocument();
+      expect(screen.getByLabelText('Loading content')).toBeInTheDocument();
     });
 
     it('should load questions and display first question', async () => {
@@ -159,7 +159,7 @@ describe('QuizContainer', () => {
     it('should show quiz completion after all questions answered', async () => {
       const onQuizComplete = jest.fn();
       
-      render(<QuizContainer onQuizComplete={onQuizComplete} answerDelayMs={50} />);
+      render(<QuizContainer onQuizComplete={onQuizComplete} answerDelayMs={0} />);
       
       // Wait for first question
       await waitFor(() => {
@@ -167,36 +167,31 @@ describe('QuizContainer', () => {
       });
 
       // Answer first question
-      act(() => {
-        fireEvent.click(screen.getByText('Option A')); // Correct
-      });
+      fireEvent.click(screen.getByText('Option A')); // Correct
       
       // Wait for second question
       await waitFor(() => {
         expect(screen.getByText('What is ML?')).toBeInTheDocument();
-      }, { timeout: 2000 });
+      });
       
       // Answer second question
-      act(() => {
-        fireEvent.click(screen.getByText('Option B')); // Correct
-      });
+      fireEvent.click(screen.getByText('Option B')); // Correct
       
       // Wait for third question
       await waitFor(() => {
         expect(screen.getByText('What is DL?')).toBeInTheDocument();
-      }, { timeout: 2000 });
+      });
       
       // Answer third question
-      act(() => {
-        fireEvent.click(screen.getByText('Option C')); // Correct
-      });
+      fireEvent.click(screen.getByText('Option C')); // Correct
 
       // Wait for completion screen
       await waitFor(() => {
         expect(screen.getByText('Quiz Complete!')).toBeInTheDocument();
-      }, { timeout: 2000 });
+      });
 
-      expect(screen.getByText('3/3')).toBeInTheDocument();
+      expect(screen.getByText('3')).toBeInTheDocument();
+      expect(screen.getByText('/3')).toBeInTheDocument();
       expect(screen.getByText('100% Correct')).toBeInTheDocument();
       expect(onQuizComplete).toHaveBeenCalledWith({
         score: 3,
@@ -207,36 +202,30 @@ describe('QuizContainer', () => {
     });
 
     it('should record quiz attempt in localStorage', async () => {
-      render(<QuizContainer answerDelayMs={50} />);
+      render(<QuizContainer answerDelayMs={0} />);
       
       // Complete quiz with 2 correct answers
       await waitFor(() => {
         expect(screen.getByText('What is AI?')).toBeInTheDocument();
       });
 
-      act(() => {
-        fireEvent.click(screen.getByText('Option A')); // Correct
-      });
+      fireEvent.click(screen.getByText('Option A')); // Correct
       
       await waitFor(() => {
         expect(screen.getByText('What is ML?')).toBeInTheDocument();
-      }, { timeout: 2000 });
-      
-      act(() => {
-        fireEvent.click(screen.getByText('Option A')); // Incorrect
       });
+      
+      fireEvent.click(screen.getByText('Option A')); // Incorrect
       
       await waitFor(() => {
         expect(screen.getByText('What is DL?')).toBeInTheDocument();
-      }, { timeout: 2000 });
-      
-      act(() => {
-        fireEvent.click(screen.getByText('Option C')); // Correct
       });
+      
+      fireEvent.click(screen.getByText('Option C')); // Correct
 
       await waitFor(() => {
         expect(screen.getByText('Quiz Complete!')).toBeInTheDocument();
-      }, { timeout: 2000 });
+      });
 
       expect(mockLocalStorageService.recordQuizAttempt).toHaveBeenCalledWith({
         timestamp: expect.any(Number),
@@ -249,69 +238,57 @@ describe('QuizContainer', () => {
 
   describe('Score Calculation and Feedback', () => {
     it('should show perfect score feedback for 100%', async () => {
-      render(<QuizContainer answerDelayMs={50} />);
+      render(<QuizContainer answerDelayMs={0} />);
       
       // Answer all questions correctly
       await waitFor(() => {
         expect(screen.getByText('What is AI?')).toBeInTheDocument();
       });
 
-      act(() => {
-        fireEvent.click(screen.getByText('Option A'));
-      });
+      fireEvent.click(screen.getByText('Option A'));
       
       await waitFor(() => {
         expect(screen.getByText('What is ML?')).toBeInTheDocument();
-      }, { timeout: 2000 });
-      
-      act(() => {
-        fireEvent.click(screen.getByText('Option B'));
       });
+      
+      fireEvent.click(screen.getByText('Option B'));
       
       await waitFor(() => {
         expect(screen.getByText('What is DL?')).toBeInTheDocument();
-      }, { timeout: 2000 });
-      
-      act(() => {
-        fireEvent.click(screen.getByText('Option C'));
       });
+      
+      fireEvent.click(screen.getByText('Option C'));
 
       await waitFor(() => {
         expect(screen.getByText('Perfect score! Excellent work! 🎉')).toBeInTheDocument();
-      }, { timeout: 2000 });
+      });
     });
 
     it('should show appropriate feedback for different score ranges', async () => {
-      render(<QuizContainer answerDelayMs={50} />);
+      render(<QuizContainer answerDelayMs={0} />);
       
       // Answer 2 out of 3 correctly (67%)
       await waitFor(() => {
         expect(screen.getByText('What is AI?')).toBeInTheDocument();
       });
 
-      act(() => {
-        fireEvent.click(screen.getByText('Option A')); // Correct
-      });
+      fireEvent.click(screen.getByText('Option A')); // Correct
       
       await waitFor(() => {
         expect(screen.getByText('What is ML?')).toBeInTheDocument();
-      }, { timeout: 2000 });
-      
-      act(() => {
-        fireEvent.click(screen.getByText('Option A')); // Incorrect
       });
+      
+      fireEvent.click(screen.getByText('Option A')); // Incorrect
       
       await waitFor(() => {
         expect(screen.getByText('What is DL?')).toBeInTheDocument();
-      }, { timeout: 2000 });
-      
-      act(() => {
-        fireEvent.click(screen.getByText('Option C')); // Correct
       });
+      
+      fireEvent.click(screen.getByText('Option C')); // Correct
 
       await waitFor(() => {
         expect(screen.getByText('Great job! You\'re getting the hang of AI concepts! 👍')).toBeInTheDocument();
-      }, { timeout: 2000 });
+      });
     });
   });
 
@@ -358,41 +335,33 @@ describe('QuizContainer', () => {
 
   describe('New Quiz Functionality', () => {
     it('should allow starting a new quiz after completion', async () => {
-      render(<QuizContainer answerDelayMs={50} />);
+      render(<QuizContainer answerDelayMs={0} />);
       
       // Complete first quiz
       await waitFor(() => {
         expect(screen.getByText('What is AI?')).toBeInTheDocument();
       });
 
-      act(() => {
-        fireEvent.click(screen.getByText('Option A'));
-      });
+      fireEvent.click(screen.getByText('Option A'));
       
       await waitFor(() => {
         expect(screen.getByText('What is ML?')).toBeInTheDocument();
-      }, { timeout: 2000 });
-      
-      act(() => {
-        fireEvent.click(screen.getByText('Option B'));
       });
+      
+      fireEvent.click(screen.getByText('Option B'));
       
       await waitFor(() => {
         expect(screen.getByText('What is DL?')).toBeInTheDocument();
-      }, { timeout: 2000 });
-      
-      act(() => {
-        fireEvent.click(screen.getByText('Option C'));
       });
+      
+      fireEvent.click(screen.getByText('Option C'));
 
       await waitFor(() => {
         expect(screen.getByText('Take Another Quiz')).toBeInTheDocument();
-      }, { timeout: 2000 });
+      });
 
       // Start new quiz
-      act(() => {
-        fireEvent.click(screen.getByText('Take Another Quiz'));
-      });
+      fireEvent.click(screen.getByText('Take Another Quiz'));
       
       await waitFor(() => {
         expect(screen.getByText('Question 1 of 3')).toBeInTheDocument();
@@ -451,7 +420,7 @@ describe('QuizContainer', () => {
       render(<QuizContainer />);
       
       await waitFor(() => {
-        expect(screen.getByText('Loading quiz questions...')).toBeInTheDocument();
+        expect(screen.getByText('localStorage error')).toBeInTheDocument();
       });
     });
 

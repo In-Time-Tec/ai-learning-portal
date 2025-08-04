@@ -1,0 +1,313 @@
+/**
+ * SkeletonLoader Component Styles
+ */
+
+.skeleton-loader {
+  animation: skeleton-pulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes skeleton-pulse {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+/* Base skeleton element styles */
+.skeleton-loader__title,
+.skeleton-loader__description,
+.skeleton-loader__search,
+.skeleton-loader__filter-button,
+.skeleton-loader__term-title,
+.skeleton-loader__term-definition,
+.skeleton-loader__term-context,
+.skeleton-loader__quiz-title,
+.skeleton-loader__progress-bar,
+.skeleton-loader__question-text,
+.skeleton-loader__option,
+.skeleton-loader__progress-title,
+.skeleton-loader__stat-label,
+.skeleton-loader__stat-value,
+.skeleton-loader__section-title {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Glossary skeleton */
+.skeleton-loader--glossary {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.skeleton-loader__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.skeleton-loader__title {
+  height: 3rem;
+  width: 60%;
+  margin: 0 auto 1rem auto;
+}
+
+.skeleton-loader__description {
+  height: 1.5rem;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.skeleton-loader__controls {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: #f7fafc;
+  border-radius: 0.5rem;
+}
+
+.skeleton-loader__search {
+  height: 3rem;
+  width: 100%;
+}
+
+.skeleton-loader__filters {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.skeleton-loader__filter-button {
+  height: 2.5rem;
+  width: 120px;
+}
+
+.skeleton-loader__terms {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.skeleton-loader__term {
+  padding: 1.5rem;
+  background: white;
+  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+.skeleton-loader__term-title {
+  height: 1.5rem;
+  width: 40%;
+  margin-bottom: 1rem;
+}
+
+.skeleton-loader__term-definition {
+  height: 1rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-loader__term-definition:last-of-type {
+  width: 80%;
+  margin-bottom: 1rem;
+}
+
+.skeleton-loader__term-context {
+  height: 1rem;
+  width: 60%;
+}
+
+/* Quiz skeleton */
+.skeleton-loader--quiz {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.skeleton-loader__quiz-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.skeleton-loader__quiz-title {
+  height: 2rem;
+  width: 60%;
+  margin: 0 auto 1.5rem auto;
+}
+
+.skeleton-loader__progress-bar {
+  height: 8px;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-loader__question {
+  margin-bottom: 2rem;
+}
+
+.skeleton-loader__question-text {
+  height: 1.5rem;
+  width: 80%;
+  margin-bottom: 1.5rem;
+}
+
+.skeleton-loader__options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.skeleton-loader__option {
+  height: 3rem;
+  width: 100%;
+}
+
+/* Progress skeleton */
+.skeleton-loader--progress {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.skeleton-loader__progress-title {
+  height: 2rem;
+  width: 50%;
+  margin-bottom: 2rem;
+}
+
+.skeleton-loader__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.skeleton-loader__stat {
+  padding: 1rem;
+  background: white;
+  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+.skeleton-loader__stat-label {
+  height: 1rem;
+  width: 70%;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-loader__stat-value {
+  height: 1.5rem;
+  width: 40%;
+}
+
+.skeleton-loader__progress-section {
+  padding: 1.5rem;
+  background: white;
+  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+.skeleton-loader__section-title {
+  height: 1.25rem;
+  width: 40%;
+  margin-bottom: 1rem;
+}
+
+/* Responsive design */
+@media (min-width: 768px) {
+  .skeleton-loader__controls {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 3rem;
+  }
+
+  .skeleton-loader__search {
+    flex: 1;
+  }
+
+  .skeleton-loader__filters {
+    flex: 1;
+    justify-content: flex-start;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .skeleton-loader__title,
+  .skeleton-loader__description,
+  .skeleton-loader__search,
+  .skeleton-loader__filter-button,
+  .skeleton-loader__term-title,
+  .skeleton-loader__term-definition,
+  .skeleton-loader__term-context,
+  .skeleton-loader__quiz-title,
+  .skeleton-loader__progress-bar,
+  .skeleton-loader__question-text,
+  .skeleton-loader__option,
+  .skeleton-loader__progress-title,
+  .skeleton-loader__stat-label,
+  .skeleton-loader__stat-value,
+  .skeleton-loader__section-title {
+    background: #ccc;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-loader,
+  .skeleton-loader__title,
+  .skeleton-loader__description,
+  .skeleton-loader__search,
+  .skeleton-loader__filter-button,
+  .skeleton-loader__term-title,
+  .skeleton-loader__term-definition,
+  .skeleton-loader__term-context,
+  .skeleton-loader__quiz-title,
+  .skeleton-loader__progress-bar,
+  .skeleton-loader__question-text,
+  .skeleton-loader__option,
+  .skeleton-loader__progress-title,
+  .skeleton-loader__stat-label,
+  .skeleton-loader__stat-value,
+  .skeleton-loader__section-title {
+    animation: none;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .skeleton-loader__title,
+  .skeleton-loader__description,
+  .skeleton-loader__search,
+  .skeleton-loader__filter-button,
+  .skeleton-loader__term-title,
+  .skeleton-loader__term-definition,
+  .skeleton-loader__term-context,
+  .skeleton-loader__quiz-title,
+  .skeleton-loader__progress-bar,
+  .skeleton-loader__question-text,
+  .skeleton-loader__option,
+  .skeleton-loader__progress-title,
+  .skeleton-loader__stat-label,
+  .skeleton-loader__stat-value,
+  .skeleton-loader__section-title {
+    background: linear-gradient(90deg, #2d3748 25%, #4a5568 50%, #2d3748 75%);
+  }
+}
