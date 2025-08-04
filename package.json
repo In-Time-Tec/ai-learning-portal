@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://in-time-tec.github.io/ai-learning-portal",
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/jest-dom": "^6.6.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
