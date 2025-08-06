@@ -30,7 +30,12 @@
 .skeleton-loader__progress-title,
 .skeleton-loader__stat-label,
 .skeleton-loader__stat-value,
-.skeleton-loader__section-title {
+.skeleton-loader__section-title,
+.skeleton-loader__tool-title,
+.skeleton-loader__tool-category,
+.skeleton-loader__tool-description,
+.skeleton-loader__use-case,
+.skeleton-loader__experience {
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.5s infinite;
@@ -230,6 +235,79 @@
   margin-bottom: 1rem;
 }
 
+/* AI Tools skeleton */
+.skeleton-loader--ai-tools {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.skeleton-loader__tools-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.skeleton-loader__tool-card {
+  padding: 1.5rem;
+  background: white;
+  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+.skeleton-loader__tool-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.skeleton-loader__tool-title {
+  height: 1.5rem;
+  width: 60%;
+}
+
+.skeleton-loader__tool-category {
+  height: 1rem;
+  width: 25%;
+}
+
+.skeleton-loader__tool-description {
+  height: 1rem;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.skeleton-loader__tool-use-cases {
+  margin-bottom: 1.5rem;
+}
+
+.skeleton-loader__use-case {
+  height: 0.875rem;
+  width: 80%;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-loader__use-case:last-child {
+  width: 60%;
+}
+
+.skeleton-loader__tool-experiences {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.skeleton-loader__experience {
+  height: 1rem;
+  width: 90%;
+}
+
+.skeleton-loader__experience:last-child {
+  width: 70%;
+}
+
 /* Responsive design */
 @media (min-width: 768px) {
   .skeleton-loader__controls {
@@ -245,6 +323,16 @@
   .skeleton-loader__filters {
     flex: 1;
     justify-content: flex-start;
+  }
+
+  .skeleton-loader__tools-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .skeleton-loader__tools-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -264,7 +352,12 @@
   .skeleton-loader__progress-title,
   .skeleton-loader__stat-label,
   .skeleton-loader__stat-value,
-  .skeleton-loader__section-title {
+  .skeleton-loader__section-title,
+  .skeleton-loader__tool-title,
+  .skeleton-loader__tool-category,
+  .skeleton-loader__tool-description,
+  .skeleton-loader__use-case,
+  .skeleton-loader__experience {
     background: #ccc;
   }
 }
@@ -286,7 +379,12 @@
   .skeleton-loader__progress-title,
   .skeleton-loader__stat-label,
   .skeleton-loader__stat-value,
-  .skeleton-loader__section-title {
+  .skeleton-loader__section-title,
+  .skeleton-loader__tool-title,
+  .skeleton-loader__tool-category,
+  .skeleton-loader__tool-description,
+  .skeleton-loader__use-case,
+  .skeleton-loader__experience {
     animation: none;
   }
 }
@@ -307,7 +405,12 @@
   .skeleton-loader__progress-title,
   .skeleton-loader__stat-label,
   .skeleton-loader__stat-value,
-  .skeleton-loader__section-title {
+  .skeleton-loader__section-title,
+  .skeleton-loader__tool-title,
+  .skeleton-loader__tool-category,
+  .skeleton-loader__tool-description,
+  .skeleton-loader__use-case,
+  .skeleton-loader__experience {
     background: linear-gradient(90deg, #2d3748 25%, #4a5568 50%, #2d3748 75%);
   }
 }

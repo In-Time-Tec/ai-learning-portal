@@ -22,7 +22,6 @@ const CURRENT_VERSION = '1.0.0';
  * Default user progress when no data exists
  */
 const DEFAULT_USER_PROGRESS: UserProgress = {
-  visitCount: 0,
   quizAttempts: [],
   answeredTerms: new Set<string>(),
   bestScore: 0
@@ -33,7 +32,6 @@ const DEFAULT_USER_PROGRESS: UserProgress = {
  */
 const DEFAULT_STORED_DATA: StoredUserData = {
   version: CURRENT_VERSION,
-  visitCount: 0,
   quizHistory: [],
   answeredTerms: [],
   preferences: {}
@@ -106,7 +104,6 @@ export class LocalStorageService {
       const currentData = this.getStoredData();
       const updatedData: StoredUserData = {
         ...currentData,
-        visitCount: progress.visitCount ?? currentData.visitCount,
         quizHistory: progress.quizAttempts ?? currentData.quizHistory,
         answeredTerms: progress.answeredTerms 
           ? Array.from(progress.answeredTerms) 
@@ -119,17 +116,6 @@ export class LocalStorageService {
       // Update fallback data as backup
       this.fallbackData = { ...this.fallbackData, ...progress };
     }
-  }
-
-  /**
-   * Increment visit count and return new count
-   */
-  public incrementVisitCount(): number {
-    const currentProgress = this.getProgress();
-    const newCount = currentProgress.visitCount + 1;
-    
-    this.updateProgress({ visitCount: newCount });
-    return newCount;
   }
 
   /**
@@ -270,7 +256,6 @@ export class LocalStorageService {
    */
   private convertStoredDataToProgress(storedData: StoredUserData): UserProgress {
     return {
-      visitCount: storedData.visitCount,
       quizAttempts: storedData.quizHistory,
       answeredTerms: new Set(storedData.answeredTerms),
       bestScore: storedData.quizHistory.reduce(
@@ -308,7 +293,6 @@ export class LocalStorageService {
     // For now, just update version and ensure all required fields exist
     const migratedData: StoredUserData = {
       version: CURRENT_VERSION,
-      visitCount: oldData.visitCount || 0,
       quizHistory: oldData.quizHistory || [],
       answeredTerms: oldData.answeredTerms || [],
       preferences: oldData.preferences || {}

@@ -40,24 +40,28 @@
   font-size: 1.25rem;
   font-weight: 600;
   color: #2c3e50;
+}
+
+.glossary-term__title-button {
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
-  flex: 1;
   background: none;
   border: none;
   text-align: left;
   padding: 0;
   font-family: inherit;
+  flex: 1;
 }
 
-.glossary-term__title:focus {
+.glossary-term__title-button:focus {
   outline: 3px solid #f39c12;
   outline-offset: 2px;
 }
 
-.glossary-term__title:focus-visible {
+.glossary-term__title-button:focus-visible {
   outline: 3px solid #f39c12;
   outline-offset: 2px;
 }
@@ -116,7 +120,8 @@
 .glossary-term__content {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease-in-out;
+  transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+  padding: 0 1rem;
 }
 
 .glossary-term__content.expanded {

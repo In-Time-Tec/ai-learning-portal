@@ -71,8 +71,7 @@ Each term below includes:
 
 ## 4. Tracking & Feedback
 
-* **Page View Counter:** Use `localStorage` to maintain and display a per-user page visit count. On page load, increment a stored counter and render it in the UI (e.g., “You’ve visited this glossary X times”).
-* **Client-side Quiz Metrics:** Continue using `localStorage` to record:
+* **Client-side Quiz Metrics:** Use `localStorage` to record:
 
   * Which quiz terms a user has completed.
   * Their best quiz score.

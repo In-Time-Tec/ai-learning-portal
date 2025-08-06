@@ -1,7 +1,7 @@
 /**
  * ProgressTracker Component
  * 
- * Displays user progress including visit count, quiz statistics, and completed terms.
+ * Displays user progress including quiz statistics and completed terms.
  * Provides progress visualization and reset functionality with full accessibility support.
  */
 
@@ -35,7 +35,6 @@ export const ProgressTracker: React.FC<ProgressTrackerProps> = ({
     } catch (error) {
       console.error('Error loading initial progress:', error);
       return {
-        visitCount: 0,
         quizAttempts: [],
         answeredTerms: new Set(),
         bestScore: 0
@@ -193,16 +192,7 @@ export const ProgressTracker: React.FC<ProgressTrackerProps> = ({
         Your Learning Progress
       </h2>
 
-      {/* Visit Counter */}
-      <div className="progress-tracker__section">
-        <h3 className="progress-tracker__section-title">Session Information</h3>
-        <div className="progress-tracker__stat">
-          <span className="progress-tracker__stat-label">Total Visits:</span>
-          <span className="progress-tracker__stat-value" aria-label={`${currentProgress.visitCount} visits`}>
-            {currentProgress.visitCount}
-          </span>
-        </div>
-      </div>
+
 
       {/* Quiz Statistics */}
       <div className="progress-tracker__section">
@@ -316,7 +306,7 @@ export const ProgressTracker: React.FC<ProgressTrackerProps> = ({
               Confirm Reset
             </h4>
             <p className="progress-tracker__reset-warning">
-              This will permanently delete all your progress data including visit count, quiz scores, and completed terms. This action cannot be undone.
+              This will permanently delete all your progress data including quiz scores and completed terms. This action cannot be undone.
             </p>
             <div className="progress-tracker__reset-actions">
               <button
@@ -340,7 +330,7 @@ export const ProgressTracker: React.FC<ProgressTrackerProps> = ({
           </div>
         )}
         <p id="reset-description" className="progress-tracker__reset-description">
-          Reset all progress data including visit count, quiz scores, and completed terms
+          Reset all progress data including quiz scores and completed terms
         </p>
       </div>
     </div>

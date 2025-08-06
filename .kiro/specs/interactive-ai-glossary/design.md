@@ -22,7 +22,6 @@ graph TB
     C --> G[QuizQuestion]
     C --> H[QuizResults]
     
-    D --> I[VisitCounter]
     D --> J[QuizHistory]
     
     K[LocalStorageService] --> D
@@ -74,8 +73,8 @@ public/
 
 #### ProgressTracker
 - **Purpose**: Displays user progress and statistics
-- **Responsibilities**: Visit counting, quiz history, progress visualization
-- **Props**: `visitCount: number`, `quizHistory: QuizAttempt[]`
+- **Responsibilities**: Quiz history, progress visualization
+- **Props**: `quizHistory: QuizAttempt[]`
 - **State**: Display preferences, expanded sections
 
 ### Data Interfaces
@@ -108,7 +107,6 @@ interface QuizAttempt {
 }
 
 interface UserProgress {
-  visitCount: number;
   quizAttempts: QuizAttempt[];
   answeredTerms: Set<string>;
   bestScore: number;
@@ -124,7 +122,6 @@ type UserRole = 'business' | 'pm-designer' | 'engineer' | 'data-scientist'; // T
 - **Methods**: 
   - `getProgress(): UserProgress`
   - `updateProgress(progress: Partial<UserProgress>): void`
-  - `incrementVisitCount(): number`
   - `recordQuizAttempt(attempt: QuizAttempt): void`
 
 #### QuizDataService
@@ -186,7 +183,6 @@ type UserRole = 'business' | 'pm-designer' | 'engineer' | 'data-scientist'; // T
 ```typescript
 interface StoredUserData {
   version: string;
-  visitCount: number;
   quizHistory: QuizAttempt[];
   answeredTerms: string[];
   preferences: {

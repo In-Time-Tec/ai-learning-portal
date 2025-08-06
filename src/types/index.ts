@@ -46,7 +46,6 @@ export interface QuizAttempt {
  * Represents user progress and statistics
  */
 export interface UserProgress {
-  visitCount: number;
   quizAttempts: QuizAttempt[];
   answeredTerms: Set<string>;
   bestScore: number;
@@ -57,7 +56,6 @@ export interface UserProgress {
  */
 export interface StoredUserData {
   version: string;
-  visitCount: number;
   quizHistory: QuizAttempt[];
   answeredTerms: string[];
   preferences: {
@@ -74,6 +72,56 @@ export interface QuizResults {
   totalQuestions: number;
   questionsAnswered: string[];
   timestamp: number;
+}
+
+/**
+ * AI tool categories for organization and filtering
+ */
+export type ToolCategory = 'code-assistant' | 'ide-extension' | 'research-tool' | 'debugging-tool' | 'testing-tool' | 'terminal-tool';
+
+/**
+ * Represents a user experience or testimonial about an AI tool
+ */
+export interface UserExperience {
+  id: string;
+  quote: string;
+  context: string;
+  useCase: string;
+  sentiment: 'positive' | 'mixed' | 'challenge';
+  role?: UserRole;
+}
+
+/**
+ * Represents an AI tool with all its associated data
+ */
+export interface AITool {
+  id: string;
+  name: string;
+  category: ToolCategory;
+  description: string;
+  officialLink?: string;
+  internalSetupNotes?: string;
+  userExperiences: UserExperience[];
+  commonUseCases: string[];
+  integrations?: string[];
+  licensingNotes?: string;
+  teamAdoption?: {
+    level: 'individual' | 'team' | 'organization';
+    notes: string;
+  };
+}
+
+/**
+ * Complete AI tools data structure with categories and tools
+ */
+export interface AIToolsData {
+  tools: AITool[];
+  categories: {
+    [key in ToolCategory]: {
+      label: string;
+      description: string;
+    };
+  };
 }
 /**
  *
@@ -182,8 +230,6 @@ export function isStoredUserData(obj: unknown): obj is StoredUserData {
   
   return (
     typeof data.version === 'string' &&
-    typeof data.visitCount === 'number' &&
-    data.visitCount >= 0 &&
     Array.isArray(data.quizHistory) &&
     data.quizHistory.every(attempt => isQuizAttempt(attempt)) &&
     Array.isArray(data.answeredTerms) &&
@@ -230,4 +276,120 @@ export function isQuizResults(obj: unknown): obj is QuizResults {
     typeof results.timestamp === 'number' &&
     results.timestamp > 0
   );
+}
+
+/**
+ * Type guard to check if a value is a valid ToolCategory
+ */
+export function isToolCategory(value: unknown): value is ToolCategory {
+  return typeof value === 'string' && 
+    ['code-assistant', 'ide-extension', 'research-tool', 'debugging-tool', 'testing-tool', 'terminal-tool'].includes(value);
+}
+
+/**
+ * Type guard to check if an object is a valid UserExperience
+ */
+export function isUserExperience(obj: unknown): obj is UserExperience {
+  if (typeof obj !== 'object' || obj === null) {
+    return false;
+  }
+
+  const experience = obj as Record<string, unknown>;
+  
+  return (
+    typeof experience.id === 'string' &&
+    typeof experience.quote === 'string' &&
+    typeof experience.context === 'string' &&
+    typeof experience.useCase === 'string' &&
+    typeof experience.sentiment === 'string' &&
+    ['positive', 'mixed', 'challenge'].includes(experience.sentiment as string) &&
+    (experience.role === undefined || isUserRole(experience.role))
+  );
+}
+
+/**
+ * Type guard to check if an object is a valid AITool
+ */
+export function isAITool(obj: unknown): obj is AITool {
+  if (typeof obj !== 'object' || obj === null) {
+    return false;
+  }
+
+  const tool = obj as Record<string, unknown>;
+  
+  return (
+    typeof tool.id === 'string' &&
+    typeof tool.name === 'string' &&
+    isToolCategory(tool.category) &&
+    typeof tool.description === 'string' &&
+    (tool.officialLink === undefined || typeof tool.officialLink === 'string') &&
+    (tool.internalSetupNotes === undefined || typeof tool.internalSetupNotes === 'string') &&
+    Array.isArray(tool.userExperiences) &&
+    tool.userExperiences.every(exp => isUserExperience(exp)) &&
+    Array.isArray(tool.commonUseCases) &&
+    tool.commonUseCases.every(useCase => typeof useCase === 'string') &&
+    (tool.integrations === undefined || (Array.isArray(tool.integrations) && 
+      tool.integrations.every(integration => typeof integration === 'string'))) &&
+    (tool.licensingNotes === undefined || typeof tool.licensingNotes === 'string') &&
+    (tool.teamAdoption === undefined || isValidTeamAdoption(tool.teamAdoption))
+  );
+}
+
+/**
+ * Helper function to validate team adoption object
+ */
+function isValidTeamAdoption(obj: unknown): obj is AITool['teamAdoption'] {
+  if (typeof obj !== 'object' || obj === null) {
+    return false;
+  }
+
+  const adoption = obj as Record<string, unknown>;
+  
+  return (
+    typeof adoption.level === 'string' &&
+    ['individual', 'team', 'organization'].includes(adoption.level as string) &&
+    typeof adoption.notes === 'string'
+  );
+}
+
+/**
+ * Type guard to check if an object is a valid AIToolsData
+ */
+export function isAIToolsData(obj: unknown): obj is AIToolsData {
+  if (typeof obj !== 'object' || obj === null) {
+    return false;
+  }
+
+  const data = obj as Record<string, unknown>;
+  
+  return (
+    Array.isArray(data.tools) &&
+    data.tools.every(tool => isAITool(tool)) &&
+    typeof data.categories === 'object' &&
+    data.categories !== null &&
+    isValidCategoriesObject(data.categories)
+  );
+}
+
+/**
+ * Helper function to validate categories object
+ */
+function isValidCategoriesObject(obj: unknown): obj is AIToolsData['categories'] {
+  if (typeof obj !== 'object' || obj === null) {
+    return false;
+  }
+
+  const categories = obj as Record<string, unknown>;
+  
+  // Validate that each category in the data has the correct structure
+  // and that the category key is a valid ToolCategory
+  return Object.entries(categories).every(([categoryKey, categoryData]) => {
+    return (
+      isToolCategory(categoryKey) &&
+      typeof categoryData === 'object' &&
+      categoryData !== null &&
+      typeof (categoryData as Record<string, unknown>).label === 'string' &&
+      typeof (categoryData as Record<string, unknown>).description === 'string'
+    );
+  });
 }

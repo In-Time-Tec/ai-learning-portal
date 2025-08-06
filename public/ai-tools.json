@@ -1,0 +1,238 @@
+{
+  "categories": {
+    "code-assistant": {
+      "label": "Code Assistant",
+      "description": "AI-powered coding assistance and code generation tools"
+    },
+    "ide-extension": {
+      "label": "IDE Extension", 
+      "description": "Integrated development environment extensions and plugins"
+    },
+    "research-tool": {
+      "label": "Research Tool",
+      "description": "Tools for research, documentation, and information gathering"
+    },
+    "terminal-tool": {
+      "label": "Terminal Tool",
+      "description": "AI-enhanced terminal and command-line interfaces"
+    }
+  },
+  "tools": [
+    {
+      "id": "warp",
+      "name": "Warp",
+      "category": "terminal-tool",
+      "description": "AI-powered terminal that provides intelligent command suggestions, explanations, and workflow automation",
+      "officialLink": "https://warp.dev",
+      "userExperiences": [
+        {
+          "id": "warp-exp-1",
+          "quote": "Using as an Advisor instead of an Engineer",
+          "context": "Customer Success Experience",
+          "useCase": "Provides instructions, requests permissions to perform actions",
+          "sentiment": "positive",
+          "role": "business"
+        },
+        {
+          "id": "warp-exp-2", 
+          "quote": "Fully sold after a few hours",
+          "context": "Initial adoption experience",
+          "useCase": "Terminal workflow enhancement and command assistance",
+          "sentiment": "positive"
+        },
+        {
+          "id": "warp-exp-3",
+          "quote": "Can't go back to using terminal without AI assistance",
+          "context": "Long-term usage feedback",
+          "useCase": "Daily development workflow integration",
+          "sentiment": "positive"
+        }
+      ],
+      "commonUseCases": [
+        "Command explanation and suggestions",
+        "Workflow automation",
+        "Terminal productivity enhancement",
+        "Learning new command-line tools"
+      ],
+      "integrations": ["ADO (Azure DevOps)", "Git", "Various CLI tools"],
+      "teamAdoption": {
+        "level": "team",
+        "notes": "Having regular meetings to upskill in usage. Team members are actively sharing tips and best practices."
+      },
+      "internalSetupNotes": "Available for download from official website. No special licensing requirements for individual use."
+    },
+    {
+      "id": "github-copilot",
+      "name": "GitHub Copilot",
+      "category": "code-assistant",
+      "description": "AI pair programmer that suggests code completions and entire functions in real-time",
+      "officialLink": "https://github.com/features/copilot",
+      "userExperiences": [
+        {
+          "id": "copilot-exp-1",
+          "quote": "Dramatically speeds up coding, especially for repetitive tasks",
+          "context": "Daily development work",
+          "useCase": "Code completion and boilerplate generation",
+          "sentiment": "positive"
+        },
+        {
+          "id": "copilot-exp-2",
+          "quote": "Great for learning new frameworks and patterns",
+          "context": "Skill development",
+          "useCase": "Exploring unfamiliar codebases and technologies",
+          "sentiment": "positive"
+        },
+        {
+          "id": "copilot-exp-3",
+          "quote": "Sometimes suggests outdated or incorrect patterns",
+          "context": "Code quality concerns",
+          "useCase": "Need to review and validate suggestions carefully",
+          "sentiment": "mixed"
+        }
+      ],
+      "commonUseCases": [
+        "Code completion and suggestions",
+        "Boilerplate code generation",
+        "Unit test creation",
+        "Documentation writing",
+        "Refactoring assistance"
+      ],
+      "integrations": ["VS Code", "Visual Studio", "JetBrains IDEs", "Neovim"],
+      "teamAdoption": {
+        "level": "individual",
+        "notes": "Individual subscriptions. Some teams exploring enterprise licensing options."
+      },
+      "licensingNotes": "Requires paid subscription. Enterprise licensing available for teams.",
+      "internalSetupNotes": "IT is working on enterprise licensing options. Currently available through individual subscriptions."
+    },
+    {
+      "id": "cursor-ide",
+      "name": "Cursor IDE",
+      "category": "ide-extension",
+      "description": "AI-first code editor built on VS Code with advanced AI integration for coding assistance",
+      "officialLink": "https://cursor.sh",
+      "userExperiences": [
+        {
+          "id": "cursor-exp-1",
+          "quote": "More integrated AI experience than traditional IDEs with plugins",
+          "context": "Comparison with other development environments",
+          "useCase": "Full-stack development with AI assistance",
+          "sentiment": "positive"
+        },
+        {
+          "id": "cursor-exp-2",
+          "quote": "Excellent for debugging and understanding complex code",
+          "context": "Working with legacy codebases",
+          "useCase": "Code analysis and debugging assistance",
+          "sentiment": "positive"
+        },
+        {
+          "id": "cursor-exp-3",
+          "quote": "Learning curve for teams used to traditional IDEs",
+          "context": "Team adoption challenges",
+          "useCase": "Transitioning from existing development environments",
+          "sentiment": "mixed"
+        }
+      ],
+      "commonUseCases": [
+        "AI-assisted coding and debugging",
+        "Code explanation and documentation",
+        "Refactoring large codebases",
+        "Learning new programming languages"
+      ],
+      "integrations": ["Built on VS Code ecosystem", "Git integration", "Various language servers"],
+      "teamAdoption": {
+        "level": "individual",
+        "notes": "Early adopters are evaluating for broader team use. Mixed feedback on transition from existing IDEs."
+      },
+      "internalSetupNotes": "Available for download. Some users report compatibility issues with existing VS Code extensions."
+    },
+    {
+      "id": "claude-code",
+      "name": "Claude Code",
+      "category": "code-assistant",
+      "description": "Anthropic's AI assistant specialized for coding tasks, code review, and technical problem-solving",
+      "officialLink": "https://claude.ai",
+      "userExperiences": [
+        {
+          "id": "claude-exp-1",
+          "quote": "Excellent for code review and explaining complex algorithms",
+          "context": "Code quality and learning",
+          "useCase": "Peer review assistance and knowledge transfer",
+          "sentiment": "positive"
+        },
+        {
+          "id": "claude-exp-2",
+          "quote": "Great for architectural discussions and design patterns",
+          "context": "System design and planning",
+          "useCase": "Technical decision making and architecture planning",
+          "sentiment": "positive"
+        },
+        {
+          "id": "claude-exp-3",
+          "quote": "Limited by context window for very large codebases",
+          "context": "Working with enterprise-scale projects",
+          "useCase": "Analyzing large, complex systems",
+          "sentiment": "mixed"
+        }
+      ],
+      "commonUseCases": [
+        "Code review and analysis",
+        "Technical documentation",
+        "Architecture and design discussions",
+        "Debugging complex issues",
+        "Learning new technologies"
+      ],
+      "integrations": ["Web interface", "API access", "Various IDE plugins available"],
+      "teamAdoption": {
+        "level": "individual",
+        "notes": "Used primarily for research and complex problem-solving. Teams exploring integration into code review processes."
+      },
+      "licensingNotes": "Subscription-based pricing with usage limits. Enterprise plans available.",
+      "internalSetupNotes": "Accessible through web interface. API integration requires technical setup."
+    },
+    {
+      "id": "perplexity",
+      "name": "Perplexity",
+      "category": "research-tool",
+      "description": "AI-powered research assistant that provides accurate, sourced answers for technical questions and documentation",
+      "officialLink": "https://perplexity.ai",
+      "userExperiences": [
+        {
+          "id": "perplexity-exp-1",
+          "quote": "Much better than traditional search for technical research",
+          "context": "Research and problem-solving",
+          "useCase": "Finding solutions to specific technical problems",
+          "sentiment": "positive"
+        },
+        {
+          "id": "perplexity-exp-2",
+          "quote": "Provides well-sourced answers with citations",
+          "context": "Information verification and research",
+          "useCase": "Validating technical approaches and best practices",
+          "sentiment": "positive"
+        },
+        {
+          "id": "perplexity-exp-3",
+          "quote": "Sometimes provides outdated information for rapidly evolving technologies",
+          "context": "Cutting-edge technology research",
+          "useCase": "Researching very recent developments or beta features",
+          "sentiment": "mixed"
+        }
+      ],
+      "commonUseCases": [
+        "Technical research and documentation",
+        "Troubleshooting and problem-solving",
+        "Learning new technologies and frameworks",
+        "Competitive analysis and market research",
+        "Validating technical approaches"
+      ],
+      "integrations": ["Web interface", "Browser extensions", "Mobile apps"],
+      "teamAdoption": {
+        "level": "organization",
+        "notes": "Widely adopted across teams for research tasks. Some teams have shared folders of useful queries and findings."
+      },
+      "internalSetupNotes": "Available through web interface. Pro subscription provides additional features and faster responses."
+    }
+  ]
+}

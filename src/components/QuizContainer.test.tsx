@@ -46,7 +46,6 @@ const mockQuestions: QuizQuestion[] = [
 ];
 
 const mockUserProgress: UserProgress = {
-  visitCount: 5,
   quizAttempts: [],
   answeredTerms: new Set<string>(),
   bestScore: 0

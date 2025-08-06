@@ -8,14 +8,16 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { HomePage } from './components/HomePage';
 import { GlossaryContainer } from './components/GlossaryContainer';
 import { QuizContainer } from './components/QuizContainer';
 import { ProgressTracker } from './components/ProgressTracker';
+import { AIToolsContainer } from './components/AIToolsContainer';
 import { localStorageService } from './services/LocalStorageService';
 import { UserProgress, QuizResults, UserRole } from './types';
 import './App.css';
 
-type AppView = 'glossary' | 'quiz' | 'progress';
+type AppView = 'home' | 'learn' | 'ai-tools' | 'glossary' | 'quiz' | 'progress';
 
 interface AppState {
   currentView: AppView;
@@ -27,9 +29,8 @@ interface AppState {
 
 function App() {
   const [appState, setAppState] = useState<AppState>({
-    currentView: 'glossary',
+    currentView: 'home',
     userProgress: {
-      visitCount: 0,
       quizAttempts: [],
       answeredTerms: new Set(),
       bestScore: 0
@@ -44,16 +45,13 @@ function App() {
    */
   useEffect(() => {
     try {
-      // Increment visit count and get user progress
-      const visitCount = localStorageService.incrementVisitCount();
+      // Get user progress and preferences
       const progress = localStorageService.getProgress();
-      
-      // Get user preferences
       const preferences = localStorageService.getPreferences();
       
       setAppState(prev => ({
         ...prev,
-        userProgress: { ...progress, visitCount },
+        userProgress: progress,
         selectedRole: preferences.selectedRole,
         isLoading: false,
         error: null
@@ -77,6 +75,17 @@ function App() {
       currentView: view
     }));
   }, []);
+
+  /**
+   * Handle HomePage navigation
+   */
+  const handleHomePageNavigation = useCallback((section: 'learn' | 'ai-tools') => {
+    if (section === 'learn') {
+      handleViewChange('glossary'); // Navigate to glossary as the main learn view
+    } else if (section === 'ai-tools') {
+      handleViewChange('ai-tools');
+    }
+  }, [handleViewChange]);
 
   /**
    * Handle role selection changes
@@ -139,29 +148,29 @@ function App() {
       <div className="app__nav-container">
         <button
           type="button"
-          className={`app__nav-button ${appState.currentView === 'glossary' ? 'active' : ''}`}
+          className={`app__nav-button ${appState.currentView === 'home' ? 'active' : ''}`}
+          onClick={() => handleViewChange('home')}
+          aria-current={appState.currentView === 'home' ? 'page' : undefined}
+        >
+          Home
+        </button>
+        
+        <button
+          type="button"
+          className={`app__nav-button ${['glossary', 'quiz', 'progress'].includes(appState.currentView) ? 'active' : ''}`}
           onClick={() => handleViewChange('glossary')}
-          aria-current={appState.currentView === 'glossary' ? 'page' : undefined}
+          aria-current={['glossary', 'quiz', 'progress'].includes(appState.currentView) ? 'page' : undefined}
         >
-          Glossary
+          Learn
         </button>
         
         <button
           type="button"
-          className={`app__nav-button ${appState.currentView === 'quiz' ? 'active' : ''}`}
-          onClick={() => handleViewChange('quiz')}
-          aria-current={appState.currentView === 'quiz' ? 'page' : undefined}
+          className={`app__nav-button ${appState.currentView === 'ai-tools' ? 'active' : ''}`}
+          onClick={() => handleViewChange('ai-tools')}
+          aria-current={appState.currentView === 'ai-tools' ? 'page' : undefined}
         >
-          Quiz
-        </button>
-        
-        <button
-          type="button"
-          className={`app__nav-button ${appState.currentView === 'progress' ? 'active' : ''}`}
-          onClick={() => handleViewChange('progress')}
-          aria-current={appState.currentView === 'progress' ? 'page' : undefined}
-        >
-          Progress
+          AI Tools
         </button>
       </div>
     </nav>
@@ -172,6 +181,15 @@ function App() {
    */
   const renderCurrentView = () => {
     switch (appState.currentView) {
+      case 'home':
+        return (
+          <HomePage
+            userProgress={appState.userProgress}
+            onNavigate={handleHomePageNavigation}
+            className="app__view-content"
+          />
+        );
+      
       case 'glossary':
         return (
           <GlossaryContainer
@@ -198,6 +216,13 @@ function App() {
           />
         );
       
+      case 'ai-tools':
+        return (
+          <AIToolsContainer
+            className="app__view-content"
+          />
+        );
+      
       default:
         return (
           <div className="app__error" role="alert">
@@ -206,9 +231,9 @@ function App() {
             <button
               type="button"
               className="app__error-button"
-              onClick={() => handleViewChange('glossary')}
+              onClick={() => handleViewChange('home')}
             >
-              Return to Glossary
+              Return to Home
             </button>
           </div>
         );
@@ -221,7 +246,7 @@ function App() {
       <div className="app app--loading">
         <div className="app__loading" role="status" aria-live="polite">
           <div className="app__spinner" aria-hidden="true"></div>
-          <p>Loading Interactive AI 101 Module...</p>
+          <p>Loading AI Learning Portal...</p>
         </div>
       </div>
     );
@@ -251,9 +276,9 @@ function App() {
       <div className="app">
         <header className="app__header">
           <div className="app__header-content">
-            <h1 className="app__title">Interactive AI 101 Module</h1>
+            <h1 className="app__title">AI Learning Portal</h1>
             <p className="app__description">
-              Learn AI concepts with role-specific context and interactive quizzes
+              Explore AI concepts and discover tools used in your organization
             </p>
           </div>
           
@@ -261,15 +286,48 @@ function App() {
         </header>
 
         <main className="app__main" role="main">
+          {/* Sub-navigation for Learn section */}
+          {['glossary', 'quiz', 'progress'].includes(appState.currentView) && (
+            <nav className="app__sub-navigation" role="navigation" aria-label="Learn section navigation">
+              <div className="app__sub-nav-container">
+                <button
+                  type="button"
+                  className={`app__sub-nav-button ${appState.currentView === 'glossary' ? 'active' : ''}`}
+                  onClick={() => handleViewChange('glossary')}
+                  aria-current={appState.currentView === 'glossary' ? 'page' : undefined}
+                >
+                  Glossary
+                </button>
+                
+                <button
+                  type="button"
+                  className={`app__sub-nav-button ${appState.currentView === 'quiz' ? 'active' : ''}`}
+                  onClick={() => handleViewChange('quiz')}
+                  aria-current={appState.currentView === 'quiz' ? 'page' : undefined}
+                >
+                  Quiz
+                </button>
+                
+                <button
+                  type="button"
+                  className={`app__sub-nav-button ${appState.currentView === 'progress' ? 'active' : ''}`}
+                  onClick={() => handleViewChange('progress')}
+                  aria-current={appState.currentView === 'progress' ? 'page' : undefined}
+                >
+                  Progress
+                </button>
+              </div>
+            </nav>
+          )}
+          
           {renderCurrentView()}
         </main>
 
         <footer className="app__footer">
           <div className="app__footer-content">
             <p className="app__footer-text">
-              Visit #{appState.userProgress.visitCount} • 
               {appState.userProgress.quizAttempts.length > 0 && (
-                <> Best Score: {appState.userProgress.bestScore} • </>
+                <>Best Score: {appState.userProgress.bestScore} • </>
               )}
               {appState.userProgress.answeredTerms.size}/16 terms completed
             </p>

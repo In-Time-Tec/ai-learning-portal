@@ -52,7 +52,7 @@
       "id": "model",
       "term": "Model",
       "definition": "A mathematical representation trained to make predictions.",
-      "externalLink": "https://learn.microsoft.com/azure/ai-fundamentals/what-are-models",
+      "externalLink": "https://www.domo.com/learn/article/ai-models",
       "roleContext": {
         "business": "Understand prediction capabilities",
         "pm-designer": "Define model requirements",
@@ -64,7 +64,7 @@
       "id": "training",
       "term": "Training",
       "definition": "The process of teaching a model from labeled data.",
-      "externalLink": "https://mlflow.org/docs/latest/tracking.html",
+      "externalLink": "https://www.nngroup.com/articles/ai-model-training/",
       "roleContext": {
         "business": "Understand model development time",
         "pm-designer": "Plan training requirements",
@@ -76,7 +76,7 @@
       "id": "inference",
       "term": "Inference",
       "definition": "Running a trained model to generate predictions on new data.",
-      "externalLink": "https://aws.amazon.com/machine-learning/what-is-inference/",
+      "externalLink": "https://www.ibm.com/think/topics/ai-inference",
       "roleContext": {
         "business": "Interpret AI outputs",
         "pm-designer": "Monitor UX performance",
@@ -160,7 +160,7 @@
       "id": "embedding",
       "term": "Embedding",
       "definition": "A numeric vector representation of text or data items.",
-      "externalLink": "https://developers.google.com/machine-learning/crash-course/embeddings/what-are-embeddings",
+      "externalLink": "https://platform.openai.com/docs/guides/embeddings",
       "roleContext": {
         "business": "Concept of similarity queries",
         "pm-designer": "Understand search capabilities",
@@ -208,7 +208,7 @@
       "id": "drift",
       "term": "Drift",
       "definition": "Change in data distribution or model performance over time.",
-      "externalLink": "https://evidently.ai/blog/detecting-data-drift",
+      "externalLink": "https://www.splunk.com/en_us/blog/learn/model-drift.html",
       "roleContext": {
         "business": "Understand model maintenance needs",
         "pm-designer": "Ensure model reliability",

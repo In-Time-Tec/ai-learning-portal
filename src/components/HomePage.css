@@ -1,0 +1,401 @@
+/**
+ * HomePage Component Styles
+ * 
+ * Provides styling for the landing page with Learn and Tools sections,
+ * section cards, and responsive design following existing design patterns.
+ */
+
+.home-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  min-height: 60vh;
+}
+
+/* Header Section */
+.home-page__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.home-page__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0 0 1rem 0;
+  line-height: 1.2;
+}
+
+.home-page__description {
+  font-size: 1.2rem;
+  color: #5a6c7d;
+  margin: 0 0 1rem 0;
+  line-height: 1.5;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+/* Sections Layout */
+.home-page__sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.home-page__section {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e9ecef;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.home-page__section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.home-page__section-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 0.5rem 0;
+  text-align: center;
+}
+
+.home-page__section-description {
+  font-size: 1rem;
+  color: #5a6c7d;
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* Section Cards */
+.home-page__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.home-page__section-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  width: 100%;
+  font-family: inherit;
+}
+
+.home-page__section-card:hover {
+  background: #e9ecef;
+  border-color: #667eea;
+  transform: translateX(4px);
+}
+
+.home-page__section-card:focus {
+  outline: 3px solid #667eea;
+  outline-offset: 2px;
+  background: #e9ecef;
+}
+
+.home-page__section-card:active {
+  transform: translateX(2px);
+}
+
+.home-page__card-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.home-page__card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.home-page__card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.3;
+}
+
+.home-page__card-description {
+  font-size: 0.95rem;
+  color: #5a6c7d;
+  margin: 0 0 0.75rem 0;
+  line-height: 1.4;
+}
+
+.home-page__card-stats {
+  font-size: 0.85rem;
+  color: #667eea;
+  font-weight: 500;
+  background: rgba(102, 126, 234, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.home-page__card-arrow {
+  font-size: 1.5rem;
+  color: #667eea;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.home-page__section-card:hover .home-page__card-arrow {
+  transform: translateX(4px);
+}
+
+/* Learn and Tools specific styling */
+.home-page__learn-card {
+  border-left: 4px solid #28a745;
+}
+
+.home-page__learn-card:hover {
+  border-left-color: #1e7e34;
+}
+
+.home-page__tools-card {
+  border-left: 4px solid #007bff;
+}
+
+.home-page__tools-card:hover {
+  border-left-color: #0056b3;
+}
+
+/* Footer Progress Summary */
+.home-page__footer {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e9ecef;
+}
+
+.home-page__progress-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+}
+
+.home-page__progress-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.home-page__stat {
+  text-align: center;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.home-page__stat-value {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #667eea;
+  margin-bottom: 0.25rem;
+}
+
+.home-page__stat-label {
+  display: block;
+  font-size: 0.9rem;
+  color: #5a6c7d;
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .home-page {
+    padding: 1rem;
+  }
+
+  .home-page__title {
+    font-size: 2rem;
+  }
+
+  .home-page__description {
+    font-size: 1.1rem;
+  }
+
+  .home-page__sections {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .home-page__section {
+    padding: 1.5rem;
+  }
+
+  .home-page__section-title {
+    font-size: 1.5rem;
+  }
+
+  .home-page__section-card {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+
+  .home-page__card-icon {
+    font-size: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .home-page__card-title {
+    font-size: 1.1rem;
+  }
+
+  .home-page__card-description {
+    font-size: 0.9rem;
+  }
+
+  .home-page__progress-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .home-page__stat {
+    padding: 0.75rem;
+  }
+
+  .home-page__stat-value {
+    font-size: 1.5rem;
+  }
+
+  .home-page__stat-label {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-page__title {
+    font-size: 1.75rem;
+  }
+
+  .home-page__description {
+    font-size: 1rem;
+  }
+
+  .home-page__section {
+    padding: 1rem;
+  }
+
+  .home-page__section-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .home-page__card-content {
+    order: 2;
+  }
+
+  .home-page__card-arrow {
+    order: 3;
+    transform: rotate(90deg);
+  }
+
+  .home-page__section-card:hover .home-page__card-arrow {
+    transform: rotate(90deg) translateX(4px);
+  }
+
+  .home-page__progress-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .home-page__section {
+    border-width: 2px;
+    border-color: #000;
+  }
+
+  .home-page__section-card {
+    border-width: 3px;
+  }
+
+  .home-page__card-stats {
+    background: #000;
+    color: #fff;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .home-page__section {
+    transition: none;
+  }
+
+  .home-page__section:hover {
+    transform: none;
+  }
+
+  .home-page__section-card {
+    transition: none;
+  }
+
+  .home-page__section-card:hover {
+    transform: none;
+  }
+
+  .home-page__card-arrow {
+    transition: none;
+  }
+
+  .home-page__section-card:hover .home-page__card-arrow {
+    transform: none;
+  }
+}
+
+/* Focus management for keyboard navigation */
+.home-page__section-card:focus-visible {
+  outline: 3px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+
+  .home-page__section {
+    box-shadow: none;
+    border: 2px solid #000;
+  }
+
+  .home-page__section-card {
+    border: 1px solid #000;
+  }
+
+  .home-page__card-arrow {
+    display: none;
+  }
+}

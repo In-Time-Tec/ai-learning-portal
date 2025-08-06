@@ -80,7 +80,6 @@ describe('LocalStorageService', () => {
             // Set up old version data
             const oldData: StoredUserData = {
                 version: '0.9.0',
-                visitCount: 5,
                 quizHistory: [],
                 answeredTerms: ['term1'],
                 preferences: {}
@@ -93,7 +92,6 @@ describe('LocalStorageService', () => {
             // Check that data was migrated
             const storedData = JSON.parse(mockLocalStorage.getItem('ai-glossary-user-data') || '{}');
             expect(storedData.version).toBe('1.0.0');
-            expect(storedData.visitCount).toBe(5);
         });
     });
 
@@ -102,7 +100,6 @@ describe('LocalStorageService', () => {
             const progress = service.getProgress();
 
             expect(progress).toEqual({
-                visitCount: 0,
                 quizAttempts: [],
                 answeredTerms: new Set(),
                 bestScore: 0
@@ -112,7 +109,6 @@ describe('LocalStorageService', () => {
         it('should return stored progress when data exists', () => {
             const storedData: StoredUserData = {
                 version: '1.0.0',
-                visitCount: 10,
                 quizHistory: [
                     {
                         timestamp: Date.now(),
@@ -129,7 +125,6 @@ describe('LocalStorageService', () => {
 
             const progress = service.getProgress();
 
-            expect(progress.visitCount).toBe(10);
             expect(progress.quizAttempts).toHaveLength(1);
             expect(progress.answeredTerms).toEqual(new Set(['term1', 'term2', 'term3']));
             expect(progress.bestScore).toBe(2);
@@ -144,7 +139,6 @@ describe('LocalStorageService', () => {
             const progress = service.getProgress();
 
             expect(progress).toEqual({
-                visitCount: 0,
                 quizAttempts: [],
                 answeredTerms: new Set(),
                 bestScore: 0
@@ -157,7 +151,6 @@ describe('LocalStorageService', () => {
             const progress = service.getProgress();
 
             expect(progress).toEqual({
-                visitCount: 0,
                 quizAttempts: [],
                 answeredTerms: new Set(),
                 bestScore: 0
@@ -172,14 +165,12 @@ describe('LocalStorageService', () => {
     describe('updateProgress', () => {
         it('should update progress in localStorage', () => {
             const progressUpdate: Partial<UserProgress> = {
-                visitCount: 5,
                 answeredTerms: new Set(['term1', 'term2'])
             };
 
             service.updateProgress(progressUpdate);
 
             const storedData = JSON.parse(mockLocalStorage.getItem('ai-glossary-user-data') || '{}');
-            expect(storedData.visitCount).toBe(5);
             expect(storedData.answeredTerms).toEqual(['term1', 'term2']);
         });
 
@@ -191,14 +182,14 @@ describe('LocalStorageService', () => {
             service = new LocalStorageService();
 
             const progressUpdate: Partial<UserProgress> = {
-                visitCount: 3
+                bestScore: 3
             };
 
             service.updateProgress(progressUpdate);
 
             // Should still return updated data from fallback
             const progress = service.getProgress();
-            expect(progress.visitCount).toBe(3);
+            expect(progress.bestScore).toBe(3);
         });
 
         it('should handle storage errors gracefully', () => {
@@ -207,7 +198,7 @@ describe('LocalStorageService', () => {
             });
 
             const progressUpdate: Partial<UserProgress> = {
-                visitCount: 5
+                bestScore: 5
             };
 
             service.updateProgress(progressUpdate);
@@ -216,40 +207,6 @@ describe('LocalStorageService', () => {
                 'Error updating user progress:',
                 expect.any(Error)
             );
-        });
-    });
-
-    describe('incrementVisitCount', () => {
-        it('should increment visit count from 0', () => {
-            const newCount = service.incrementVisitCount();
-
-            expect(newCount).toBe(1);
-
-            const progress = service.getProgress();
-            expect(progress.visitCount).toBe(1);
-        });
-
-        it('should increment existing visit count', () => {
-            service.updateProgress({ visitCount: 5 });
-
-            const newCount = service.incrementVisitCount();
-
-            expect(newCount).toBe(6);
-        });
-
-        it('should work with fallback data when localStorage unavailable', () => {
-            // Make localStorage unavailable by making setItem throw
-            mockLocalStorage.setItem.mockImplementation(() => {
-                throw new Error('localStorage error');
-            });
-
-            service = new LocalStorageService();
-
-            const count1 = service.incrementVisitCount();
-            const count2 = service.incrementVisitCount();
-
-            expect(count1).toBe(1);
-            expect(count2).toBe(2);
         });
     });
 
@@ -369,7 +326,6 @@ describe('LocalStorageService', () => {
 
     describe('clearAllData', () => {
         it('should clear all data from localStorage', () => {
-            service.updateProgress({ visitCount: 10 });
             service.recordQuizAttempt({
                 timestamp: Date.now(),
                 score: 2,
@@ -383,7 +339,6 @@ describe('LocalStorageService', () => {
 
             const progress = service.getProgress();
             expect(progress).toEqual({
-                visitCount: 0,
                 quizAttempts: [],
                 answeredTerms: new Set(),
                 bestScore: 0
@@ -396,12 +351,11 @@ describe('LocalStorageService', () => {
             });
 
             service = new LocalStorageService();
-            service.updateProgress({ visitCount: 5 });
 
             service.clearAllData();
 
             const progress = service.getProgress();
-            expect(progress.visitCount).toBe(0);
+            expect(progress.bestScore).toBe(0);
         });
     });
 
@@ -437,8 +391,7 @@ describe('LocalStorageService', () => {
     describe('Data Migration', () => {
         it('should migrate data with missing fields', () => {
             const incompleteData = {
-                version: '0.5.0',
-                visitCount: 3
+                version: '0.5.0'
                 // Missing other required fields
             };
 
@@ -447,7 +400,6 @@ describe('LocalStorageService', () => {
             service = new LocalStorageService();
 
             const progress = service.getProgress();
-            expect(progress.visitCount).toBe(3);
             expect(progress.quizAttempts).toEqual([]);
             expect(progress.answeredTerms).toEqual(new Set());
         });
@@ -460,7 +412,6 @@ describe('LocalStorageService', () => {
             // Should not crash and should use defaults
             const progress = service.getProgress();
             expect(progress).toEqual({
-                visitCount: 0,
                 quizAttempts: [],
                 answeredTerms: new Set(),
                 bestScore: 0
@@ -474,7 +425,6 @@ describe('LocalStorageService', () => {
 
             const progress = service.getProgress();
             expect(progress).toEqual({
-                visitCount: 0,
                 quizAttempts: [],
                 answeredTerms: new Set(),
                 bestScore: 0
@@ -486,7 +436,6 @@ describe('LocalStorageService', () => {
 
             const progress = service.getProgress();
             expect(progress).toEqual({
-                visitCount: 0,
                 quizAttempts: [],
                 answeredTerms: new Set(),
                 bestScore: 0
@@ -498,7 +447,6 @@ describe('LocalStorageService', () => {
 
             const progress = service.getProgress();
             expect(progress).toEqual({
-                visitCount: 0,
                 quizAttempts: [],
                 answeredTerms: new Set(),
                 bestScore: 0
@@ -509,7 +457,6 @@ describe('LocalStorageService', () => {
         it('should handle data with wrong types', () => {
             const invalidData = {
                 version: '1.0.0',
-                visitCount: 'not a number',
                 quizHistory: 'not an array',
                 answeredTerms: 123,
                 preferences: 'not an object'
@@ -519,7 +466,6 @@ describe('LocalStorageService', () => {
 
             const progress = service.getProgress();
             expect(progress).toEqual({
-                visitCount: 0,
                 quizAttempts: [],
                 answeredTerms: new Set(),
                 bestScore: 0

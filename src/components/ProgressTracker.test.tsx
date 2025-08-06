@@ -50,14 +50,12 @@ describe('ProgressTracker Component', () => {
   ];
 
   const mockProgress: UserProgress = {
-    visitCount: 5,
     quizAttempts: mockQuizAttempts,
     answeredTerms: new Set(['artificial-intelligence', 'machine-learning', 'neural-network', 'deep-learning', 'algorithm']),
     bestScore: 3
   };
 
   const emptyProgress: UserProgress = {
-    visitCount: 0,
     quizAttempts: [],
     answeredTerms: new Set(),
     bestScore: 0
@@ -79,11 +77,7 @@ describe('ProgressTracker Component', () => {
       expect(screen.getByRole('heading', { name: /your learning progress/i })).toBeInTheDocument();
     });
 
-    it('displays visit count correctly', () => {
-      render(<ProgressTracker progress={mockProgress} />);
-      expect(screen.getByText('Total Visits:')).toBeInTheDocument();
-      expect(screen.getByLabelText('5 visits')).toBeInTheDocument();
-    });
+
 
     it('displays quiz statistics correctly', () => {
       render(<ProgressTracker progress={mockProgress} />);
@@ -307,7 +301,6 @@ describe('ProgressTracker Component', () => {
   describe('External vs Internal Progress', () => {
     it('uses external progress when provided', () => {
       const externalProgress: UserProgress = {
-        visitCount: 10,
         quizAttempts: [],
         answeredTerms: new Set(['external-term']),
         bestScore: 0
@@ -329,8 +322,6 @@ describe('ProgressTracker Component', () => {
       render(<ProgressTracker />);
       
       expect(mockLocalStorageService.getProgress).toHaveBeenCalled();
-      // Should display the mocked progress data (visitCount: 5)
-      expect(screen.getByLabelText('5 visits')).toBeInTheDocument();
     });
   });
 
@@ -447,7 +438,6 @@ describe('ProgressTracker Component', () => {
 describe('ProgressTracker Integration Tests', () => {
   it('integrates properly with LocalStorageService', () => {
     const realProgress: UserProgress = {
-      visitCount: 3,
       quizAttempts: [{
         timestamp: Date.now(),
         score: 2,

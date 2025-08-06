@@ -36,11 +36,10 @@ The Interactive AI 101 Module is a self-contained educational feature that provi
 
 #### Acceptance Criteria
 
-1. WHEN a user visits the page THEN the system SHALL increment and display their visit count from localStorage
-2. WHEN a user completes a quiz THEN the system SHALL record their score and attempt count in localStorage
-3. WHEN a user views their progress THEN the system SHALL display their best quiz score and total attempts
-4. WHEN a user views their progress THEN the system SHALL show which terms they have been quizzed on
-5. IF a user clears their browser data THEN the system SHALL reset all progress tracking to initial state
+1. WHEN a user completes a quiz THEN the system SHALL record their score and attempt count in localStorage
+2. WHEN a user views their progress THEN the system SHALL display their best quiz score and total attempts
+3. WHEN a user views their progress THEN the system SHALL show which terms they have been quizzed on
+4. IF a user clears their browser data THEN the system SHALL reset all progress tracking to initial state
 
 ### Requirement 4
 

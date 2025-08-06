@@ -184,7 +184,6 @@ describe('Component Error Handling', () => {
     
     // Setup default mocks
     mockLocalStorageService.getProgress.mockReturnValue({
-      visitCount: 1,
       quizAttempts: [],
       answeredTerms: new Set(),
       bestScore: 0
@@ -421,7 +420,7 @@ describe('Service Error Handling', () => {
 
       // This should not throw, but handle gracefully
       expect(() => {
-        localStorageService.updateProgress({ visitCount: 1 });
+        localStorageService.updateProgress({ bestScore: 1 });
       }).not.toThrow();
 
       // Restore original method

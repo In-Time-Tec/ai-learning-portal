@@ -9,12 +9,20 @@ import {
   QuizAttempt,
   StoredUserData,
   QuizResults,
+  ToolCategory,
+  UserExperience,
+  AITool,
+  AIToolsData,
   isUserRole,
   isGlossaryTerm,
   isQuizQuestion,
   isQuizAttempt,
   isStoredUserData,
   isQuizResults,
+  isToolCategory,
+  isUserExperience,
+  isAITool,
+  isAIToolsData,
 } from './index';
 
 describe('Type Guards', () => {
@@ -216,7 +224,6 @@ describe('Type Guards', () => {
   describe('isStoredUserData', () => {
     const validStoredUserData: StoredUserData = {
       version: '1.0.0',
-      visitCount: 5,
       quizHistory: [
         {
           timestamp: Date.now(),
@@ -257,12 +264,6 @@ describe('Type Guards', () => {
         version: 123,
       };
       expect(isStoredUserData(invalidVersion)).toBe(false);
-
-      const negativeVisitCount = {
-        ...validStoredUserData,
-        visitCount: -1,
-      };
-      expect(isStoredUserData(negativeVisitCount)).toBe(false);
 
       const invalidQuizHistory = {
         ...validStoredUserData,
@@ -339,6 +340,266 @@ describe('Type Guards', () => {
         questionsAnswered: ['q1', 123, 'q3'],
       };
       expect(isQuizResults(nonStringQuestions)).toBe(false);
+    });
+  });
+
+  describe('isToolCategory', () => {
+    it('should return true for valid tool categories', () => {
+      expect(isToolCategory('code-assistant')).toBe(true);
+      expect(isToolCategory('ide-extension')).toBe(true);
+      expect(isToolCategory('research-tool')).toBe(true);
+      expect(isToolCategory('debugging-tool')).toBe(true);
+      expect(isToolCategory('testing-tool')).toBe(true);
+    });
+
+    it('should return false for invalid tool categories', () => {
+      expect(isToolCategory('invalid-category')).toBe(false);
+      expect(isToolCategory('')).toBe(false);
+      expect(isToolCategory(null)).toBe(false);
+      expect(isToolCategory(undefined)).toBe(false);
+      expect(isToolCategory(123)).toBe(false);
+      expect(isToolCategory({})).toBe(false);
+      expect(isToolCategory([])).toBe(false);
+    });
+  });
+
+  describe('isUserExperience', () => {
+    const validUserExperience: UserExperience = {
+      id: 'exp-001',
+      quote: 'This tool is amazing!',
+      context: 'Daily development work',
+      useCase: 'Code completion and debugging',
+      sentiment: 'positive',
+      role: 'engineer',
+    };
+
+    it('should return true for valid user experiences', () => {
+      expect(isUserExperience(validUserExperience)).toBe(true);
+    });
+
+    it('should return true for valid user experiences without optional role', () => {
+      const { role, ...withoutRole } = validUserExperience;
+      expect(isUserExperience(withoutRole)).toBe(true);
+    });
+
+    it('should return false for invalid user experiences', () => {
+      expect(isUserExperience(null)).toBe(false);
+      expect(isUserExperience(undefined)).toBe(false);
+      expect(isUserExperience({})).toBe(false);
+      expect(isUserExperience('string')).toBe(false);
+    });
+
+    it('should return false when required fields are missing', () => {
+      const { id, ...withoutId } = validUserExperience;
+      expect(isUserExperience(withoutId)).toBe(false);
+
+      const { quote, ...withoutQuote } = validUserExperience;
+      expect(isUserExperience(withoutQuote)).toBe(false);
+
+      const { sentiment, ...withoutSentiment } = validUserExperience;
+      expect(isUserExperience(withoutSentiment)).toBe(false);
+    });
+
+    it('should return false for invalid sentiment values', () => {
+      const invalidSentiment = {
+        ...validUserExperience,
+        sentiment: 'invalid-sentiment',
+      };
+      expect(isUserExperience(invalidSentiment)).toBe(false);
+    });
+
+    it('should return false for invalid role values', () => {
+      const invalidRole = {
+        ...validUserExperience,
+        role: 'invalid-role',
+      };
+      expect(isUserExperience(invalidRole)).toBe(false);
+    });
+  });
+
+  describe('isAITool', () => {
+    const validAITool: AITool = {
+      id: 'tool-001',
+      name: 'GitHub Copilot',
+      category: 'code-assistant',
+      description: 'AI-powered code completion tool',
+      officialLink: 'https://github.com/features/copilot',
+      internalSetupNotes: 'Contact IT for license',
+      userExperiences: [
+        {
+          id: 'exp-001',
+          quote: 'Great for code completion',
+          context: 'Daily coding',
+          useCase: 'Writing functions',
+          sentiment: 'positive',
+          role: 'engineer',
+        },
+      ],
+      commonUseCases: ['Code completion', 'Bug fixing'],
+      integrations: ['VS Code', 'GitHub'],
+      licensingNotes: 'Requires GitHub Pro subscription',
+      teamAdoption: {
+        level: 'team',
+        notes: 'Adopted by development team',
+      },
+    };
+
+    it('should return true for valid AI tools', () => {
+      expect(isAITool(validAITool)).toBe(true);
+    });
+
+    it('should return true for valid AI tools with minimal optional fields', () => {
+      const minimalTool: AITool = {
+        id: 'tool-002',
+        name: 'Simple Tool',
+        category: 'research-tool',
+        description: 'A simple research tool',
+        userExperiences: [],
+        commonUseCases: ['Research'],
+      };
+      expect(isAITool(minimalTool)).toBe(true);
+    });
+
+    it('should return false for invalid AI tools', () => {
+      expect(isAITool(null)).toBe(false);
+      expect(isAITool(undefined)).toBe(false);
+      expect(isAITool({})).toBe(false);
+      expect(isAITool('string')).toBe(false);
+    });
+
+    it('should return false when required fields are missing', () => {
+      const { id, ...withoutId } = validAITool;
+      expect(isAITool(withoutId)).toBe(false);
+
+      const { name, ...withoutName } = validAITool;
+      expect(isAITool(withoutName)).toBe(false);
+
+      const { category, ...withoutCategory } = validAITool;
+      expect(isAITool(withoutCategory)).toBe(false);
+
+      const { userExperiences, ...withoutExperiences } = validAITool;
+      expect(isAITool(withoutExperiences)).toBe(false);
+
+      const { commonUseCases, ...withoutUseCases } = validAITool;
+      expect(isAITool(withoutUseCases)).toBe(false);
+    });
+
+    it('should return false for invalid category', () => {
+      const invalidCategory = {
+        ...validAITool,
+        category: 'invalid-category',
+      };
+      expect(isAITool(invalidCategory)).toBe(false);
+    });
+
+    it('should return false for invalid user experiences', () => {
+      const invalidExperiences = {
+        ...validAITool,
+        userExperiences: [{ invalid: 'experience' }],
+      };
+      expect(isAITool(invalidExperiences)).toBe(false);
+    });
+
+    it('should return false for invalid team adoption', () => {
+      const invalidTeamAdoption = {
+        ...validAITool,
+        teamAdoption: {
+          level: 'invalid-level',
+          notes: 'Some notes',
+        },
+      };
+      expect(isAITool(invalidTeamAdoption)).toBe(false);
+    });
+  });
+
+  describe('isAIToolsData', () => {
+    const validAIToolsData: AIToolsData = {
+      tools: [
+        {
+          id: 'tool-001',
+          name: 'GitHub Copilot',
+          category: 'code-assistant',
+          description: 'AI-powered code completion',
+          userExperiences: [],
+          commonUseCases: ['Code completion'],
+        },
+      ],
+      categories: {
+        'code-assistant': {
+          label: 'Code Assistant',
+          description: 'AI-powered coding assistance tools',
+        },
+        'ide-extension': {
+          label: 'IDE Extension',
+          description: 'Development environment extensions',
+        },
+        'research-tool': {
+          label: 'Research Tool',
+          description: 'Research and documentation tools',
+        },
+        'debugging-tool': {
+          label: 'Debugging Tool',
+          description: 'Tools for debugging and troubleshooting',
+        },
+        'testing-tool': {
+          label: 'Testing Tool',
+          description: 'Tools for testing and quality assurance',
+        },
+        'terminal-tool': {
+          label: 'Terminal Tool',
+          description: 'AI-enhanced terminal and command-line interfaces',
+        },
+      },
+    };
+
+    it('should return true for valid AI tools data', () => {
+      expect(isAIToolsData(validAIToolsData)).toBe(true);
+    });
+
+    it('should return false for invalid AI tools data', () => {
+      expect(isAIToolsData(null)).toBe(false);
+      expect(isAIToolsData(undefined)).toBe(false);
+      expect(isAIToolsData({})).toBe(false);
+      expect(isAIToolsData('string')).toBe(false);
+    });
+
+    it('should return false when tools array is invalid', () => {
+      const invalidTools = {
+        ...validAIToolsData,
+        tools: [{ invalid: 'tool' }],
+      };
+      expect(isAIToolsData(invalidTools)).toBe(false);
+
+      const notAnArray = {
+        ...validAIToolsData,
+        tools: 'not an array',
+      };
+      expect(isAIToolsData(notAnArray)).toBe(false);
+    });
+
+    it('should return false when categories object is invalid', () => {
+      const invalidCategoryKey = {
+        ...validAIToolsData,
+        categories: {
+          'invalid-category': {
+            label: 'Invalid Category',
+            description: 'This category key is not valid',
+          },
+        },
+      };
+      expect(isAIToolsData(invalidCategoryKey)).toBe(false);
+
+      const invalidCategoryStructure = {
+        ...validAIToolsData,
+        categories: {
+          ...validAIToolsData.categories,
+          'code-assistant': {
+            label: 'Code Assistant',
+            // Missing description
+          },
+        },
+      };
+      expect(isAIToolsData(invalidCategoryStructure)).toBe(false);
     });
   });
 });

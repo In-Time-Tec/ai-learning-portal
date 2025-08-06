@@ -74,7 +74,6 @@ const mockQuizQuestions = [
 ];
 
 const mockUserProgress = {
-  visitCount: 5,
   quizAttempts: [
     {
       timestamp: Date.now() - 86400000,
@@ -93,7 +92,6 @@ describe('App Component Integration Tests', () => {
     jest.clearAllMocks();
     
     // Setup default mock implementations
-    mockLocalStorageService.incrementVisitCount.mockReturnValue(6);
     mockLocalStorageService.getProgress.mockReturnValue(mockUserProgress);
     mockLocalStorageService.getPreferences.mockReturnValue({ selectedRole: 'business' });
     mockLocalStorageService.isLocalStorageAvailable.mockReturnValue(true);
@@ -116,22 +114,20 @@ describe('App Component Integration Tests', () => {
       
       // Wait for app to load
       await waitFor(() => {
-        expect(screen.getByText('Interactive AI 101 Module')).toBeInTheDocument();
+        expect(screen.getAllByText('AI Learning Portal')).toHaveLength(2);
       });
       
       // Check that services were called
-      expect(mockLocalStorageService.incrementVisitCount).toHaveBeenCalled();
       expect(mockLocalStorageService.getProgress).toHaveBeenCalled();
       expect(mockLocalStorageService.getPreferences).toHaveBeenCalled();
       
-      // Check footer shows visit count
-      expect(screen.getByText(/Visit #6/)).toBeInTheDocument();
+      // Check footer shows progress
       expect(screen.getByText(/Best Score: 2/)).toBeInTheDocument();
       expect(screen.getByText(/2\/16 terms completed/)).toBeInTheDocument();
     });
 
     it('should handle initialization errors gracefully', async () => {
-      mockLocalStorageService.incrementVisitCount.mockImplementation(() => {
+      mockLocalStorageService.getProgress.mockImplementation(() => {
         throw new Error('Storage error');
       });
       
@@ -162,7 +158,7 @@ describe('App Component Integration Tests', () => {
       render(<App />);
       
       await waitFor(() => {
-        expect(screen.getByText('Interactive AI 101 Module')).toBeInTheDocument();
+        expect(screen.getAllByText('AI Learning Portal')).toHaveLength(2);
       });
       
       // Should start on glossary view
@@ -191,7 +187,7 @@ describe('App Component Integration Tests', () => {
       render(<App />);
       
       await waitFor(() => {
-        expect(screen.getByText('Interactive AI 101 Module')).toBeInTheDocument();
+        expect(screen.getAllByText('AI Learning Portal')).toHaveLength(2);
       });
       
       const glossaryButton = screen.getByRole('button', { name: 'Glossary' });
@@ -215,7 +211,7 @@ describe('App Component Integration Tests', () => {
       render(<App />);
       
       await waitFor(() => {
-        expect(screen.getByText('Interactive AI 101 Module')).toBeInTheDocument();
+        expect(screen.getAllByText('AI Learning Portal')).toHaveLength(2);
       });
       
       // Navigate to each view and verify active state
@@ -240,7 +236,7 @@ describe('App Component Integration Tests', () => {
       render(<App />);
       
       await waitFor(() => {
-        expect(screen.getByText('Interactive AI 101 Module')).toBeInTheDocument();
+        expect(screen.getAllByText('AI Learning Portal')).toHaveLength(2);
       });
       
       // Wait for glossary to load
@@ -257,7 +253,7 @@ describe('App Component Integration Tests', () => {
       render(<App />);
       
       await waitFor(() => {
-        expect(screen.getByText('Interactive AI 101 Module')).toBeInTheDocument();
+        expect(screen.getAllByText('AI Learning Portal')).toHaveLength(2);
       });
       
       // Navigate to quiz
@@ -274,7 +270,7 @@ describe('App Component Integration Tests', () => {
       render(<App />);
       
       await waitFor(() => {
-        expect(screen.getByText('Interactive AI 101 Module')).toBeInTheDocument();
+        expect(screen.getAllByText('AI Learning Portal')).toHaveLength(2);
       });
       
       // Navigate to progress view
@@ -298,7 +294,7 @@ describe('App Component Integration Tests', () => {
       render(<App />);
       
       await waitFor(() => {
-        expect(screen.getByText('Interactive AI 101 Module')).toBeInTheDocument();
+        expect(screen.getAllByText('AI Learning Portal')).toHaveLength(2);
       });
       
       // Error should be caught and handled gracefully
@@ -317,11 +313,11 @@ describe('App Component Integration Tests', () => {
       render(<App />);
       
       await waitFor(() => {
-        expect(screen.getByText('Interactive AI 101 Module')).toBeInTheDocument();
+        expect(screen.getAllByText('AI Learning Portal')).toHaveLength(2);
       });
       
       // App should continue to function despite service errors
-      expect(screen.getByText('Interactive AI 101 Module')).toBeInTheDocument();
+      expect(screen.getAllByText('AI Learning Portal')).toHaveLength(2);
       
       consoleSpy.mockRestore();
     });
@@ -330,7 +326,7 @@ describe('App Component Integration Tests', () => {
       render(<App />);
       
       await waitFor(() => {
-        expect(screen.getByText('Interactive AI 101 Module')).toBeInTheDocument();
+        expect(screen.getAllByText('AI Learning Portal')).toHaveLength(2);
       });
       
       // Simulate unknown view by directly manipulating state
@@ -344,7 +340,7 @@ describe('App Component Integration Tests', () => {
       const { container } = render(<App />);
       
       await waitFor(() => {
-        expect(screen.getByText('Interactive AI 101 Module')).toBeInTheDocument();
+        expect(screen.getAllByText('AI Learning Portal')).toHaveLength(2);
       });
       
       const results = await axe(container);
@@ -355,7 +351,7 @@ describe('App Component Integration Tests', () => {
       render(<App />);
       
       await waitFor(() => {
-        expect(screen.getByText('Interactive AI 101 Module')).toBeInTheDocument();
+        expect(screen.getAllByText('AI Learning Portal')).toHaveLength(2);
       });
       
       // Check navigation has proper role
@@ -373,7 +369,7 @@ describe('App Component Integration Tests', () => {
       render(<App />);
       
       await waitFor(() => {
-        expect(screen.getByText('Interactive AI 101 Module')).toBeInTheDocument();
+        expect(screen.getAllByText('AI Learning Portal')).toHaveLength(2);
       });
       
       // Focus first button
@@ -391,7 +387,7 @@ describe('App Component Integration Tests', () => {
       render(<App />);
       
       await waitFor(() => {
-        expect(screen.getByText('Interactive AI 101 Module')).toBeInTheDocument();
+        expect(screen.getAllByText('AI Learning Portal')).toHaveLength(2);
       });
       
       // Check for aria-live regions in the glossary container
@@ -404,7 +400,7 @@ describe('App Component Integration Tests', () => {
       render(<App />);
       
       await waitFor(() => {
-        expect(screen.getByText('Interactive AI 101 Module')).toBeInTheDocument();
+        expect(screen.getAllByText('AI Learning Portal')).toHaveLength(2);
       });
       
       // App should render without issues on mobile
@@ -424,7 +420,7 @@ describe('App Component Integration Tests', () => {
       const { rerender } = render(<TestWrapper />);
       
       await waitFor(() => {
-        expect(screen.getByText('Interactive AI 101 Module')).toBeInTheDocument();
+        expect(screen.getAllByText('AI Learning Portal')).toHaveLength(2);
       });
       
       const initialRenderCount = renderSpy.mock.calls.length;
@@ -441,11 +437,10 @@ describe('App Component Integration Tests', () => {
       render(<App />);
       
       await waitFor(() => {
-        expect(screen.getByText('Interactive AI 101 Module')).toBeInTheDocument();
+        expect(screen.getAllByText('AI Learning Portal')).toHaveLength(2);
       });
       
       // Verify service integration
-      expect(mockLocalStorageService.incrementVisitCount).toHaveBeenCalledTimes(1);
       expect(mockLocalStorageService.getProgress).toHaveBeenCalled();
       expect(mockLocalStorageService.getPreferences).toHaveBeenCalled();
     });

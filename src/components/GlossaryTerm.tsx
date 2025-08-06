@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { GlossaryTerm as GlossaryTermType, UserRole } from '../types';
 import './GlossaryTerm.css';
 
@@ -23,12 +23,28 @@ export const GlossaryTerm: React.FC<GlossaryTermProps> = ({
   className = ''
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [focusedRole, setFocusedRole] = useState<UserRole | null>(null);
-  const termRef = useRef<HTMLDivElement>(null);
+  const articleRef = useRef<HTMLElement>(null);
   const roleButtonsRef = useRef<HTMLDivElement>(null);
 
-  // Handle keyboard navigation for role buttons
-  const handleRoleKeyDown = (event: React.KeyboardEvent, role: UserRole) => {
+  const handleToggleExpanded = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    switch (event.key) {
+      case 'Enter':
+      case ' ':
+        event.preventDefault();
+        handleToggleExpanded();
+        break;
+    }
+  };
+
+  const handleRoleButtonClick = (role: UserRole) => {
+    onRoleChange?.(role);
+  };
+
+  const handleRoleButtonKeyDown = (event: React.KeyboardEvent, role: UserRole) => {
     const roles: UserRole[] = ['business', 'pm-designer', 'engineer', 'data-scientist'];
     const currentIndex = roles.indexOf(role);
 
@@ -37,43 +53,30 @@ export const GlossaryTerm: React.FC<GlossaryTermProps> = ({
       case 'ArrowDown':
         event.preventDefault();
         const nextIndex = (currentIndex + 1) % roles.length;
-        const nextRole = roles[nextIndex];
-        if (nextRole) setFocusedRole(nextRole);
+        const nextButton = roleButtonsRef.current?.querySelector(
+          `[data-role="${roles[nextIndex]}"]`
+        ) as HTMLButtonElement;
+        nextButton?.focus();
         break;
       case 'ArrowLeft':
       case 'ArrowUp':
         event.preventDefault();
         const prevIndex = (currentIndex - 1 + roles.length) % roles.length;
-        const prevRole = roles[prevIndex];
-        if (prevRole) setFocusedRole(prevRole);
+        const prevButton = roleButtonsRef.current?.querySelector(
+          `[data-role="${roles[prevIndex]}"]`
+        ) as HTMLButtonElement;
+        prevButton?.focus();
         break;
       case 'Enter':
       case ' ':
         event.preventDefault();
-        onRoleChange?.(role);
+        handleRoleButtonClick(role);
         break;
       case 'Escape':
         event.preventDefault();
-        setFocusedRole(null);
-        termRef.current?.focus();
+        articleRef.current?.focus();
         break;
     }
-  };
-
-  // Focus management for role buttons
-  useEffect(() => {
-    if (focusedRole && roleButtonsRef.current) {
-      const button = roleButtonsRef.current.querySelector(
-        `[data-role="${focusedRole}"]`
-      ) as HTMLButtonElement;
-      button?.focus();
-    }
-  }, [focusedRole]);
-
-  // Handle external link with proper accessibility
-  const handleExternalLinkClick = () => {
-    // Link will open in new tab due to target="_blank"
-    // Screen readers will announce this due to aria-label
   };
 
   const handleExternalLinkKeyDown = (event: React.KeyboardEvent) => {
@@ -83,77 +86,55 @@ export const GlossaryTerm: React.FC<GlossaryTermProps> = ({
     }
   };
 
-  const toggleExpanded = () => {
-    setIsExpanded(!isExpanded);
-  };
-
-  const handleTermKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      toggleExpanded();
-    }
-  };
-
   return (
-    <article 
+    <article
+      ref={articleRef}
       className={`glossary-term ${className}`}
-      ref={termRef}
       aria-labelledby={`term-${term.id}`}
       aria-describedby={`definition-${term.id}`}
     >
-      <header className="glossary-term__header">
-        <button 
+      <button
+        className="glossary-term__header"
+        onClick={handleToggleExpanded}
+        onKeyDown={handleKeyDown}
+        aria-expanded={isExpanded}
+        aria-controls={`content-${term.id}`}
+      >
+        <h3
           id={`term-${term.id}`}
           className="glossary-term__title"
-          onClick={toggleExpanded}
-          onKeyDown={handleTermKeyDown}
-          aria-expanded={isExpanded}
-          aria-controls={`content-${term.id}`}
-          type="button"
         >
           {term.term}
-          <span 
-            className={`glossary-term__expand-icon ${isExpanded ? 'expanded' : ''}`}
-            aria-hidden="true"
-          >
-            ▼
-          </span>
-        </button>
-        
-        <a
-          href={term.externalLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="glossary-term__external-link"
-          aria-label={`Learn more about ${term.term} from external source (opens in new tab)`}
-          onClick={handleExternalLinkClick}
-          onKeyDown={handleExternalLinkKeyDown}
-        >
-          <span className="glossary-term__link-icon" aria-hidden="true">🔗</span>
-          <span className="glossary-term__link-text">Learn More</span>
-        </a>
-      </header>
+        </h3>
+        <span className={`glossary-term__toggle ${isExpanded ? 'expanded' : ''}`}>
+          {isExpanded ? '−' : '+'}
+        </span>
+      </button>
 
       <div 
         id={`content-${term.id}`}
         className={`glossary-term__content ${isExpanded ? 'expanded' : ''}`}
-        aria-hidden={!isExpanded}
       >
-        <p 
-          id={`definition-${term.id}`}
-          className="glossary-term__definition"
-        >
-          {term.definition}
-        </p>
+        <div className="glossary-term__definition">
+          <p id={`definition-${term.id}`}>{term.definition}</p>
+          <a
+            href={term.externalLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="glossary-term__external-link"
+            aria-label={`Learn more about ${term.term} (opens in new tab)`}
+            onKeyDown={handleExternalLinkKeyDown}
+          >
+            Learn More →
+          </a>
+        </div>
 
         <div className="glossary-term__role-section">
-          <h3 className="glossary-term__role-title">
-            Role-Specific Context
-          </h3>
+          <h4 className="glossary-term__role-heading">Role-Specific Context</h4>
           
-          <div 
-            className="glossary-term__role-buttons"
+          <div
             ref={roleButtonsRef}
+            className="glossary-term__role-buttons"
             role="tablist"
             aria-label="Select role for context"
           >
@@ -161,13 +142,14 @@ export const GlossaryTerm: React.FC<GlossaryTermProps> = ({
               <button
                 key={role}
                 data-role={role}
-                className={`glossary-term__role-button ${selectedRole === role ? 'active' : ''}`}
-                onClick={() => onRoleChange?.(role)}
-                onKeyDown={(e) => handleRoleKeyDown(e, role)}
+                id={`role-button-${role}`}
                 role="tab"
                 aria-selected={selectedRole === role}
-                aria-controls={`role-context-${term.id}`}
-                tabIndex={selectedRole === role || (!selectedRole && role === 'business') ? 0 : -1}
+                aria-controls={`role-panel-${role}`}
+                tabIndex={selectedRole === role ? 0 : -1}
+                className={`glossary-term__role-button ${selectedRole === role ? 'active' : ''}`}
+                onClick={() => handleRoleButtonClick(role)}
+                onKeyDown={(e) => handleRoleButtonKeyDown(e, role)}
               >
                 {ROLE_LABELS[role]}
               </button>
@@ -175,14 +157,15 @@ export const GlossaryTerm: React.FC<GlossaryTermProps> = ({
           </div>
 
           {selectedRole && (
-            <div 
-              id={`role-context-${term.id}`}
-              className="glossary-term__role-context"
+            <div
+              id={`role-panel-${selectedRole}`}
               role="tabpanel"
               aria-labelledby={`role-button-${selectedRole}`}
+              className="glossary-term__role-context"
             >
-              <p className="glossary-term__context-text">
-                <strong>{ROLE_LABELS[selectedRole]}:</strong> {term.roleContext[selectedRole]}
+              <p>
+                <strong>{ROLE_LABELS[selectedRole]}:</strong>{' '}
+                {term.roleContext[selectedRole]}
               </p>
             </div>
           )}
