@@ -100,12 +100,12 @@ export const GlossaryTerm: React.FC<GlossaryTermProps> = ({
         aria-expanded={isExpanded}
         aria-controls={`content-${term.id}`}
       >
-        <h3
+        <h2
           id={`term-${term.id}`}
           className="glossary-term__title"
         >
           {term.term}
-        </h3>
+        </h2>
         <span className={`glossary-term__toggle ${isExpanded ? 'expanded' : ''}`}>
           {isExpanded ? '−' : '+'}
         </span>
@@ -130,7 +130,7 @@ export const GlossaryTerm: React.FC<GlossaryTermProps> = ({
         </div>
 
         <div className="glossary-term__role-section">
-          <h4 className="glossary-term__role-heading">Role-Specific Context</h4>
+          <h3 className="glossary-term__role-heading">Role-Specific Context</h3>
           
           <div
             ref={roleButtonsRef}

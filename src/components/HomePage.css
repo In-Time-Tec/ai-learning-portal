@@ -41,9 +41,39 @@
 /* Sections Layout */
 .home-page__sections {
   display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+/* Introduction section gets full width and prominent positioning */
+.home-page__section--introduction {
+  background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%);
+  color: #2c3e50;
+  border: 2px solid #667eea;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  grid-column: 1 / -1;
+}
+
+.home-page__section--introduction .home-page__section-title {
+  color: #2c3e50;
+}
+
+.home-page__section--introduction .home-page__section-description {
+  color: #5a6c7d;
+}
+
+.home-page__section--introduction:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+}
+
+/* Learn and Tools sections container */
+.home-page__learn-tools-container {
+  display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
-  margin-bottom: 3rem;
+  grid-column: 1 / -1;
 }
 
 .home-page__section {
@@ -168,6 +198,37 @@
   transform: translateX(4px);
 }
 
+/* Introduction card specific styling */
+.home-page__introduction-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(102, 126, 234, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.home-page__introduction-card:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(102, 126, 234, 0.5);
+  transform: translateX(4px);
+}
+
+.home-page__introduction-card .home-page__card-title {
+  color: #2c3e50;
+}
+
+.home-page__introduction-card .home-page__card-description {
+  color: #5a6c7d;
+}
+
+.home-page__introduction-card .home-page__card-stats {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.home-page__introduction-card .home-page__card-arrow {
+  color: #667eea;
+}
+
 /* Learn and Tools specific styling */
 .home-page__learn-card {
   border-left: 4px solid #28a745;
@@ -251,6 +312,11 @@
     margin-bottom: 2rem;
   }
 
+  .home-page__learn-tools-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
   .home-page__section {
     padding: 1.5rem;
   }
@@ -309,6 +375,11 @@
     padding: 1rem;
   }
 
+  .home-page__learn-tools-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
   .home-page__section-card {
     flex-direction: column;
     text-align: center;
@@ -326,6 +397,10 @@
 
   .home-page__section-card:hover .home-page__card-arrow {
     transform: rotate(90deg) translateX(4px);
+  }
+
+  .home-page__introduction-card .home-page__card-arrow {
+    color: white;
   }
 
   .home-page__progress-stats {

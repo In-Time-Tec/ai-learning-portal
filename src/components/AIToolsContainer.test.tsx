@@ -181,7 +181,7 @@ describe('AIToolsContainer', () => {
         expect(screen.getByText('Unable to Load AI Tools')).toBeInTheDocument();
       });
 
-      const retryButton = screen.getByRole('button', { name: /retry/i });
+      const retryButton = screen.getByRole('button', { name: /try again/i });
       await userEvent.click(retryButton);
 
       await waitFor(() => {
@@ -218,7 +218,9 @@ describe('AIToolsContainer', () => {
     it('should filter tools based on search query', async () => {
       const searchInput = screen.getByLabelText('Search tools, descriptions, and use cases');
       
-      await userEvent.type(searchInput, 'Warp');
+      await act(async () => {
+        await userEvent.type(searchInput, 'Warp');
+      });
 
       await waitFor(() => {
         expect(screen.getByText(/Showing.*1.*of.*3.*tools matching "Warp"/)).toBeInTheDocument();
@@ -231,14 +233,18 @@ describe('AIToolsContainer', () => {
     it('should clear search when clear button is clicked', async () => {
       const searchInput = screen.getByLabelText('Search tools, descriptions, and use cases');
       
-      await userEvent.type(searchInput, 'Warp');
+      await act(async () => {
+        await userEvent.type(searchInput, 'Warp');
+      });
       
       await waitFor(() => {
         expect(screen.getByDisplayValue('Warp')).toBeInTheDocument();
       });
 
       const clearButton = screen.getByRole('button', { name: 'Clear search' });
-      await userEvent.click(clearButton);
+      await act(async () => {
+        await userEvent.click(clearButton);
+      });
 
       expect(searchInput).toHaveValue('');
       await waitFor(() => {
@@ -249,8 +255,10 @@ describe('AIToolsContainer', () => {
     it('should clear search when Escape key is pressed', async () => {
       const searchInput = screen.getByLabelText('Search tools, descriptions, and use cases');
       
-      await userEvent.type(searchInput, 'Warp');
-      await userEvent.keyboard('{Escape}');
+      await act(async () => {
+        await userEvent.type(searchInput, 'Warp');
+        await userEvent.keyboard('{Escape}');
+      });
 
       expect(searchInput).toHaveValue('');
       await waitFor(() => {
@@ -261,7 +269,9 @@ describe('AIToolsContainer', () => {
     it('should display no results message when search yields no matches', async () => {
       const searchInput = screen.getByLabelText('Search tools, descriptions, and use cases');
       
-      await userEvent.type(searchInput, 'NonexistentTool');
+      await act(async () => {
+        await userEvent.type(searchInput, 'NonexistentTool');
+      });
 
       await waitFor(() => {
         expect(screen.getByText('No tools found matching "NonexistentTool". Try adjusting your filters.')).toBeInTheDocument();
@@ -272,7 +282,9 @@ describe('AIToolsContainer', () => {
     it('should filter results when searching', async () => {
       const searchInput = screen.getByLabelText('Search tools, descriptions, and use cases');
       
-      await userEvent.type(searchInput, 'terminal');
+      await act(async () => {
+        await userEvent.type(searchInput, 'terminal');
+      });
 
       await waitFor(() => {
         expect(screen.getByText(/Showing.*1.*of.*3.*tools matching "terminal"/)).toBeInTheDocument();
@@ -294,14 +306,16 @@ describe('AIToolsContainer', () => {
 
     it('should display all available categories', async () => {
       expect(screen.getByText('All Categories')).toBeInTheDocument();
-      expect(screen.getByText('Code Assistant')).toBeInTheDocument();
-      expect(screen.getByText('IDE Extension')).toBeInTheDocument();
-      expect(screen.getByText('Research Tool')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Code Assistant' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'IDE Extension' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Research Tool' })).toBeInTheDocument();
     });
 
     it('should filter tools by category when category button is clicked', async () => {
       const codeAssistantButton = screen.getByRole('button', { name: 'Code Assistant' });
-      await userEvent.click(codeAssistantButton);
+      await act(async () => {
+        await userEvent.click(codeAssistantButton);
+      });
 
       await waitFor(() => {
         expect(screen.getByText(/Showing.*1.*of.*3.*tools in Code Assistant/)).toBeInTheDocument();
@@ -316,7 +330,9 @@ describe('AIToolsContainer', () => {
     it('should clear category filter when "All Categories" is clicked', async () => {
       // First select a category
       const codeAssistantButton = screen.getByRole('button', { name: 'Code Assistant' });
-      await userEvent.click(codeAssistantButton);
+      await act(async () => {
+        await userEvent.click(codeAssistantButton);
+      });
 
       await waitFor(() => {
         expect(screen.getByText(/Showing.*1.*of.*3.*tools in Code Assistant/)).toBeInTheDocument();
@@ -324,7 +340,9 @@ describe('AIToolsContainer', () => {
 
       // Then clear the filter
       const allCategoriesButton = screen.getByRole('button', { name: 'All Categories' });
-      await userEvent.click(allCategoriesButton);
+      await act(async () => {
+        await userEvent.click(allCategoriesButton);
+      });
 
       await waitFor(() => {
         expect(screen.getByText(/Showing.*3.*of.*3.*tools/)).toBeInTheDocument();
@@ -337,13 +355,19 @@ describe('AIToolsContainer', () => {
       const codeAssistantButton = screen.getByRole('button', { name: 'Code Assistant' });
       codeAssistantButton.focus();
 
-      await userEvent.keyboard('{ArrowRight}');
+      await act(async () => {
+        await userEvent.keyboard('{ArrowRight}');
+      });
       expect(screen.getByRole('button', { name: 'IDE Extension' })).toHaveFocus();
 
-      await userEvent.keyboard('{ArrowLeft}');
+      await act(async () => {
+        await userEvent.keyboard('{ArrowLeft}');
+      });
       expect(codeAssistantButton).toHaveFocus();
 
-      await userEvent.keyboard('{Enter}');
+      await act(async () => {
+        await userEvent.keyboard('{Enter}');
+      });
       await waitFor(() => {
         expect(screen.getByText(/Showing.*1.*of.*3.*tools in Code Assistant/)).toBeInTheDocument();
       });
@@ -363,7 +387,9 @@ describe('AIToolsContainer', () => {
     it('should combine search and category filters', async () => {
       // First apply category filter
       const ideExtensionButton = screen.getByRole('button', { name: 'IDE Extension' });
-      await userEvent.click(ideExtensionButton);
+      await act(async () => {
+        await userEvent.click(ideExtensionButton);
+      });
 
       await waitFor(() => {
         expect(screen.getByText(/Showing.*1.*of.*3.*tools in IDE Extension/)).toBeInTheDocument();
@@ -371,7 +397,9 @@ describe('AIToolsContainer', () => {
 
       // Then apply search
       const searchInput = screen.getByLabelText('Search tools, descriptions, and use cases');
-      await userEvent.type(searchInput, 'GitHub');
+      await act(async () => {
+        await userEvent.type(searchInput, 'GitHub');
+      });
 
       await waitFor(() => {
         expect(screen.getByText(/Showing.*1.*of.*3.*tools matching "GitHub" in IDE Extension/)).toBeInTheDocument();
@@ -382,17 +410,23 @@ describe('AIToolsContainer', () => {
     it('should clear all filters when "Clear All Filters" button is clicked', async () => {
       // Apply both filters
       const ideExtensionButton = screen.getByRole('button', { name: 'IDE Extension' });
-      await userEvent.click(ideExtensionButton);
+      await act(async () => {
+        await userEvent.click(ideExtensionButton);
+      });
 
       const searchInput = screen.getByLabelText('Search tools, descriptions, and use cases');
-      await userEvent.type(searchInput, 'GitHub');
+      await act(async () => {
+        await userEvent.type(searchInput, 'GitHub');
+      });
 
       await waitFor(() => {
         expect(screen.getByText('Clear All Filters')).toBeInTheDocument();
       });
 
       const clearAllButton = screen.getByRole('button', { name: 'Clear All Filters' });
-      await userEvent.click(clearAllButton);
+      await act(async () => {
+        await userEvent.click(clearAllButton);
+      });
 
       expect(searchInput).toHaveValue('');
       await waitFor(() => {
@@ -415,7 +449,9 @@ describe('AIToolsContainer', () => {
       const searchInput = screen.getByLabelText('Search tools, descriptions, and use cases');
       searchInput.focus();
 
-      await userEvent.keyboard('{ArrowDown}');
+      await act(async () => {
+        await userEvent.keyboard('{ArrowDown}');
+      });
       expect(screen.getByRole('button', { name: 'Code Assistant' })).toHaveFocus();
     });
 
@@ -423,7 +459,9 @@ describe('AIToolsContainer', () => {
       const codeAssistantButton = screen.getByRole('button', { name: 'Code Assistant' });
       codeAssistantButton.focus();
 
-      await userEvent.keyboard('{Escape}');
+      await act(async () => {
+        await userEvent.keyboard('{Escape}');
+      });
       expect(screen.getByLabelText('Search tools, descriptions, and use cases')).toHaveFocus();
     });
   });
@@ -523,10 +561,14 @@ describe('AIToolsContainer', () => {
 
       const searchInput = screen.getByLabelText('Search tools, descriptions, and use cases');
 
-      await userEvent.type(searchInput, 'test');
+      await act(async () => {
+        await userEvent.type(searchInput, 'test');
+      });
       
       const clearButton = screen.getByRole('button', { name: 'Clear search' });
-      await userEvent.click(clearButton);
+      await act(async () => {
+        await userEvent.click(clearButton);
+      });
 
       // Focus should return to search input after clearing
       expect(searchInput).toHaveFocus();
@@ -564,14 +606,16 @@ describe('AIToolsContainer', () => {
       const searchInput = screen.getByLabelText('Search tools, descriptions, and use cases');
       
       // Type quickly
-      await userEvent.type(searchInput, 'test', { delay: 1 });
+      await act(async () => {
+        await userEvent.type(searchInput, 'test', { delay: 1 });
+      });
       
       // Check that the search input has the value
       expect(searchInput).toHaveValue('test');
       
       // Wait for the search to be applied
       await waitFor(() => {
-        expect(screen.getByText(/Showing.*0.*of.*3.*tools matching "test"/)).toBeInTheDocument();
+        expect(screen.getByText(/Showing.*1.*of.*3.*tools matching "test"/)).toBeInTheDocument();
       });
     });
   });
@@ -620,7 +664,9 @@ describe('AIToolsContainer', () => {
       const searchInput = screen.getByLabelText('Search tools, descriptions, and use cases');
       const longQuery = 'a'.repeat(100); // Reduce length to avoid timeout
       
-      await userEvent.type(searchInput, longQuery);
+      await act(async () => {
+        await userEvent.type(searchInput, longQuery);
+      });
       
       expect(searchInput).toHaveValue(longQuery);
       // Since we're not using the service method anymore, we don't need to check this

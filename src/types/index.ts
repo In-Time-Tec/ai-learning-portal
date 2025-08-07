@@ -2,6 +2,8 @@
  * Core TypeScript interfaces and types for the Interactive AI Glossary
  */
 
+import React from 'react';
+
 /**
  * User roles for role-specific context display
  */
@@ -121,6 +123,28 @@ export interface AIToolsData {
       label: string;
       description: string;
     };
+  };
+}
+
+/**
+ * Interface for individual introduction content sections
+ */
+export interface IntroductionSection {
+  id: string;
+  title: string;
+  subtitle?: string;
+  content: string | React.ReactNode;
+  variant?: 'default' | 'highlighted' | 'warning';
+}
+
+/**
+ * Complete introduction content data structure
+ */
+export interface IntroductionContent {
+  sections: IntroductionSection[];
+  navigation: {
+    previous?: { label: string; destination: 'glossary' | 'quiz' | 'home' };
+    next?: { label: string; destination: 'glossary' | 'quiz' | 'home' };
   };
 }
 /**

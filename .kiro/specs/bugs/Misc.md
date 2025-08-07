@@ -1,0 +1,2 @@
+- Discrepancy between 16 and 18 quiz 
+- Quiz should be dynamic, let them choose a number instead of hardcoded 3 

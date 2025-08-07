@@ -64,17 +64,12 @@ export class GlossaryDataService {
         throw new Error('No valid terms found in data file. Please check the glossary data format.');
       }
 
-      // Log warning if some terms were invalid
-      if (validTerms.length < data.terms.length) {
-        console.warn(`${data.terms.length - validTerms.length} invalid terms were skipped`);
-      }
+      // Some terms were invalid but continue with valid ones
 
       this.terms = validTerms;
       this.isLoaded = true;
       return this.terms;
     } catch (error) {
-      console.error('Error loading glossary terms:', error);
-      
       // Provide more specific error messages
       if (error instanceof TypeError && error.message.includes('fetch')) {
         throw new Error('Network error: Unable to connect to load glossary data. Please check your internet connection.');

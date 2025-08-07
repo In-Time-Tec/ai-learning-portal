@@ -81,8 +81,6 @@ export const GlossaryContainer: React.FC<GlossaryContainerProps> = ({
       } else {
         setErrorType('generic');
       }
-      
-      console.error('Error loading glossary:', err);
     } finally {
       setIsLoading(false);
     }
@@ -290,7 +288,7 @@ export const GlossaryContainer: React.FC<GlossaryContainerProps> = ({
       <div className="glossary-container__terms">
         {filteredTerms.length === 0 && searchQuery ? (
           <div className="glossary-container__no-results">
-            <h3>No matching terms found</h3>
+            <h2>No matching terms found</h2>
             <p>Try adjusting your search or browse all terms.</p>
             <button onClick={clearSearch} className="glossary-container__clear-button">
               Clear Search

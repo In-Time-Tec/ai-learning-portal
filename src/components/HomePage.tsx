@@ -12,7 +12,7 @@ import './HomePage.css';
 interface HomePageProps {
   className?: string;
   userProgress: UserProgress;
-  onNavigate: (section: 'learn' | 'ai-tools') => void;
+  onNavigate: (section: 'learn' | 'ai-tools' | 'introduction') => void;
 }
 
 interface SectionCardProps {
@@ -100,7 +100,9 @@ export const HomePage: React.FC<HomePageProps> = ({
     onNavigate('ai-tools');
   };
 
-
+  const handleIntroductionNavigation = () => {
+    onNavigate('introduction');
+  };
 
   return (
     <div className={`home-page ${className}`}>
@@ -114,45 +116,67 @@ export const HomePage: React.FC<HomePageProps> = ({
       </div>
 
       <div className="home-page__sections">
-        <section className="home-page__section" aria-labelledby="learn-section-title">
-          <h2 id="learn-section-title" className="home-page__section-title">
-            Learn
+        <section className="home-page__section home-page__section--introduction" aria-labelledby="introduction-section-title">
+          <h2 id="introduction-section-title" className="home-page__section-title">
+            Start Here
           </h2>
           <p className="home-page__section-description">
-            Master AI fundamentals with interactive glossary, quizzes, and progress tracking
+            Begin with a balanced perspective on AI's advantages and cognitive risks
           </p>
           
           <div className="home-page__cards">
             <SectionCard
-              title="Interactive Learning"
-              description="Explore 16 essential AI terms with role-specific context, take quizzes, and track your progress"
-              icon="📚"
-              stats={learnStats}
-              onClick={handleLearnNavigation}
-              className="home-page__learn-card"
+              title="AI Introduction & Risks"
+              description="Understand both the promise and perils of AI technology before diving into specific concepts"
+              icon="🧠"
+              stats="Essential reading for conscious AI engagement"
+              onClick={handleIntroductionNavigation}
+              className="home-page__introduction-card"
             />
           </div>
         </section>
 
-        <section className="home-page__section" aria-labelledby="tools-section-title">
-          <h2 id="tools-section-title" className="home-page__section-title">
-            Tools
-          </h2>
-          <p className="home-page__section-description">
-            Discover AI tools and real user experiences from within your organization
-          </p>
-          
-          <div className="home-page__cards">
-            <SectionCard
-              title="AI Tools Showcase"
-              description="Browse AI development tools, read user testimonials, and learn from real implementation experiences"
-              icon="🛠️"
-              stats={toolsStats}
-              onClick={handleToolsNavigation}
-              className="home-page__tools-card"
-            />
-          </div>
-        </section>
+        <div className="home-page__learn-tools-container">
+          <section className="home-page__section" aria-labelledby="learn-section-title">
+            <h2 id="learn-section-title" className="home-page__section-title">
+              Learn
+            </h2>
+            <p className="home-page__section-description">
+              Master AI fundamentals with interactive glossary, quizzes, and progress tracking
+            </p>
+            
+            <div className="home-page__cards">
+              <SectionCard
+                title="Interactive Learning"
+                description="Explore 16 essential AI terms with role-specific context, take quizzes, and track your progress"
+                icon="📚"
+                stats={learnStats}
+                onClick={handleLearnNavigation}
+                className="home-page__learn-card"
+              />
+            </div>
+          </section>
+
+          <section className="home-page__section" aria-labelledby="tools-section-title">
+            <h2 id="tools-section-title" className="home-page__section-title">
+              Tools
+            </h2>
+            <p className="home-page__section-description">
+              Discover AI tools and real user experiences from within your organization
+            </p>
+            
+            <div className="home-page__cards">
+              <SectionCard
+                title="AI Tools Showcase"
+                description="Browse AI development tools, read user testimonials, and learn from real implementation experiences"
+                icon="🛠️"
+                stats={toolsStats}
+                onClick={handleToolsNavigation}
+                className="home-page__tools-card"
+              />
+            </div>
+          </section>
+        </div>
       </div>
 
       <div className="home-page__footer">

@@ -75,8 +75,8 @@ describe('GlossaryContainer', () => {
 
       render(<GlossaryContainer />);
 
-      expect(screen.getByText('Loading AI glossary terms...')).toBeInTheDocument();
-      expect(screen.getByRole('main')).toHaveClass('glossary-container');
+      expect(screen.getByRole('status', { name: /loading content/i })).toBeInTheDocument();
+      expect(screen.getByRole('status')).toHaveClass('skeleton-loader');
     });
 
     it('has accessible loading state', async () => {
@@ -86,8 +86,8 @@ describe('GlossaryContainer', () => {
 
       const { container } = render(<GlossaryContainer />);
 
-      const loadingElement = screen.getByText('Loading AI glossary terms...').parentElement;
-      expect(loadingElement).toHaveAttribute('aria-live', 'polite');
+      const loadingElement = screen.getByRole('status', { name: /loading content/i });
+      expect(loadingElement).toHaveAttribute('aria-label', 'Loading content');
 
       // Check accessibility
       const results = await axe(container);
@@ -152,7 +152,7 @@ describe('GlossaryContainer', () => {
 
       // After retry is clicked, the component should show loading state
       await waitFor(() => {
-        expect(screen.getByText('Loading AI glossary terms...')).toBeInTheDocument();
+        expect(screen.getByRole('status', { name: /loading content/i })).toBeInTheDocument();
         expect(screen.queryByText('Try Again')).not.toBeInTheDocument();
       });
     });
@@ -431,7 +431,7 @@ describe('GlossaryContainer', () => {
       render(<GlossaryContainer />);
 
       await waitFor(() => {
-        expect(screen.getByRole('main')).toBeInTheDocument();
+        expect(screen.getByText('AI Glossary')).toBeInTheDocument();
         expect(screen.getByRole('group', { name: 'Role filter options' })).toBeInTheDocument();
         expect(screen.getByLabelText('Search terms and definitions')).toBeInTheDocument();
       });

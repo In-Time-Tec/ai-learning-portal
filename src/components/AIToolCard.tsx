@@ -93,12 +93,12 @@ export const AIToolCard: React.FC<AIToolCardProps> = ({
       {/* Tool Header */}
       <header className="ai-tool-card__header">
         <div className="ai-tool-card__title-section">
-          <h3 
+          <h2 
             id={`tool-${tool.id}-title`}
             className="ai-tool-card__title"
           >
             {tool.name}
-          </h3>
+          </h2>
           <span 
             className="ai-tool-card__category"
             aria-label={`Category: ${CATEGORY_LABELS[tool.category]}`}
@@ -158,7 +158,7 @@ export const AIToolCard: React.FC<AIToolCardProps> = ({
       {/* Common Use Cases */}
       {tool.commonUseCases.length > 0 && (
         <section className="ai-tool-card__use-cases">
-          <h4 className="ai-tool-card__section-title">Common Use Cases</h4>
+          <h3 className="ai-tool-card__section-title">Common Use Cases</h3>
           <ul className="ai-tool-card__use-cases-list">
             {tool.commonUseCases.map((useCase, index) => (
               <li key={`${tool.id}-usecase-${index}`} className="ai-tool-card__use-case">
@@ -172,7 +172,7 @@ export const AIToolCard: React.FC<AIToolCardProps> = ({
       {/* User Experiences */}
       {tool.userExperiences.length > 0 && (
         <section className="ai-tool-card__experiences">
-          <h4 className="ai-tool-card__section-title">User Experiences</h4>
+          <h3 className="ai-tool-card__section-title">User Experiences</h3>
           <div className="ai-tool-card__experiences-list">
             {tool.userExperiences.map((experience) => (
               <div 
@@ -227,7 +227,7 @@ export const AIToolCard: React.FC<AIToolCardProps> = ({
       {/* Team Adoption */}
       {tool.teamAdoption && (
         <section className="ai-tool-card__adoption">
-          <h4 className="ai-tool-card__section-title">Team Adoption</h4>
+          <h3 className="ai-tool-card__section-title">Team Adoption</h3>
           <div className="ai-tool-card__adoption-content">
             <p className="ai-tool-card__adoption-level">
               <strong>Level:</strong> {getAdoptionLevelLabel(tool.teamAdoption.level)}
@@ -242,7 +242,7 @@ export const AIToolCard: React.FC<AIToolCardProps> = ({
       {/* Integrations */}
       {tool.integrations && tool.integrations.length > 0 && (
         <section className="ai-tool-card__integrations">
-          <h4 className="ai-tool-card__section-title">Integrations</h4>
+          <h3 className="ai-tool-card__section-title">Integrations</h3>
           <ul className="ai-tool-card__integrations-list">
             {tool.integrations.map((integration, index) => (
               <li key={`${tool.id}-integration-${index}`} className="ai-tool-card__integration">
@@ -257,14 +257,14 @@ export const AIToolCard: React.FC<AIToolCardProps> = ({
       <footer className="ai-tool-card__footer">
         {tool.internalSetupNotes && (
           <div className="ai-tool-card__setup-notes">
-            <h5 className="ai-tool-card__footer-title">Setup Notes</h5>
+            <h4 className="ai-tool-card__footer-title">Setup Notes</h4>
             <p className="ai-tool-card__footer-text">{tool.internalSetupNotes}</p>
           </div>
         )}
         
         {tool.licensingNotes && (
           <div className="ai-tool-card__licensing">
-            <h5 className="ai-tool-card__footer-title">Licensing</h5>
+            <h4 className="ai-tool-card__footer-title">Licensing</h4>
             <p className="ai-tool-card__footer-text">{tool.licensingNotes}</p>
           </div>
         )}

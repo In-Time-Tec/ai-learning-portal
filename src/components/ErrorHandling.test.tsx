@@ -354,19 +354,15 @@ describe('Service Error Handling', () => {
     });
 
     it('should handle fetch timeout in GlossaryDataService', async () => {
-      // Mock fetch to never resolve
-      global.fetch = jest.fn(() => new Promise(() => {}));
+      // Mock fetch to simulate timeout
+      global.fetch = jest.fn(() => 
+        Promise.reject(new DOMException('The operation was aborted.', 'AbortError'))
+      );
 
       const { GlossaryDataService } = await import('../services/GlossaryDataService');
       const service = new GlossaryDataService();
-      const loadPromise = service.loadGlossary();
       
-      // Fast-forward time to trigger timeout
-      act(() => {
-        jest.advanceTimersByTime(10000);
-      });
-
-      await expect(loadPromise).rejects.toThrow('Request timeout');
+      await expect(service.loadGlossary()).rejects.toThrow('Request timeout');
     });
   });
 

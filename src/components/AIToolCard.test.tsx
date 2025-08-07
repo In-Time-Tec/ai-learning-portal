@@ -79,7 +79,7 @@ describe('AIToolCard Component', () => {
     it('renders the tool name and category correctly', () => {
       render(<AIToolCard tool={mockTool} />);
       
-      expect(screen.getByRole('heading', { level: 3, name: 'Test AI Tool' })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 2, name: 'Test AI Tool' })).toBeInTheDocument();
       expect(screen.getByText('Code Assistant')).toBeInTheDocument();
     });
 
@@ -313,7 +313,7 @@ describe('AIToolCard Component', () => {
     it('renders team adoption information when provided', () => {
       render(<AIToolCard tool={mockTool} />);
       
-      expect(screen.getByRole('heading', { level: 4, name: 'Team Adoption' })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 3, name: 'Team Adoption' })).toBeInTheDocument();
       expect(screen.getByText((content, element) => {
         return element?.textContent === 'Level: Team Adoption';
       })).toBeInTheDocument();
@@ -394,18 +394,18 @@ describe('AIToolCard Component', () => {
     it('has proper heading hierarchy', () => {
       render(<AIToolCard tool={mockTool} />);
       
-      // Main tool name should be h3
-      expect(screen.getByRole('heading', { level: 3, name: mockTool.name })).toBeInTheDocument();
+      // Main tool name should be h2
+      expect(screen.getByRole('heading', { level: 2, name: mockTool.name })).toBeInTheDocument();
       
-      // Section titles should be h4
-      expect(screen.getByRole('heading', { level: 4, name: 'Common Use Cases' })).toBeInTheDocument();
-      expect(screen.getByRole('heading', { level: 4, name: 'User Experiences' })).toBeInTheDocument();
-      expect(screen.getByRole('heading', { level: 4, name: 'Team Adoption' })).toBeInTheDocument();
-      expect(screen.getByRole('heading', { level: 4, name: 'Integrations' })).toBeInTheDocument();
+      // Section titles should be h3
+      expect(screen.getByRole('heading', { level: 3, name: 'Common Use Cases' })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 3, name: 'User Experiences' })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 3, name: 'Team Adoption' })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 3, name: 'Integrations' })).toBeInTheDocument();
       
-      // Footer titles should be h5
-      expect(screen.getByRole('heading', { level: 5, name: 'Setup Notes' })).toBeInTheDocument();
-      expect(screen.getByRole('heading', { level: 5, name: 'Licensing' })).toBeInTheDocument();
+      // Footer titles should be h4
+      expect(screen.getByRole('heading', { level: 4, name: 'Setup Notes' })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 4, name: 'Licensing' })).toBeInTheDocument();
     });
 
     it('has proper button attributes for expandable sections', () => {

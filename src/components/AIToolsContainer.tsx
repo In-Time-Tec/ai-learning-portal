@@ -339,7 +339,7 @@ export const AIToolsContainer: React.FC<AIToolsContainerProps> = ({
       <div className="ai-tools-container__tools">
         {filteredTools.length === 0 && (searchQuery || selectedCategory) ? (
           <div className="ai-tools-container__no-results">
-            <h3>No matching tools found</h3>
+            <h2>No matching tools found</h2>
             <p>
               Try adjusting your search terms or browse all categories to discover available tools.
             </p>

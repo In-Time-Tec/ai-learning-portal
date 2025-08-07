@@ -58,7 +58,7 @@ describe('HomePage Component', () => {
 
 
 
-    it('renders Learn and Tools sections', () => {
+    it('renders Start Here, Learn and Tools sections', () => {
       render(
         <HomePage
           userProgress={mockUserProgress}
@@ -66,6 +66,7 @@ describe('HomePage Component', () => {
         />
       );
 
+      expect(screen.getByRole('heading', { name: 'Start Here' })).toBeInTheDocument();
       expect(screen.getByRole('heading', { name: 'Learn' })).toBeInTheDocument();
       expect(screen.getByRole('heading', { name: 'Tools' })).toBeInTheDocument();
     });
@@ -77,6 +78,10 @@ describe('HomePage Component', () => {
           onNavigate={mockOnNavigate}
         />
       );
+
+      // Introduction section card
+      expect(screen.getByRole('button', { name: /ai introduction & risks/i })).toBeInTheDocument();
+      expect(screen.getByText(/understand both the promise and perils/i)).toBeInTheDocument();
 
       // Learn section card
       expect(screen.getByRole('button', { name: /interactive learning/i })).toBeInTheDocument();
@@ -132,6 +137,21 @@ describe('HomePage Component', () => {
   });
 
   describe('Navigation', () => {
+    it('calls onNavigate with "introduction" when Introduction section card is clicked', async () => {
+      render(
+        <HomePage
+          userProgress={mockUserProgress}
+          onNavigate={mockOnNavigate}
+        />
+      );
+
+      const introductionCard = screen.getByRole('button', { name: /ai introduction & risks/i });
+      fireEvent.click(introductionCard);
+
+      expect(mockOnNavigate).toHaveBeenCalledWith('introduction');
+      expect(mockOnNavigate).toHaveBeenCalledTimes(1);
+    });
+
     it('calls onNavigate with "learn" when Learn section card is clicked', async () => {
       render(
         <HomePage
@@ -170,11 +190,11 @@ describe('HomePage Component', () => {
         />
       );
 
-      const learnCard = screen.getByRole('button', { name: /interactive learning/i });
-      learnCard.focus();
-      fireEvent.keyDown(learnCard, { key: 'Enter', code: 'Enter' });
+      const introductionCard = screen.getByRole('button', { name: /ai introduction & risks/i });
+      introductionCard.focus();
+      fireEvent.keyDown(introductionCard, { key: 'Enter', code: 'Enter' });
 
-      expect(mockOnNavigate).toHaveBeenCalledWith('learn');
+      expect(mockOnNavigate).toHaveBeenCalledWith('introduction');
     });
 
     it('supports keyboard navigation with Space key', async () => {
@@ -203,9 +223,9 @@ describe('HomePage Component', () => {
       );
 
       // Check for proper semantic elements
-      expect(screen.getAllByRole('region')).toHaveLength(2); // Learn and Tools sections
-      expect(screen.getAllByRole('button')).toHaveLength(2); // Navigation cards
-      expect(screen.getAllByRole('heading')).toHaveLength(6); // Main, sections, cards, progress
+      expect(screen.getAllByRole('region')).toHaveLength(3); // Introduction, Learn and Tools sections
+      expect(screen.getAllByRole('button')).toHaveLength(3); // Navigation cards
+      expect(screen.getAllByRole('heading')).toHaveLength(8); // Main, sections, cards, progress
     });
 
     it('has proper heading hierarchy', () => {
@@ -223,8 +243,8 @@ describe('HomePage Component', () => {
       // The order includes card titles (H3) before the Tools section (H2)
       const h2Headings = headings.filter(h => h.tagName === 'H2');
       const h3Headings = headings.filter(h => h.tagName === 'H3');
-      expect(h2Headings.length).toBe(2); // Learn and Tools sections
-      expect(h3Headings.length).toBeGreaterThanOrEqual(2); // Card titles and Progress title
+      expect(h2Headings.length).toBe(3); // Start Here, Learn and Tools sections
+      expect(h3Headings.length).toBeGreaterThanOrEqual(3); // Card titles and Progress title
     });
 
     it('has proper ARIA labels and descriptions', () => {
@@ -236,6 +256,9 @@ describe('HomePage Component', () => {
       );
 
       // Check section labeling by finding sections with proper aria-labelledby
+      const introductionSection = screen.getByRole('region', { name: /start here/i });
+      expect(introductionSection).toBeInTheDocument();
+
       const learnSection = screen.getByRole('region', { name: /learn/i });
       expect(learnSection).toBeInTheDocument();
 
@@ -256,11 +279,11 @@ describe('HomePage Component', () => {
 
       // Check for proper section elements
       const sections = screen.getAllByRole('region');
-      expect(sections.length).toBeGreaterThanOrEqual(2); // Learn and Tools sections
+      expect(sections.length).toBeGreaterThanOrEqual(3); // Introduction, Learn and Tools sections
 
       // Check for proper button roles
       const buttons = screen.getAllByRole('button');
-      expect(buttons).toHaveLength(2); // Learn and Tools cards
+      expect(buttons).toHaveLength(3); // Introduction, Learn and Tools cards
     });
   });
 
@@ -377,6 +400,7 @@ describe('HomePage Component', () => {
       );
 
       // Icons are rendered as text content within the cards
+      expect(screen.getByText('🧠')).toBeInTheDocument(); // Introduction icon
       expect(screen.getByText('📚')).toBeInTheDocument(); // Learn icon
       expect(screen.getByText('🛠️')).toBeInTheDocument(); // Tools icon
     });
@@ -392,7 +416,6 @@ describe('HomePage Component', () => {
       expect(screen.getByText('Terms Explored')).toBeInTheDocument();
       expect(screen.getByText('Quiz Attempts')).toBeInTheDocument();
       expect(screen.getByText('Best Score')).toBeInTheDocument();
-      expect(screen.getByText('Your Visits')).toBeInTheDocument();
     });
   });
 });

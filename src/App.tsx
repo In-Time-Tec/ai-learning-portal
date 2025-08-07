@@ -13,11 +13,12 @@ import { GlossaryContainer } from './components/GlossaryContainer';
 import { QuizContainer } from './components/QuizContainer';
 import { ProgressTracker } from './components/ProgressTracker';
 import { AIToolsContainer } from './components/AIToolsContainer';
+import { AIIntroductionContainer } from './components/AIIntroductionContainer';
 import { localStorageService } from './services/LocalStorageService';
 import { UserProgress, QuizResults, UserRole } from './types';
 import './App.css';
 
-type AppView = 'home' | 'learn' | 'ai-tools' | 'glossary' | 'quiz' | 'progress';
+type AppView = 'home' | 'learn' | 'ai-tools' | 'glossary' | 'quiz' | 'progress' | 'introduction';
 
 interface AppState {
   currentView: AppView;
@@ -48,7 +49,7 @@ function App() {
       // Get user progress and preferences
       const progress = localStorageService.getProgress();
       const preferences = localStorageService.getPreferences();
-      
+
       setAppState(prev => ({
         ...prev,
         userProgress: progress,
@@ -57,7 +58,6 @@ function App() {
         error: null
       }));
     } catch (error) {
-      console.error('Error initializing app:', error);
       setAppState(prev => ({
         ...prev,
         isLoading: false,
@@ -79,11 +79,13 @@ function App() {
   /**
    * Handle HomePage navigation
    */
-  const handleHomePageNavigation = useCallback((section: 'learn' | 'ai-tools') => {
+  const handleHomePageNavigation = useCallback((section: 'learn' | 'ai-tools' | 'introduction') => {
     if (section === 'learn') {
       handleViewChange('glossary'); // Navigate to glossary as the main learn view
     } else if (section === 'ai-tools') {
       handleViewChange('ai-tools');
+    } else if (section === 'introduction') {
+      handleViewChange('introduction');
     }
   }, [handleViewChange]);
 
@@ -100,7 +102,7 @@ function App() {
     try {
       localStorageService.updatePreferences({ selectedRole: role });
     } catch (error) {
-      console.error('Error saving role preference:', error);
+      // Error saving role preference - continue silently
     }
   }, []);
 
@@ -112,13 +114,13 @@ function App() {
       // Progress is automatically updated by QuizContainer via localStorageService
       // Refresh our local state to reflect the changes
       const updatedProgress = localStorageService.getProgress();
-      
+
       setAppState(prev => ({
         ...prev,
         userProgress: updatedProgress
       }));
     } catch (error) {
-      console.error('Error handling quiz completion:', error);
+      // Error handling quiz completion - continue silently
     }
   }, []);
 
@@ -136,7 +138,6 @@ function App() {
    * Handle application errors
    */
   const handleError = useCallback((error: Error, errorInfo: React.ErrorInfo) => {
-    console.error('Application error:', error, errorInfo);
     // Could send to error reporting service here
   }, []);
 
@@ -154,7 +155,16 @@ function App() {
         >
           Home
         </button>
-        
+
+        <button
+          type="button"
+          className={`app__nav-button ${appState.currentView === 'introduction' ? 'active' : ''}`}
+          onClick={() => handleViewChange('introduction')}
+          aria-current={appState.currentView === 'introduction' ? 'page' : undefined}
+        >
+          Introduction
+        </button>
+
         <button
           type="button"
           className={`app__nav-button ${['glossary', 'quiz', 'progress'].includes(appState.currentView) ? 'active' : ''}`}
@@ -163,7 +173,7 @@ function App() {
         >
           Learn
         </button>
-        
+
         <button
           type="button"
           className={`app__nav-button ${appState.currentView === 'ai-tools' ? 'active' : ''}`}
@@ -189,7 +199,7 @@ function App() {
             className="app__view-content"
           />
         );
-      
+
       case 'glossary':
         return (
           <GlossaryContainer
@@ -198,7 +208,7 @@ function App() {
             className="app__view-content"
           />
         );
-      
+
       case 'quiz':
         return (
           <QuizContainer
@@ -206,7 +216,7 @@ function App() {
             questionsPerQuiz={3}
           />
         );
-      
+
       case 'progress':
         return (
           <ProgressTracker
@@ -215,14 +225,22 @@ function App() {
             className="app__view-content"
           />
         );
-      
+
       case 'ai-tools':
         return (
           <AIToolsContainer
             className="app__view-content"
           />
         );
-      
+
+      case 'introduction':
+        return (
+          <AIIntroductionContainer
+            className="app__view-content"
+            onNavigate={(destination) => handleViewChange(destination)}
+          />
+        );
+
       default:
         return (
           <div className="app__error" role="alert">
@@ -281,7 +299,7 @@ function App() {
               Explore AI concepts and discover tools used in your organization
             </p>
           </div>
-          
+
           {renderNavigation()}
         </header>
 
@@ -298,7 +316,7 @@ function App() {
                 >
                   Glossary
                 </button>
-                
+
                 <button
                   type="button"
                   className={`app__sub-nav-button ${appState.currentView === 'quiz' ? 'active' : ''}`}
@@ -307,7 +325,7 @@ function App() {
                 >
                   Quiz
                 </button>
-                
+
                 <button
                   type="button"
                   className={`app__sub-nav-button ${appState.currentView === 'progress' ? 'active' : ''}`}
@@ -319,7 +337,7 @@ function App() {
               </div>
             </nav>
           )}
-          
+
           {renderCurrentView()}
         </main>
 
@@ -331,7 +349,7 @@ function App() {
               )}
               {appState.userProgress.answeredTerms.size}/16 terms completed
             </p>
-            
+
             {!localStorageService.isLocalStorageAvailable() && (
               <p className="app__footer-warning" role="alert">
                 ⚠️ Progress tracking unavailable - data will not persist between sessions

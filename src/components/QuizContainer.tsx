@@ -81,8 +81,6 @@ export const QuizContainer: React.FC<QuizContainerProps> = ({
       }));
 
     } catch (error) {
-      console.error('Error initializing quiz:', error);
-      
       const errorMessage = error instanceof Error ? error.message : 'Failed to load quiz questions';
       let errorType: 'network' | 'data' | 'storage' | 'generic' = 'generic';
       
@@ -117,7 +115,6 @@ export const QuizContainer: React.FC<QuizContainerProps> = ({
     const currentQuestion = quizState.questions[quizState.currentQuestionIndex];
     
     if (!currentQuestion || currentQuestion.id !== questionId) {
-      console.error('Answer received for unexpected question');
       return;
     }
 

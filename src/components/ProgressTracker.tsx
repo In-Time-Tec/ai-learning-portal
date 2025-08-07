@@ -33,7 +33,6 @@ export const ProgressTracker: React.FC<ProgressTrackerProps> = ({
     try {
       return localStorageService.getProgress();
     } catch (error) {
-      console.error('Error loading initial progress:', error);
       return {
         quizAttempts: [],
         answeredTerms: new Set(),
@@ -60,7 +59,6 @@ export const ProgressTracker: React.FC<ProgressTrackerProps> = ({
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to load progress data';
         setError(errorMessage);
-        console.error('Error loading progress:', err);
       } finally {
         setIsLoading(false);
       }
@@ -126,7 +124,7 @@ export const ProgressTracker: React.FC<ProgressTrackerProps> = ({
       
       setShowResetConfirmation(false);
     } catch (error) {
-      console.error('Error resetting progress:', error);
+      // Error resetting progress - continue silently
     } finally {
       setIsResetting(false);
     }
