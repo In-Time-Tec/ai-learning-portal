@@ -377,24 +377,18 @@ export const AIIntroductionContainer: React.FC<AIIntroductionContainerProps> = (
         <a 
           href="#main-content" 
           className="ai-introduction-container__skip-link"
-          onFocus={(e) => e.currentTarget.style.top = '6px'}
-          onBlur={(e) => e.currentTarget.style.top = '-40px'}
         >
           Skip to main content
         </a>
         <a 
           href="#table-of-contents" 
           className="ai-introduction-container__skip-link"
-          onFocus={(e) => e.currentTarget.style.top = '6px'}
-          onBlur={(e) => e.currentTarget.style.top = '-40px'}
         >
           Skip to table of contents
         </a>
         <a 
           href="#navigation-footer" 
           className="ai-introduction-container__skip-link"
-          onFocus={(e) => e.currentTarget.style.top = '6px'}
-          onBlur={(e) => e.currentTarget.style.top = '-40px'}
         >
           Skip to navigation
         </a>

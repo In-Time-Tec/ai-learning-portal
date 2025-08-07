@@ -612,6 +612,7 @@
 /* Skip links for keyboard navigation */
 .ai-introduction-container__skip-links {
   position: relative;
+  z-index: 1000;
 }
 
 .ai-introduction-container__skip-link {
@@ -623,27 +624,45 @@
   padding: 8px 12px;
   text-decoration: none;
   border-radius: 4px;
-  z-index: 1000;
+  z-index: 1001;
   font-weight: 600;
   font-size: 0.9rem;
   transition: top 0.2s ease;
   border: 2px solid transparent;
   white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ai-introduction-container__skip-link:nth-child(1) {
+  left: 6px;
 }
 
 .ai-introduction-container__skip-link:nth-child(2) {
-  left: 140px;
+  left: 6px;
+  top: -80px;
 }
 
 .ai-introduction-container__skip-link:nth-child(3) {
-  left: 300px;
+  left: 6px;
+  top: -120px;
 }
 
 .ai-introduction-container__skip-link:focus {
   top: 6px;
+  opacity: 1;
+  pointer-events: auto;
   outline: 3px solid #ffffff;
   outline-offset: 2px;
   border-color: #ffffff;
+}
+
+.ai-introduction-container__skip-link:nth-child(2):focus {
+  top: 46px;
+}
+
+.ai-introduction-container__skip-link:nth-child(3):focus {
+  top: 86px;
 }
 
 /* Screen reader only content */
