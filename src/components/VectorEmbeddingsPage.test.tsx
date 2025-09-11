@@ -34,7 +34,7 @@ describe('VectorEmbeddingsPage Component', () => {
       expect(iframe).toBeInTheDocument();
       expect(iframe).toHaveAttribute('src', 'https://claude.site/public/artifacts/f78fe0d2-0eb6-480f-a35a-7d1dac81760a/embed');
       expect(iframe).toHaveAttribute('width', '100%');
-      expect(iframe).toHaveAttribute('height', '800');
+      expect(iframe).toHaveAttribute('height', '1200');
       expect(iframe).toHaveClass('vector-embeddings-page__iframe');
       expect(iframe).toHaveAttribute('allowFullScreen');
     });

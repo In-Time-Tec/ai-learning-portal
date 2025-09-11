@@ -56,7 +56,7 @@ export const VectorEmbeddingsPage: React.FC<VectorEmbeddingsPageProps> = ({
                             src="https://claude.site/public/artifacts/f78fe0d2-0eb6-480f-a35a-7d1dac81760a/embed"
                             title="Vector Embeddings Interactive Demonstration"
                             width="100%"
-                            height="800"
+                            height="1200"
                             allow="clipboard-write"
                             allowFullScreen
                             className="vector-embeddings-page__iframe"
