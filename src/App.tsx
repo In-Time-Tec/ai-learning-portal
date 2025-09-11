@@ -14,11 +14,12 @@ import { QuizContainer } from './components/QuizContainer';
 import { ProgressTracker } from './components/ProgressTracker';
 import { AIToolsContainer } from './components/AIToolsContainer';
 import { AIIntroductionContainer } from './components/AIIntroductionContainer';
+import { VectorEmbeddingsPage } from './components/VectorEmbeddingsPage';
 import { localStorageService } from './services/LocalStorageService';
 import { UserProgress, QuizResults, UserRole } from './types';
 import './App.css';
 
-type AppView = 'home' | 'learn' | 'ai-tools' | 'glossary' | 'quiz' | 'progress' | 'introduction';
+type AppView = 'home' | 'learn' | 'ai-tools' | 'glossary' | 'quiz' | 'progress' | 'introduction' | 'vector-embeddings';
 
 interface AppState {
   currentView: AppView;
@@ -182,6 +183,15 @@ function App() {
         >
           AI Tools
         </button>
+
+        <button
+          type="button"
+          className={`app__nav-button ${appState.currentView === 'vector-embeddings' ? 'active' : ''}`}
+          onClick={() => handleViewChange('vector-embeddings')}
+          aria-current={appState.currentView === 'vector-embeddings' ? 'page' : undefined}
+        >
+          Vector Embeddings
+        </button>
       </div>
     </nav>
   );
@@ -238,6 +248,13 @@ function App() {
           <AIIntroductionContainer
             className="app__view-content"
             onNavigate={(destination) => handleViewChange(destination)}
+          />
+        );
+
+      case 'vector-embeddings':
+        return (
+          <VectorEmbeddingsPage
+            className="app__view-content"
           />
         );
 

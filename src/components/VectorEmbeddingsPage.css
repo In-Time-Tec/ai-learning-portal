@@ -1,0 +1,359 @@
+/**
+ * VectorEmbeddingsPage Styles
+ * 
+ * Styling for the vector embeddings educational page with responsive design
+ * and accessibility considerations.
+ */
+
+.vector-embeddings-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+.vector-embeddings-page__header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.vector-embeddings-page__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.vector-embeddings-page__description {
+  font-size: 1.2rem;
+  color: #666;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.vector-embeddings-page__content {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.vector-embeddings-page__section-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+  border-left: 4px solid #667eea;
+  padding-left: 1rem;
+}
+
+.vector-embeddings-page__overview {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+}
+
+.vector-embeddings-page__text-content p {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.vector-embeddings-page__text-content p:last-child {
+  margin-bottom: 0;
+}
+
+.vector-embeddings-page__interactive {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.vector-embeddings-page__demo-description {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.vector-embeddings-page__iframe-container {
+  position: relative;
+  width: 100%;
+  min-height: 800px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #e9ecef;
+  background: #f8f9fa;
+}
+
+.vector-embeddings-page__iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 6px;
+}
+
+.vector-embeddings-page__iframe-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 800px;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-align: center;
+}
+
+.vector-embeddings-page__fallback-content {
+  max-width: 500px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.vector-embeddings-page__fallback-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.vector-embeddings-page__fallback-content h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.vector-embeddings-page__fallback-content p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.vector-embeddings-page__demo-button {
+  background: white;
+  color: #667eea;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.vector-embeddings-page__demo-button:hover {
+  background: #f8f9fa;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.vector-embeddings-page__demo-button:focus {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+.vector-embeddings-page__fallback-note {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0;
+}
+
+.vector-embeddings-page__applications {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+}
+
+.vector-embeddings-page__applications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.vector-embeddings-page__application-card {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vector-embeddings-page__application-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.vector-embeddings-page__card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #2c3e50;
+}
+
+.vector-embeddings-page__card-description {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+}
+
+.vector-embeddings-page__key-concepts {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+}
+
+.vector-embeddings-page__concepts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.vector-embeddings-page__concept {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  border-left: 4px solid #667eea;
+}
+
+.vector-embeddings-page__concept-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #2c3e50;
+}
+
+.vector-embeddings-page__concept-description {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .vector-embeddings-page {
+    padding: 1rem 0.5rem;
+  }
+
+  .vector-embeddings-page__title {
+    font-size: 2rem;
+  }
+
+  .vector-embeddings-page__description {
+    font-size: 1.1rem;
+  }
+
+  .vector-embeddings-page__section-title {
+    font-size: 1.5rem;
+  }
+
+  .vector-embeddings-page__overview,
+  .vector-embeddings-page__interactive,
+  .vector-embeddings-page__applications,
+  .vector-embeddings-page__key-concepts {
+    padding: 1.5rem;
+  }
+
+  .vector-embeddings-page__applications-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vector-embeddings-page__iframe-container {
+    min-height: 600px;
+  }
+
+  .vector-embeddings-page__iframe-fallback {
+    min-height: 600px;
+    padding: 1.5rem;
+  }
+
+  .vector-embeddings-page__fallback-content {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .vector-embeddings-page {
+    padding: 0.5rem 0.25rem;
+  }
+
+  .vector-embeddings-page__title {
+    font-size: 1.8rem;
+  }
+
+  .vector-embeddings-page__overview,
+  .vector-embeddings-page__interactive,
+  .vector-embeddings-page__applications,
+  .vector-embeddings-page__key-concepts {
+    padding: 1rem;
+  }
+
+  .vector-embeddings-page__iframe-container {
+    min-height: 500px;
+  }
+
+  .vector-embeddings-page__iframe-fallback {
+    min-height: 500px;
+    padding: 1rem;
+  }
+
+  .vector-embeddings-page__fallback-content {
+    padding: 1rem;
+  }
+
+  .vector-embeddings-page__demo-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .vector-embeddings-page__title {
+    background: none;
+    -webkit-text-fill-color: initial;
+    color: #000;
+  }
+
+  .vector-embeddings-page__application-card,
+  .vector-embeddings-page__concept {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .vector-embeddings-page__application-card {
+    transition: none;
+  }
+
+  .vector-embeddings-page__application-card:hover {
+    transform: none;
+  }
+}
+
+/* Focus styles for accessibility */
+.vector-embeddings-page__iframe:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
