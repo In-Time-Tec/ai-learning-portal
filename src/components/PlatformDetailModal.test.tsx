@@ -99,13 +99,13 @@ describe('PlatformDetailModal', () => {
 
   describe('Tab Navigation', () => {
     it('switches to features tab when clicked', async () => {
-      const user = userEvent.setup();
+      
       renderModal();
       
       const featuresTab = screen.getByRole('tab', { name: 'Features' });
       
       await act(async () => {
-        await user.click(featuresTab);
+        await userEvent.click(featuresTab);
       });
       
       expect(featuresTab).toHaveAttribute('aria-selected', 'true');
@@ -117,13 +117,13 @@ describe('PlatformDetailModal', () => {
     });
 
     it('switches to resources tab when clicked', async () => {
-      const user = userEvent.setup();
+      
       renderModal();
       
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
       
       await act(async () => {
-        await user.click(resourcesTab);
+        await userEvent.click(resourcesTab);
       });
       
       expect(resourcesTab).toHaveAttribute('aria-selected', 'true');
@@ -135,7 +135,7 @@ describe('PlatformDetailModal', () => {
     });
 
     it('displays correct content for each tab', async () => {
-      const user = userEvent.setup();
+      
       renderModal();
       
       // Overview tab content
@@ -145,14 +145,14 @@ describe('PlatformDetailModal', () => {
       
       // Switch to Features tab
       await act(async () => {
-        await user.click(screen.getByRole('tab', { name: 'Features' }));
+        await userEvent.click(screen.getByRole('tab', { name: 'Features' }));
       });
       expect(screen.getByText('Supported Languages')).toBeInTheDocument();
       expect(screen.getByText('JavaScript')).toBeInTheDocument();
       
       // Switch to Resources tab
       await act(async () => {
-        await user.click(screen.getByRole('tab', { name: 'Resources' }));
+        await userEvent.click(screen.getByRole('tab', { name: 'Resources' }));
       });
       expect(screen.getByText('Platform Details')).toBeInTheDocument();
       expect(screen.getByText('Stable')).toBeInTheDocument();
@@ -161,12 +161,12 @@ describe('PlatformDetailModal', () => {
 
   describe('Modal Closing', () => {
     it('calls onClose when close button is clicked', async () => {
-      const user = userEvent.setup();
+      
       const onClose = jest.fn();
       renderModal({ onClose });
       
       const closeButton = screen.getByRole('button', { name: 'Close modal' });
-      await user.click(closeButton);
+      await userEvent.click(closeButton);
       
       expect(onClose).toHaveBeenCalledTimes(1);
     });
@@ -193,11 +193,11 @@ describe('PlatformDetailModal', () => {
     });
 
     it('calls onClose when Escape key is pressed', async () => {
-      const user = userEvent.setup();
+      
       const onClose = jest.fn();
       renderModal({ onClose });
       
-      await user.keyboard('{Escape}');
+      await userEvent.keyboard('{Escape}');
       
       expect(onClose).toHaveBeenCalledTimes(1);
     });
@@ -216,7 +216,7 @@ describe('PlatformDetailModal', () => {
     });
 
     it('traps focus within modal', async () => {
-      const user = userEvent.setup();
+      
       renderModal();
       
       const closeButton = screen.getByRole('button', { name: 'Close modal' });
@@ -227,15 +227,15 @@ describe('PlatformDetailModal', () => {
       await waitFor(() => expect(closeButton).toHaveFocus());
       
       // Tab should move to next focusable element
-      await user.tab();
+      await userEvent.tab();
       expect(overviewTab).toHaveFocus();
       
-      await user.tab();
+      await userEvent.tab();
       expect(featuresTab).toHaveFocus();
     });
 
     it('handles shift+tab navigation correctly', async () => {
-      const user = userEvent.setup();
+      
       renderModal();
       
       const closeButton = screen.getByRole('button', { name: 'Close modal' });
@@ -246,7 +246,7 @@ describe('PlatformDetailModal', () => {
       expect(resourcesTab).toHaveFocus();
       
       // Shift+Tab should move to previous element
-      await user.tab({ shift: true });
+      await userEvent.tab({ shift: true });
       expect(screen.getByRole('tab', { name: 'Features' })).toHaveFocus();
     });
   });
@@ -417,11 +417,11 @@ describe('PlatformDetailModal', () => {
     });
 
     it('displays technical details in features tab', async () => {
-      const user = userEvent.setup();
+      
       renderModal();
       
       await act(async () => {
-        await user.click(screen.getByRole('tab', { name: 'Features' }));
+        await userEvent.click(screen.getByRole('tab', { name: 'Features' }));
       });
       
       expect(screen.getByText('Supported Languages')).toBeInTheDocument();
@@ -433,11 +433,11 @@ describe('PlatformDetailModal', () => {
     });
 
     it('displays metadata in resources tab', async () => {
-      const user = userEvent.setup();
+      
       renderModal();
       
       await act(async () => {
-        await user.click(screen.getByRole('tab', { name: 'Resources' }));
+        await userEvent.click(screen.getByRole('tab', { name: 'Resources' }));
       });
       
       expect(screen.getByText('Type:')).toBeInTheDocument();

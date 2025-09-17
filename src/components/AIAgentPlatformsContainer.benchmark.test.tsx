@@ -180,7 +180,7 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
 
     it('should perform search on small datasets quickly', async () => {
       const platforms = setupSearchTest(25);
-      const user = userEvent.setup();
+      
       
       render(<AIAgentPlatformsContainer />);
       
@@ -191,7 +191,7 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
       const searchInput = screen.getByTestId('search-input');
       
       const searchTime = await measurePerformance(async () => {
-        await user.type(searchInput, 'Platform 1');
+        await userEvent.type(searchInput, 'Platform 1');
       });
 
       // Search should be very fast on small datasets (< 50ms)
@@ -200,7 +200,7 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
 
     it('should perform search on medium datasets efficiently', async () => {
       const platforms = setupSearchTest(100);
-      const user = userEvent.setup();
+      
       
       render(<AIAgentPlatformsContainer />);
       
@@ -211,7 +211,7 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
       const searchInput = screen.getByTestId('search-input');
       
       const searchTime = await measurePerformance(async () => {
-        await user.type(searchInput, 'Platform');
+        await userEvent.type(searchInput, 'Platform');
       });
 
       // Search should be reasonably fast on medium datasets (< 200ms)
@@ -220,7 +220,7 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
 
     it('should handle rapid consecutive searches efficiently', async () => {
       const platforms = setupSearchTest(50);
-      const user = userEvent.setup();
+      
       
       render(<AIAgentPlatformsContainer />);
       
@@ -233,8 +233,8 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
       const rapidSearchTime = await measurePerformance(async () => {
         // Simulate rapid typing
         for (let i = 0; i < 10; i++) {
-          await user.clear(searchInput);
-          await user.type(searchInput, `search${i}`);
+          await userEvent.clear(searchInput);
+          await userEvent.type(searchInput, `search${i}`);
         }
       });
 
@@ -244,7 +244,7 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
 
     it('should debounce search input effectively', async () => {
       const platforms = setupSearchTest(50);
-      const user = userEvent.setup();
+      
       
       render(<AIAgentPlatformsContainer />);
       
@@ -257,7 +257,7 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
       
       // Type rapidly without waiting
       await act(async () => {
-        await user.type(searchInput, 'test'); // Fast typing
+        await userEvent.type(searchInput, 'test'); // Fast typing
       });
 
       // Wait for debounce to settle
@@ -326,7 +326,7 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
         return filtered.slice(0, 50);
       });
       
-      const user = userEvent.setup();
+      
       render(<AIAgentPlatformsContainer />);
       
       await waitFor(() => {
@@ -336,7 +336,7 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
       const combinedOperationTime = await measurePerformance(async () => {
         // Apply search
         const searchInput = screen.getByTestId('search-input');
-        await user.type(searchInput, 'Platform');
+        await userEvent.type(searchInput, 'Platform');
         
         // Apply category filter
         const categoryButton = screen.getByTestId('category-open-source-framework');
@@ -365,7 +365,7 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
       mockDataService.getFilteredPlatforms.mockReturnValue(platforms);
       mockDataService.getUniqueCategories.mockReturnValue(['open-source-framework']);
 
-      const user = userEvent.setup();
+      
       render(<AIAgentPlatformsContainer />);
       
       await waitFor(() => {
@@ -375,7 +375,7 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
       const viewDetailsButton = screen.getByTestId('view-details-platform-0');
       
       const modalOpenTime = await measurePerformance(async () => {
-        await user.click(viewDetailsButton);
+        await userEvent.click(viewDetailsButton);
         await waitFor(() => {
           expect(screen.getByRole('dialog')).toBeInTheDocument();
         });
@@ -391,7 +391,7 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
       mockDataService.getFilteredPlatforms.mockReturnValue(platforms);
       mockDataService.getUniqueCategories.mockReturnValue(['open-source-framework']);
 
-      const user = userEvent.setup();
+      
       render(<AIAgentPlatformsContainer />);
       
       await waitFor(() => {
@@ -400,7 +400,7 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
 
       // Open modal
       const viewDetailsButton = screen.getByTestId('view-details-platform-0');
-      await user.click(viewDetailsButton);
+      await userEvent.click(viewDetailsButton);
       
       await waitFor(() => {
         expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -409,13 +409,13 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
       const tabSwitchTime = await measurePerformance(async () => {
         // Switch through all tabs
         const featuresTab = screen.getByRole('tab', { name: 'Features' });
-        await user.click(featuresTab);
+        await userEvent.click(featuresTab);
         
         const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-        await user.click(resourcesTab);
+        await userEvent.click(resourcesTab);
         
         const overviewTab = screen.getByRole('tab', { name: 'Overview' });
-        await user.click(overviewTab);
+        await userEvent.click(overviewTab);
       });
 
       // Tab switching should be very fast (< 50ms)
@@ -428,7 +428,7 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
       mockDataService.getFilteredPlatforms.mockReturnValue(platforms);
       mockDataService.getUniqueCategories.mockReturnValue(['open-source-framework']);
 
-      const user = userEvent.setup();
+      
       render(<AIAgentPlatformsContainer />);
       
       await waitFor(() => {
@@ -437,7 +437,7 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
 
       // Open modal
       const viewDetailsButton = screen.getByTestId('view-details-platform-0');
-      await user.click(viewDetailsButton);
+      await userEvent.click(viewDetailsButton);
       
       await waitFor(() => {
         expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -446,7 +446,7 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
       const closeButton = screen.getByRole('button', { name: 'Close modal' });
       
       const modalCloseTime = await measurePerformance(async () => {
-        await user.click(closeButton);
+        await userEvent.click(closeButton);
         await waitFor(() => {
           expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
         });
@@ -464,7 +464,7 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
       mockDataService.getFilteredPlatforms.mockReturnValue(platforms);
       mockDataService.getUniqueCategories.mockReturnValue(['open-source-framework']);
 
-      const user = userEvent.setup();
+      
       const { unmount } = render(<AIAgentPlatformsContainer />);
       
       await waitFor(() => {
@@ -476,8 +476,8 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
       // Perform many operations
       for (let i = 0; i < 50; i++) {
         const searchInput = screen.getByTestId('search-input');
-        await user.clear(searchInput);
-        await user.type(searchInput, `search${i % 10}`);
+        await userEvent.clear(searchInput);
+        await userEvent.type(searchInput, `search${i % 10}`);
         
         if (i % 10 === 0) {
           const categoryButton = screen.getByTestId('category-open-source-framework');
@@ -524,7 +524,7 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
       mockDataService.getFilteredPlatforms.mockReturnValue(platforms.slice(0, 25));
       mockDataService.getUniqueCategories.mockReturnValue(['open-source-framework', 'commercial-platform']);
 
-      const user = userEvent.setup();
+      
       render(<AIAgentPlatformsContainer />);
       
       await waitFor(() => {
@@ -535,8 +535,8 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
         // Rapid interactions
         for (let i = 0; i < 20; i++) {
           const searchInput = screen.getByTestId('search-input');
-          await user.clear(searchInput);
-          await user.type(searchInput, `stress${i}`);
+          await userEvent.clear(searchInput);
+          await userEvent.type(searchInput, `stress${i}`);
           
           const categoryButton = screen.getByTestId('category-open-source-framework');
           fireEvent.click(categoryButton);
@@ -561,7 +561,7 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
       });
       mockDataService.getUniqueCategories.mockReturnValue(['open-source-framework']);
 
-      const user = userEvent.setup();
+      
       render(<AIAgentPlatformsContainer />);
       
       await waitFor(() => {
@@ -571,7 +571,7 @@ describe('AIAgentPlatformsContainer Performance Benchmarks', () => {
       const searchInput = screen.getByTestId('search-input');
       
       const loadTestTime = await measurePerformance(async () => {
-        await user.type(searchInput, 'load test');
+        await userEvent.type(searchInput, 'load test');
       });
 
       // Should remain responsive even under simulated load (< 1000ms)

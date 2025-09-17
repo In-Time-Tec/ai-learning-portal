@@ -150,7 +150,7 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
 
   describe('Complete User Workflows', () => {
     it('should complete full browse and view workflow', async () => {
-      const user = userEvent.setup();
+      
       render(<AIAgentPlatformsContainer />);
 
       // Wait for initial load
@@ -165,7 +165,7 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
 
       // Verify search functionality works
       const searchInput = screen.getByTestId('search-input');
-      await user.type(searchInput, 'LangChain');
+      await userEvent.type(searchInput, 'LangChain');
 
       await waitFor(() => {
         expect(mockDataService.getFilteredPlatforms).toHaveBeenCalledWith(
@@ -176,7 +176,7 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
 
       // Verify category filtering works
       const categoryButton = screen.getByTestId('category-open-source-framework');
-      await user.click(categoryButton);
+      await userEvent.click(categoryButton);
 
       await waitFor(() => {
         expect(mockDataService.getFilteredPlatforms).toHaveBeenCalledWith(
@@ -187,7 +187,7 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
     });
 
     it('should complete search and filter workflow', async () => {
-      const user = userEvent.setup();
+      
       render(<AIAgentPlatformsContainer />);
 
       await waitFor(() => {
@@ -196,7 +196,7 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
 
       // Search for specific platform
       const searchInput = screen.getByTestId('search-input');
-      await user.type(searchInput, 'LangChain');
+      await userEvent.type(searchInput, 'LangChain');
 
       await waitFor(() => {
         expect(mockDataService.getFilteredPlatforms).toHaveBeenCalledWith(
@@ -207,7 +207,7 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
 
       // Apply category filter
       const categoryButton = screen.getByTestId('category-open-source-framework');
-      await user.click(categoryButton);
+      await userEvent.click(categoryButton);
 
       await waitFor(() => {
         expect(mockDataService.getFilteredPlatforms).toHaveBeenCalledWith(
@@ -220,7 +220,7 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
       });
 
       // Clear search
-      await user.clear(searchInput);
+      await userEvent.clear(searchInput);
 
       // Verify category filter still active
       await waitFor(() => {
@@ -235,7 +235,7 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
     });
 
     it('should handle complex multi-step interactions', async () => {
-      const user = userEvent.setup();
+      
       render(<AIAgentPlatformsContainer />);
 
       await waitFor(() => {
@@ -244,15 +244,15 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
 
       // Step 1: Search for frameworks
       const searchInput = screen.getByTestId('search-input');
-      await user.type(searchInput, 'framework');
+      await userEvent.type(searchInput, 'framework');
 
       // Step 2: Apply category filter
       const categoryButton = screen.getByTestId('category-open-source-framework');
-      await user.click(categoryButton);
+      await userEvent.click(categoryButton);
 
       // Step 3: View platform details
       const viewDetailsButton = screen.getByTestId('view-details-langchain');
-      await user.click(viewDetailsButton);
+      await userEvent.click(viewDetailsButton);
 
       await waitFor(() => {
         expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -260,21 +260,21 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
 
       // Step 4: Navigate to resources tab
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       expect(screen.getByText('Official Resources')).toBeInTheDocument();
 
       // Step 5: Close modal and modify search
       const closeButton = screen.getByRole('button', { name: 'Close modal' });
-      await user.click(closeButton);
+      await userEvent.click(closeButton);
 
       await waitFor(() => {
         expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
       });
 
       // Step 6: Clear filters and search for different term
-      await user.clear(searchInput);
-      await user.type(searchInput, 'multi-agent');
+      await userEvent.clear(searchInput);
+      await userEvent.type(searchInput, 'multi-agent');
 
       await waitFor(() => {
         expect(mockDataService.getFilteredPlatforms).toHaveBeenCalledWith(
@@ -287,7 +287,7 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
 
   describe('External Link Security and Handling', () => {
     it('should handle external links with proper security attributes', async () => {
-      const user = userEvent.setup();
+      
       render(<AIAgentPlatformsContainer />);
 
       await waitFor(() => {
@@ -296,7 +296,7 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
 
       // Open modal
       const viewDetailsButton = screen.getByRole('button', { name: /view detailed information about langchain/i });
-      await user.click(viewDetailsButton);
+      await userEvent.click(viewDetailsButton);
 
       await waitFor(() => {
         expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -304,7 +304,7 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
 
       // Navigate to resources tab
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // Check external links have proper security attributes
       const websiteLink = screen.getByRole('link', { name: /visit langchain official website/i });
@@ -334,7 +334,7 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
 
       mockDataService.loadPlatforms.mockResolvedValue([platformWithSuspiciousUrl]);
 
-      const user = userEvent.setup();
+      
       render(<AIAgentPlatformsContainer />);
 
       await waitFor(() => {
@@ -342,14 +342,14 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
       });
 
       const viewDetailsButton = screen.getByTestId('view-details-suspicious-platform');
-      await user.click(viewDetailsButton);
+      await userEvent.click(viewDetailsButton);
 
       await waitFor(() => {
         expect(screen.getByRole('dialog')).toBeInTheDocument();
       });
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // Suspicious URLs should be filtered out or sanitized
       const suspiciousLinks = screen.queryAllByRole('link').filter(link => {
@@ -371,7 +371,7 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
 
       mockDataService.loadPlatforms.mockResolvedValue([platformWithBrokenLinks]);
 
-      const user = userEvent.setup();
+      
       render(<AIAgentPlatformsContainer />);
 
       await waitFor(() => {
@@ -379,14 +379,14 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
       });
 
       const viewDetailsButton = screen.getByRole('button', { name: /view detailed information about broken links platform/i });
-      await user.click(viewDetailsButton);
+      await userEvent.click(viewDetailsButton);
 
       await waitFor(() => {
         expect(screen.getByRole('dialog')).toBeInTheDocument();
       });
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // Links should still be rendered but with appropriate warnings or indicators
       const websiteLink = screen.getByRole('link', { name: /visit broken links platform official website/i });
@@ -444,7 +444,7 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
     });
 
     it('should handle search service failures', async () => {
-      const user = userEvent.setup();
+      
       render(<AIAgentPlatformsContainer />);
 
       await waitFor(() => {
@@ -460,7 +460,7 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
       
       // Should handle search errors gracefully
       await act(async () => {
-        await user.type(searchInput, 'test search');
+        await userEvent.type(searchInput, 'test search');
       });
 
       // Should show error state or fallback behavior
@@ -469,7 +469,7 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
     });
 
     it('should handle modal state corruption', async () => {
-      const user = userEvent.setup();
+      
       render(<AIAgentPlatformsContainer />);
 
       await waitFor(() => {
@@ -478,7 +478,7 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
 
       // Open modal
       const viewDetailsButton = screen.getByRole('button', { name: /view detailed information about langchain/i });
-      await user.click(viewDetailsButton);
+      await userEvent.click(viewDetailsButton);
 
       await waitFor(() => {
         expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -493,7 +493,7 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
       
       // Should be able to close modal despite data issues
       const closeButton = screen.getByRole('button', { name: 'Close modal' });
-      await user.click(closeButton);
+      await userEvent.click(closeButton);
 
       await waitFor(() => {
         expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
@@ -528,7 +528,7 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
     });
 
     it('should handle rapid search input efficiently', async () => {
-      const user = userEvent.setup();
+      
       render(<AIAgentPlatformsContainer />);
 
       await waitFor(() => {
@@ -542,8 +542,8 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
       // Simulate rapid typing
       await act(async () => {
         for (let i = 0; i < 10; i++) {
-          await user.type(searchInput, `search${i}`);
-          await user.clear(searchInput);
+          await userEvent.type(searchInput, `search${i}`);
+          await userEvent.clear(searchInput);
         }
       });
 
@@ -555,7 +555,7 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
     });
 
     it('should manage memory efficiently during extended use', async () => {
-      const user = userEvent.setup();
+      
       render(<AIAgentPlatformsContainer />);
 
       await waitFor(() => {
@@ -566,15 +566,15 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
       for (let i = 0; i < 20; i++) {
         // Search
         const searchInput = screen.getByTestId('search-input');
-        await user.type(searchInput, `search${i}`);
+        await userEvent.type(searchInput, `search${i}`);
         
         // Filter
         const categoryButton = screen.getByTestId('category-open-source-framework');
-        await user.click(categoryButton);
+        await userEvent.click(categoryButton);
         
         // Clear
-        await user.clear(searchInput);
-        await user.click(categoryButton); // Deselect category
+        await userEvent.clear(searchInput);
+        await userEvent.click(categoryButton); // Deselect category
       }
 
       // Should still be responsive after extended use
@@ -584,7 +584,7 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
 
   describe('Accessibility Compliance', () => {
     it('should maintain accessibility during all user interactions', async () => {
-      const user = userEvent.setup();
+      
       const { container } = render(<AIAgentPlatformsContainer />);
 
       await waitFor(() => {
@@ -597,14 +597,14 @@ describe('AIAgentPlatformsContainer Integration Tests', () => {
 
       // Test after search
       const searchInput = screen.getByTestId('search-input');
-      await user.type(searchInput, 'LangChain');
+      await userEvent.type(searchInput, 'LangChain');
 
       results = await axe(container);
       expect(results).toHaveNoViolations();
 
       // Test modal accessibility
       const viewDetailsButton = screen.getByTestId('view-details-langchain');
-      await user.click(viewDetailsButton);
+      await userEvent.click(viewDetailsButton);
 
       await waitFor(() => {
         expect(screen.getByRole('dialog')).toBeInTheDocument();

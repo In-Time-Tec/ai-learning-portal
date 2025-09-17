@@ -342,7 +342,7 @@ describe('Accessibility Features', () => {
 
   describe('Dynamic Content Announcements', () => {
     it('should announce filter changes to screen readers', async () => {
-      const user = userEvent.setup();
+      
       render(<AIAgentPlatformsContainer />);
       
       await waitFor(() => {

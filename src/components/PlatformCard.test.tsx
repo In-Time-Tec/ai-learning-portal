@@ -193,7 +193,7 @@ describe('PlatformCard', () => {
 
   describe('Interactions', () => {
     it('calls onViewDetails when View Details button is clicked', async () => {
-      const user = userEvent.setup();
+      
       
       render(
         <PlatformCard 
@@ -203,7 +203,7 @@ describe('PlatformCard', () => {
       );
 
       const viewDetailsButton = screen.getByRole('button', { name: /view detailed information about test ai platform/i });
-      await user.click(viewDetailsButton);
+      await userEvent.click(viewDetailsButton);
 
       expect(mockOnViewDetails).toHaveBeenCalledTimes(1);
       expect(mockOnViewDetails).toHaveBeenCalledWith(mockPlatform);

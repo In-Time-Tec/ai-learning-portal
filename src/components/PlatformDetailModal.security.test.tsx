@@ -67,12 +67,12 @@ describe('PlatformDetailModal Security Tests', () => {
         pricing: 'https://example.com/pricing'
       });
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       // Navigate to resources tab
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // All valid HTTPS links should be rendered
       expect(screen.getByRole('link', { name: /visit test platform official website/i })).toBeInTheDocument();
@@ -87,11 +87,11 @@ describe('PlatformDetailModal Security Tests', () => {
         documentation: 'http://docs.example.com'
       });
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // HTTP links should be rendered but may have warnings
       expect(screen.getByRole('link', { name: /visit test platform official website/i })).toBeInTheDocument();
@@ -104,11 +104,11 @@ describe('PlatformDetailModal Security Tests', () => {
         documentation: 'javascript:void(0)'
       });
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // JavaScript URLs should be filtered out
       const suspiciousLinks = screen.queryAllByRole('link').filter(link => {
@@ -125,11 +125,11 @@ describe('PlatformDetailModal Security Tests', () => {
         documentation: 'data:application/javascript,alert("xss")'
       });
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // Data URLs should be filtered out
       const suspiciousLinks = screen.queryAllByRole('link').filter(link => {
@@ -146,11 +146,11 @@ describe('PlatformDetailModal Security Tests', () => {
         documentation: 'vbscript:alert("test")'
       });
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // VBScript URLs should be filtered out
       const suspiciousLinks = screen.queryAllByRole('link').filter(link => {
@@ -168,11 +168,11 @@ describe('PlatformDetailModal Security Tests', () => {
         githubRepository: 'ftp://invalid-protocol.com'
       });
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // Should not crash and should handle malformed URLs
       expect(screen.getByText('Official Resources')).toBeInTheDocument();
@@ -184,11 +184,11 @@ describe('PlatformDetailModal Security Tests', () => {
         documentation: 'https://example.com/redirect?url=javascript:alert("xss")'
       });
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // Should handle encoded malicious content appropriately
       const links = screen.getAllByRole('link');
@@ -210,11 +210,11 @@ describe('PlatformDetailModal Security Tests', () => {
         githubRepository: 'https://github.com/example/repo'
       });
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // Check all external links have proper security attributes
       const externalLinks = screen.getAllByRole('link');
@@ -229,11 +229,11 @@ describe('PlatformDetailModal Security Tests', () => {
         officialWebsite: 'https://malicious-site.com'
       });
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       const websiteLink = screen.getByRole('link', { name: /visit test platform official website/i });
       
@@ -246,11 +246,11 @@ describe('PlatformDetailModal Security Tests', () => {
         officialWebsite: 'https://tracking-site.com'
       });
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       const websiteLink = screen.getByRole('link', { name: /visit test platform official website/i });
       
@@ -265,11 +265,11 @@ describe('PlatformDetailModal Security Tests', () => {
         officialWebsite: 'https://example.com/page?script=<script>alert("xss")</script>'
       });
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // Should not execute any inline scripts
       expect(document.querySelectorAll('script')).toHaveLength(0);
@@ -281,11 +281,11 @@ describe('PlatformDetailModal Security Tests', () => {
         documentation: 'https://docs.example.com?search="><script>alert("xss")</script>'
       });
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // URLs should be rendered safely without executing embedded scripts
       const links = screen.getAllByRole('link');
@@ -303,11 +303,11 @@ describe('PlatformDetailModal Security Tests', () => {
         officialWebsite: longUrl
       });
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // Should handle long URLs without crashing
       expect(screen.getByText('Official Resources')).toBeInTheDocument();
@@ -319,11 +319,11 @@ describe('PlatformDetailModal Security Tests', () => {
         documentation: 'https://docs.example.com/path/with spaces/and-special-chars!@#$%'
       });
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // Should handle special characters in URLs
       expect(screen.getByRole('link', { name: /visit test platform official website/i })).toBeInTheDocument();
@@ -335,11 +335,11 @@ describe('PlatformDetailModal Security Tests', () => {
         githubRepository: ''
       });
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // Should handle missing URLs gracefully
       expect(screen.getByText('Official Resources')).toBeInTheDocument();
@@ -356,11 +356,11 @@ describe('PlatformDetailModal Security Tests', () => {
         officialWebsite: 'https://example.com'
       });
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       const websiteLink = screen.getByRole('link', { name: /visit test platform official website/i });
       
@@ -373,11 +373,11 @@ describe('PlatformDetailModal Security Tests', () => {
         officialWebsite: 'https://malicious-frame-site.com'
       });
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // Should not create any iframe elements
       expect(document.querySelectorAll('iframe')).toHaveLength(0);
@@ -393,11 +393,11 @@ describe('PlatformDetailModal Security Tests', () => {
       // Override platform name with potentially malicious content
       platform.name = '<script>alert("xss")</script>Test Platform';
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // Link labels should be sanitized
       const websiteLink = screen.getByRole('link', { name: /visit.*official website/i });
@@ -412,11 +412,11 @@ describe('PlatformDetailModal Security Tests', () => {
         officialWebsite: 'https://example.com?param=&lt;script&gt;alert("xss")&lt;/script&gt;'
       });
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       const websiteLink = screen.getByRole('link', { name: /visit test platform official website/i });
       
@@ -434,11 +434,11 @@ describe('PlatformDetailModal Security Tests', () => {
 
       const originalCSP = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
       
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // Should not modify existing CSP
       const currentCSP = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
@@ -450,11 +450,11 @@ describe('PlatformDetailModal Security Tests', () => {
         officialWebsite: 'https://example.com'
       });
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // Should not add any inline styles with javascript
       const elementsWithInlineStyles = document.querySelectorAll('[style*="javascript"]');
@@ -472,11 +472,11 @@ describe('PlatformDetailModal Security Tests', () => {
         officialWebsite: 'javascript:alert("security-test")'
       });
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // Should handle security violations without crashing
       expect(screen.getByText('Official Resources')).toBeInTheDocument();
@@ -488,11 +488,11 @@ describe('PlatformDetailModal Security Tests', () => {
         documentation: 'data:text/html,test'
       });
 
-      const user = userEvent.setup();
+      
       render(<PlatformDetailModal {...defaultProps} platform={platform} />);
 
       const resourcesTab = screen.getByRole('tab', { name: 'Resources' });
-      await user.click(resourcesTab);
+      await userEvent.click(resourcesTab);
 
       // Should show resources section even with blocked URLs
       expect(screen.getByText('Official Resources')).toBeInTheDocument();

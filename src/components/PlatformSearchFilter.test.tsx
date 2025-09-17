@@ -73,23 +73,23 @@ describe('PlatformSearchFilter', () => {
 
   describe('Search Functionality', () => {
     it('updates search input value when typing', async () => {
-      const user = userEvent.setup();
+      
       render(<PlatformSearchFilter {...defaultProps} />);
       
       const searchInput = screen.getByLabelText('Search Platforms');
-      await user.type(searchInput, 'test query');
+      await userEvent.type(searchInput, 'test query');
       
       expect(searchInput).toHaveValue('test query');
     });
 
     it('calls onSearchChange with debounced value after 300ms', async () => {
       const mockOnSearchChange = jest.fn();
-      const user = userEvent.setup();
+      
       
       render(<PlatformSearchFilter {...defaultProps} onSearchChange={mockOnSearchChange} />);
       
       const searchInput = screen.getByLabelText('Search Platforms');
-      await user.type(searchInput, 'test');
+      await userEvent.type(searchInput, 'test');
       
       // Should not call immediately
       expect(mockOnSearchChange).not.toHaveBeenCalled();
@@ -102,14 +102,14 @@ describe('PlatformSearchFilter', () => {
 
     it('debounces multiple rapid keystrokes', async () => {
       const mockOnSearchChange = jest.fn();
-      const user = userEvent.setup();
+      
       
       render(<PlatformSearchFilter {...defaultProps} onSearchChange={mockOnSearchChange} />);
       
       const searchInput = screen.getByLabelText('Search Platforms');
       
       // Type multiple characters rapidly
-      await user.type(searchInput, 'abc');
+      await userEvent.type(searchInput, 'abc');
       
       // Should only call once after debounce
       await waitFor(() => {
@@ -132,11 +132,11 @@ describe('PlatformSearchFilter', () => {
   describe('Category Filtering', () => {
     it('calls onCategoryChange when category button is clicked', async () => {
       const mockOnCategoryChange = jest.fn();
-      const user = userEvent.setup();
+      
       
       render(<PlatformSearchFilter {...defaultProps} onCategoryChange={mockOnCategoryChange} />);
       
-      await user.click(screen.getByRole('button', { name: 'Open Source' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Open Source' }));
       
       expect(mockOnCategoryChange).toHaveBeenCalledWith('open-source-framework');
     });
@@ -151,14 +151,14 @@ describe('PlatformSearchFilter', () => {
 
     it('deselects category when clicking active category button', async () => {
       const mockOnCategoryChange = jest.fn();
-      const user = userEvent.setup();
+      
       
       render(<PlatformSearchFilter {...defaultProps} 
         selectedCategory="open-source-framework" 
         onCategoryChange={mockOnCategoryChange} 
       />);
       
-      await user.click(screen.getByRole('button', { name: 'Open Source' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Open Source' }));
       
       expect(mockOnCategoryChange).toHaveBeenCalledWith(undefined);
     });
@@ -175,28 +175,28 @@ describe('PlatformSearchFilter', () => {
   describe('Clear Filters Functionality', () => {
     it('clears search query when clear filters is clicked', async () => {
       const mockOnSearchChange = jest.fn();
-      const user = userEvent.setup();
+      
       
       render(<PlatformSearchFilter {...defaultProps} 
         searchQuery="test query" 
         onSearchChange={mockOnSearchChange} 
       />);
       
-      await user.click(screen.getByText('Clear Filters'));
+      await userEvent.click(screen.getByText('Clear Filters'));
       
       expect(mockOnSearchChange).toHaveBeenCalledWith('');
     });
 
     it('clears selected category when clear filters is clicked', async () => {
       const mockOnCategoryChange = jest.fn();
-      const user = userEvent.setup();
+      
       
       render(<PlatformSearchFilter {...defaultProps} 
         selectedCategory="open-source-framework" 
         onCategoryChange={mockOnCategoryChange} 
       />);
       
-      await user.click(screen.getByText('Clear Filters'));
+      await userEvent.click(screen.getByText('Clear Filters'));
       
       expect(mockOnCategoryChange).toHaveBeenCalledWith(undefined);
     });
@@ -204,7 +204,7 @@ describe('PlatformSearchFilter', () => {
     it('clears both search and category filters simultaneously', async () => {
       const mockOnSearchChange = jest.fn();
       const mockOnCategoryChange = jest.fn();
-      const user = userEvent.setup();
+      
       
       render(<PlatformSearchFilter {...defaultProps} 
         searchQuery="test" 
@@ -213,7 +213,7 @@ describe('PlatformSearchFilter', () => {
         onCategoryChange={mockOnCategoryChange}
       />);
       
-      await user.click(screen.getByText('Clear Filters'));
+      await userEvent.click(screen.getByText('Clear Filters'));
       
       expect(mockOnSearchChange).toHaveBeenCalledWith('');
       expect(mockOnCategoryChange).toHaveBeenCalledWith(undefined);
@@ -222,7 +222,7 @@ describe('PlatformSearchFilter', () => {
 
   describe('Keyboard Navigation', () => {
     it('supports tab navigation through interactive elements', async () => {
-      const user = userEvent.setup();
+      
       render(<PlatformSearchFilter {...defaultProps} searchQuery="test" />);
       
       const searchInput = screen.getByLabelText('Search Platforms');
@@ -230,17 +230,17 @@ describe('PlatformSearchFilter', () => {
       const clearButton = screen.getByText('Clear Filters');
       
       // Tab through elements
-      await user.tab();
+      await userEvent.tab();
       expect(searchInput).toHaveFocus();
       
-      await user.tab();
+      await userEvent.tab();
       expect(firstCategoryButton).toHaveFocus();
       
       // Tab through all category buttons
-      await user.tab();
-      await user.tab();
-      await user.tab();
-      await user.tab();
+      await userEvent.tab();
+      await userEvent.tab();
+      await userEvent.tab();
+      await userEvent.tab();
       expect(clearButton).toHaveFocus();
     });
 
@@ -326,13 +326,13 @@ describe('PlatformSearchFilter', () => {
     it('handles very long search queries', async () => {
       const longQuery = 'a'.repeat(100); // Reduced size for faster test
       const mockOnSearchChange = jest.fn();
-      const user = userEvent.setup();
+      
       
       render(<PlatformSearchFilter {...defaultProps} onSearchChange={mockOnSearchChange} />);
       
       const searchInput = screen.getByLabelText('Search Platforms');
-      await user.clear(searchInput);
-      await user.type(searchInput, longQuery);
+      await userEvent.clear(searchInput);
+      await userEvent.type(searchInput, longQuery);
       
       await waitFor(() => {
         expect(mockOnSearchChange).toHaveBeenCalledWith(longQuery);
@@ -341,14 +341,14 @@ describe('PlatformSearchFilter', () => {
 
     it('handles rapid category selection changes', async () => {
       const mockOnCategoryChange = jest.fn();
-      const user = userEvent.setup();
+      
       
       render(<PlatformSearchFilter {...defaultProps} onCategoryChange={mockOnCategoryChange} />);
       
       // Rapidly click different category buttons
-      await user.click(screen.getByRole('button', { name: 'Open Source' }));
-      await user.click(screen.getByRole('button', { name: 'Commercial' }));
-      await user.click(screen.getByRole('button', { name: 'Enterprise' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Open Source' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Commercial' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Enterprise' }));
       
       expect(mockOnCategoryChange).toHaveBeenCalledTimes(3);
       expect(mockOnCategoryChange).toHaveBeenNthCalledWith(1, 'open-source-framework');

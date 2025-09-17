@@ -219,7 +219,7 @@ describe('AIAgentPlatformsContainer Error Scenario Tests', () => {
       mockDataService.getFilteredPlatforms.mockReturnValue(validPlatforms);
       mockDataService.getUniqueCategories.mockReturnValue(['open-source-framework']);
 
-      const user = userEvent.setup();
+      
       render(<AIAgentPlatformsContainer />);
 
       await waitFor(() => {
@@ -235,7 +235,7 @@ describe('AIAgentPlatformsContainer Error Scenario Tests', () => {
       
       // This should trigger the corrupted filter function
       await act(async () => {
-        await user.type(searchInput, 'test');
+        await userEvent.type(searchInput, 'test');
       });
 
       // Should handle the error gracefully without crashing
@@ -302,7 +302,7 @@ describe('AIAgentPlatformsContainer Error Scenario Tests', () => {
 
   describe('Component State Error Scenarios', () => {
     it('should handle state corruption during search', async () => {
-      const user = userEvent.setup();
+      
       
       mockDataService.loadPlatforms.mockResolvedValue(validPlatforms);
       mockDataService.getFilteredPlatforms.mockReturnValue(validPlatforms);
@@ -323,7 +323,7 @@ describe('AIAgentPlatformsContainer Error Scenario Tests', () => {
       
       // Should handle search errors gracefully
       await act(async () => {
-        await user.type(searchInput, 'crash test');
+        await userEvent.type(searchInput, 'crash test');
       });
 
       // Component should still be functional
@@ -332,7 +332,7 @@ describe('AIAgentPlatformsContainer Error Scenario Tests', () => {
     });
 
     it('should handle modal state errors', async () => {
-      const user = userEvent.setup();
+      
       
       mockDataService.loadPlatforms.mockResolvedValue(validPlatforms);
       mockDataService.getFilteredPlatforms.mockReturnValue(validPlatforms);
@@ -346,7 +346,7 @@ describe('AIAgentPlatformsContainer Error Scenario Tests', () => {
 
       // Open modal
       const viewDetailsButton = screen.getByTestId('view-details-valid-platform');
-      await user.click(viewDetailsButton);
+      await userEvent.click(viewDetailsButton);
 
       await waitFor(() => {
         expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -360,7 +360,7 @@ describe('AIAgentPlatformsContainer Error Scenario Tests', () => {
       
       // Should be able to close modal
       const closeButton = screen.getByRole('button', { name: 'Close modal' });
-      await user.click(closeButton);
+      await userEvent.click(closeButton);
 
       await waitFor(() => {
         expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
@@ -368,7 +368,7 @@ describe('AIAgentPlatformsContainer Error Scenario Tests', () => {
     });
 
     it('should handle filter state inconsistencies', async () => {
-      const user = userEvent.setup();
+      
       
       mockDataService.loadPlatforms.mockResolvedValue(validPlatforms);
       mockDataService.getUniqueCategories.mockReturnValue(['open-source-framework']);
@@ -395,11 +395,11 @@ describe('AIAgentPlatformsContainer Error Scenario Tests', () => {
       const searchInput = screen.getByTestId('search-input');
       
       // First search should work
-      await user.type(searchInput, 'test');
+      await userEvent.type(searchInput, 'test');
       
       // Second search should fail but component should recover
-      await user.clear(searchInput);
-      await user.type(searchInput, 'recovery');
+      await userEvent.clear(searchInput);
+      await userEvent.type(searchInput, 'recovery');
 
       // Component should still be functional
       expect(searchInput).toBeInTheDocument();

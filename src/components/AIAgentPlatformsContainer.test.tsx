@@ -228,7 +228,7 @@ describe('AIAgentPlatformsContainer', () => {
     });
 
     it('should announce filter changes to screen readers', async () => {
-      const user = userEvent.setup();
+      
       render(<AIAgentPlatformsContainer />);
       
       await waitFor(() => {
@@ -236,7 +236,7 @@ describe('AIAgentPlatformsContainer', () => {
       });
       
       const searchInput = screen.getByTestId('search-input');
-      await user.type(searchInput, 'test');
+      await userEvent.type(searchInput, 'test');
       
       // The announcement should be made to the screen reader region
       const announcementRegion = screen.getByRole('status');
@@ -324,10 +324,10 @@ describe('AIAgentPlatformsContainer', () => {
     });
 
     it('should filter platforms by search query', async () => {
-      const user = userEvent.setup();
+      
       const searchInput = screen.getByTestId('search-input');
       
-      await user.type(searchInput, 'Platform 1');
+      await userEvent.type(searchInput, 'Platform 1');
       
       await waitFor(() => {
         expect(mockDataService.getFilteredPlatforms).toHaveBeenCalledWith(
@@ -426,8 +426,8 @@ describe('AIAgentPlatformsContainer', () => {
       
       // Trigger a search that returns no results
       const searchInput = screen.getByTestId('search-input');
-      const user = userEvent.setup();
-      await user.type(searchInput, 'nonexistent');
+      
+      await userEvent.type(searchInput, 'nonexistent');
       
       await waitFor(() => {
         expect(screen.getByText('No platforms found')).toBeInTheDocument();
@@ -447,8 +447,8 @@ describe('AIAgentPlatformsContainer', () => {
       
       // Apply a filter
       const searchInput = screen.getByTestId('search-input');
-      const user = userEvent.setup();
-      await user.type(searchInput, 'nonexistent');
+      
+      await userEvent.type(searchInput, 'nonexistent');
       
       await waitFor(() => {
         expect(screen.getByText('Clear All Filters')).toBeInTheDocument();
@@ -465,9 +465,9 @@ describe('AIAgentPlatformsContainer', () => {
       });
       
       const searchInput = screen.getByTestId('search-input');
-      const user = userEvent.setup();
       
-      await user.type(searchInput, 'Platform');
+      
+      await userEvent.type(searchInput, 'Platform');
       
       // Verify that the search input maintains its value
       expect(searchInput).toHaveValue('Platform');
@@ -493,8 +493,8 @@ describe('AIAgentPlatformsContainer', () => {
       
       // Perform concurrent updates
       await act(async () => {
-        const user = userEvent.setup();
-        await user.type(searchInput, 'Test');
+        
+        await userEvent.type(searchInput, 'Test');
         fireEvent.click(categoryButton);
       });
       

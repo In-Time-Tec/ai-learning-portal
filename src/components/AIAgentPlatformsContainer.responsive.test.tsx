@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import AIAgentPlatformsContainer from './AIAgentPlatformsContainer';
@@ -176,7 +175,6 @@ describe('AIAgentPlatformsContainer Responsive Design Tests', () => {
     });
 
     it('should optimize modal for mobile screens', async () => {
-      const user = userEvent.setup();
       render(<AIAgentPlatformsContainer />);
 
       await waitFor(() => {
@@ -184,7 +182,7 @@ describe('AIAgentPlatformsContainer Responsive Design Tests', () => {
       });
 
       const viewDetailsButton = screen.getByTestId('view-details-platform-1');
-      await user.click(viewDetailsButton);
+      await userEvent.click(viewDetailsButton);
 
       await waitFor(() => {
         expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -286,7 +284,6 @@ describe('AIAgentPlatformsContainer Responsive Design Tests', () => {
     });
 
     it('should optimize modal size for tablet', async () => {
-      const user = userEvent.setup();
       render(<AIAgentPlatformsContainer />);
 
       await waitFor(() => {
@@ -294,7 +291,7 @@ describe('AIAgentPlatformsContainer Responsive Design Tests', () => {
       });
 
       const viewDetailsButton = screen.getByTestId('view-details-platform-1');
-      await user.click(viewDetailsButton);
+      await userEvent.click(viewDetailsButton);
 
       await waitFor(() => {
         expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -348,7 +345,6 @@ describe('AIAgentPlatformsContainer Responsive Design Tests', () => {
     });
 
     it('should position modal optimally on desktop', async () => {
-      const user = userEvent.setup();
       render(<AIAgentPlatformsContainer />);
 
       await waitFor(() => {
@@ -356,7 +352,7 @@ describe('AIAgentPlatformsContainer Responsive Design Tests', () => {
       });
 
       const viewDetailsButton = screen.getByTestId('view-details-platform-1');
-      await user.click(viewDetailsButton);
+      await userEvent.click(viewDetailsButton);
 
       await waitFor(() => {
         expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -430,7 +426,6 @@ describe('AIAgentPlatformsContainer Responsive Design Tests', () => {
     });
 
     it('should maintain modal functionality across breakpoints', async () => {
-      const user = userEvent.setup();
       render(<AIAgentPlatformsContainer />);
 
       await waitFor(() => {
@@ -440,7 +435,7 @@ describe('AIAgentPlatformsContainer Responsive Design Tests', () => {
       // Open modal on mobile
       setViewportSize(375, 667);
       const viewDetailsButton = screen.getByTestId('view-details-platform-1');
-      await user.click(viewDetailsButton);
+      await userEvent.click(viewDetailsButton);
 
       await waitFor(() => {
         expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -454,7 +449,7 @@ describe('AIAgentPlatformsContainer Responsive Design Tests', () => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
       
       const closeButton = screen.getByRole('button', { name: 'Close modal' });
-      await user.click(closeButton);
+      await userEvent.click(closeButton);
 
       await waitFor(() => {
         expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
