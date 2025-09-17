@@ -9,7 +9,7 @@ import './SkeletonLoader.css';
 
 interface SkeletonLoaderProps {
   /** Type of skeleton to display */
-  type: 'glossary' | 'quiz' | 'progress' | 'term' | 'question' | 'ai-tools';
+  type: 'glossary' | 'quiz' | 'progress' | 'term' | 'question' | 'ai-tools' | 'platforms';
   /** Number of items to show (for list types) */
   count?: number;
   /** Additional CSS class */
@@ -139,6 +139,44 @@ export const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
     </div>
   );
 
+  const renderPlatformsSkeleton = () => (
+    <div className="skeleton-loader skeleton-loader--platforms">
+      <div className="skeleton-loader__header">
+        <div className="skeleton-loader__title"></div>
+        <div className="skeleton-loader__description"></div>
+      </div>
+      <div className="skeleton-loader__controls">
+        <div className="skeleton-loader__search"></div>
+        <div className="skeleton-loader__filters">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="skeleton-loader__filter-button"></div>
+          ))}
+        </div>
+      </div>
+      <div className="skeleton-loader__platforms-grid">
+        {[...Array(count)].map((_, i) => (
+          <div key={i} className="skeleton-loader__platform-card">
+            <div className="skeleton-loader__platform-header">
+              <div className="skeleton-loader__platform-title"></div>
+              <div className="skeleton-loader__platform-badges">
+                <div className="skeleton-loader__platform-badge"></div>
+                <div className="skeleton-loader__platform-badge"></div>
+              </div>
+            </div>
+            <div className="skeleton-loader__platform-description"></div>
+            <div className="skeleton-loader__platform-description"></div>
+            <div className="skeleton-loader__platform-features">
+              {[...Array(3)].map((_, j) => (
+                <div key={j} className="skeleton-loader__platform-feature"></div>
+              ))}
+            </div>
+            <div className="skeleton-loader__platform-button"></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
   const renderSkeleton = () => {
     switch (type) {
       case 'glossary':
@@ -153,6 +191,8 @@ export const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
         return renderQuestionSkeleton();
       case 'ai-tools':
         return renderAIToolsSkeleton();
+      case 'platforms':
+        return renderPlatformsSkeleton();
       default:
         return null;
     }

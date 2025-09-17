@@ -15,11 +15,12 @@ import { ProgressTracker } from './components/ProgressTracker';
 import { AIToolsContainer } from './components/AIToolsContainer';
 import { AIIntroductionContainer } from './components/AIIntroductionContainer';
 import { VectorEmbeddingsPage } from './components/VectorEmbeddingsPage';
+import { AIAgentPlatformsContainer } from './components/AIAgentPlatformsContainer';
 import { localStorageService } from './services/LocalStorageService';
 import { UserProgress, QuizResults, UserRole } from './types';
 import './App.css';
 
-type AppView = 'home' | 'learn' | 'ai-tools' | 'glossary' | 'quiz' | 'progress' | 'introduction' | 'vector-embeddings';
+type AppView = 'home' | 'learn' | 'ai-tools' | 'glossary' | 'quiz' | 'progress' | 'introduction' | 'vector-embeddings' | 'agent-platforms';
 
 interface AppState {
   currentView: AppView;
@@ -66,6 +67,27 @@ function App() {
       }));
     }
   }, []);
+
+  /**
+   * Handle focus management on route changes
+   */
+  useEffect(() => {
+    // Focus the main content area when view changes for screen readers
+    const mainElement = document.querySelector('main[role="main"]') as HTMLElement;
+    if (mainElement) {
+      mainElement.focus();
+      // Remove focus outline after focusing for visual users
+      mainElement.style.outline = 'none';
+      // Restore focus outline for keyboard users
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Tab') {
+          mainElement.style.outline = '';
+          mainElement.removeEventListener('keydown', handleKeyDown);
+        }
+      };
+      mainElement.addEventListener('keydown', handleKeyDown);
+    }
+  }, [appState.currentView]);
 
   /**
    * Handle view navigation
@@ -192,6 +214,15 @@ function App() {
         >
           Vector Embeddings
         </button>
+
+        <button
+          type="button"
+          className={`app__nav-button ${appState.currentView === 'agent-platforms' ? 'active' : ''}`}
+          onClick={() => handleViewChange('agent-platforms')}
+          aria-current={appState.currentView === 'agent-platforms' ? 'page' : undefined}
+        >
+          Agent Platforms
+        </button>
       </div>
     </nav>
   );
@@ -258,6 +289,13 @@ function App() {
           />
         );
 
+      case 'agent-platforms':
+        return (
+          <AIAgentPlatformsContainer
+            className="app__view-content"
+          />
+        );
+
       default:
         return (
           <div className="app__error" role="alert">
@@ -320,7 +358,7 @@ function App() {
           {renderNavigation()}
         </header>
 
-        <main className="app__main" role="main">
+        <main className="app__main" role="main" tabIndex={-1}>
           {/* Sub-navigation for Learn section */}
           {['glossary', 'quiz', 'progress'].includes(appState.currentView) && (
             <nav className="app__sub-navigation" role="navigation" aria-label="Learn section navigation">

@@ -13,6 +13,9 @@ import {
   UserExperience,
   AITool,
   AIToolsData,
+  PlatformCategory,
+  AgentPlatform,
+  AgentPlatformsData,
   isUserRole,
   isGlossaryTerm,
   isQuizQuestion,
@@ -23,6 +26,9 @@ import {
   isUserExperience,
   isAITool,
   isAIToolsData,
+  isPlatformCategory,
+  isAgentPlatform,
+  isAgentPlatformsData,
 } from './index';
 
 describe('Type Guards', () => {
@@ -600,6 +606,275 @@ describe('Type Guards', () => {
         },
       };
       expect(isAIToolsData(invalidCategoryStructure)).toBe(false);
+    });
+  });
+
+  describe('isPlatformCategory', () => {
+    it('should return true for valid platform categories', () => {
+      expect(isPlatformCategory('open-source-framework')).toBe(true);
+      expect(isPlatformCategory('commercial-platform')).toBe(true);
+      expect(isPlatformCategory('enterprise-solution')).toBe(true);
+      expect(isPlatformCategory('workflow-automation')).toBe(true);
+      expect(isPlatformCategory('multi-agent-system')).toBe(true);
+      expect(isPlatformCategory('autonomous-agent')).toBe(true);
+    });
+
+    it('should return false for invalid platform categories', () => {
+      expect(isPlatformCategory('invalid-category')).toBe(false);
+      expect(isPlatformCategory('')).toBe(false);
+      expect(isPlatformCategory(null)).toBe(false);
+      expect(isPlatformCategory(undefined)).toBe(false);
+      expect(isPlatformCategory(123)).toBe(false);
+      expect(isPlatformCategory({})).toBe(false);
+      expect(isPlatformCategory([])).toBe(false);
+    });
+  });
+
+  describe('isAgentPlatform', () => {
+    const validAgentPlatform: AgentPlatform = {
+      id: 'platform-001',
+      name: 'Test Platform',
+      category: 'open-source-framework',
+      type: 'open-source',
+      description: 'A test platform for AI agents',
+      detailedDescription: 'Detailed description of the test platform',
+      strengths: ['Easy to use', 'Well documented'],
+      weaknesses: ['Limited features', 'Small community'],
+      primaryUseCases: ['Chatbots', 'Automation'],
+      keyFeatures: ['Multi-agent support', 'REST API'],
+      officialWebsite: 'https://example.com',
+      documentation: 'https://docs.example.com',
+      githubRepository: 'https://github.com/example/platform',
+      pricing: 'Free',
+      supportedLanguages: ['Python', 'JavaScript'],
+      integrations: ['Slack', 'Discord'],
+      deploymentOptions: ['Cloud', 'On-premise'],
+      targetAudience: ['Developers', 'Businesses'],
+      competitorComparison: 'Better than competitor X',
+      maturityLevel: 'stable',
+      lastUpdated: '2024-01-01',
+    };
+
+    it('should return true for valid agent platforms', () => {
+      expect(isAgentPlatform(validAgentPlatform)).toBe(true);
+    });
+
+    it('should return true for valid agent platforms with minimal optional fields', () => {
+      const minimalPlatform: AgentPlatform = {
+        id: 'platform-002',
+        name: 'Minimal Platform',
+        category: 'commercial-platform',
+        type: 'commercial',
+        description: 'A minimal platform',
+        detailedDescription: 'Detailed description',
+        strengths: ['Simple'],
+        weaknesses: ['Limited'],
+        primaryUseCases: ['Basic tasks'],
+        keyFeatures: ['Core functionality'],
+        targetAudience: ['Users'],
+        maturityLevel: 'beta',
+        lastUpdated: '2024-01-01',
+      };
+      expect(isAgentPlatform(minimalPlatform)).toBe(true);
+    });
+
+    it('should return false for invalid agent platforms', () => {
+      expect(isAgentPlatform(null)).toBe(false);
+      expect(isAgentPlatform(undefined)).toBe(false);
+      expect(isAgentPlatform({})).toBe(false);
+      expect(isAgentPlatform('string')).toBe(false);
+      expect(isAgentPlatform(123)).toBe(false);
+    });
+
+    it('should return false when required fields are missing', () => {
+      const { id, ...withoutId } = validAgentPlatform;
+      expect(isAgentPlatform(withoutId)).toBe(false);
+
+      const { name, ...withoutName } = validAgentPlatform;
+      expect(isAgentPlatform(withoutName)).toBe(false);
+
+      const { category, ...withoutCategory } = validAgentPlatform;
+      expect(isAgentPlatform(withoutCategory)).toBe(false);
+
+      const { strengths, ...withoutStrengths } = validAgentPlatform;
+      expect(isAgentPlatform(withoutStrengths)).toBe(false);
+
+      const { targetAudience, ...withoutTargetAudience } = validAgentPlatform;
+      expect(isAgentPlatform(withoutTargetAudience)).toBe(false);
+    });
+
+    it('should return false for invalid category', () => {
+      const invalidCategory = {
+        ...validAgentPlatform,
+        category: 'invalid-category',
+      };
+      expect(isAgentPlatform(invalidCategory)).toBe(false);
+    });
+
+    it('should return false for invalid type', () => {
+      const invalidType = {
+        ...validAgentPlatform,
+        type: 'invalid-type',
+      };
+      expect(isAgentPlatform(invalidType)).toBe(false);
+    });
+
+    it('should return false for invalid maturity level', () => {
+      const invalidMaturity = {
+        ...validAgentPlatform,
+        maturityLevel: 'invalid-maturity',
+      };
+      expect(isAgentPlatform(invalidMaturity)).toBe(false);
+    });
+
+    it('should return false for invalid array fields', () => {
+      const invalidStrengths = {
+        ...validAgentPlatform,
+        strengths: ['valid', 123], // Should be all strings
+      };
+      expect(isAgentPlatform(invalidStrengths)).toBe(false);
+
+      const invalidKeyFeatures = {
+        ...validAgentPlatform,
+        keyFeatures: 'not-an-array',
+      };
+      expect(isAgentPlatform(invalidKeyFeatures)).toBe(false);
+    });
+  });
+
+  describe('isAgentPlatformsData', () => {
+    const validAgentPlatformsData: AgentPlatformsData = {
+      platforms: [
+        {
+          id: 'platform-001',
+          name: 'Test Platform',
+          category: 'open-source-framework',
+          type: 'open-source',
+          description: 'A test platform',
+          detailedDescription: 'Detailed description',
+          strengths: ['Easy to use'],
+          weaknesses: ['Limited features'],
+          primaryUseCases: ['Chatbots'],
+          keyFeatures: ['Multi-agent support'],
+          targetAudience: ['Developers'],
+          maturityLevel: 'stable',
+          lastUpdated: '2024-01-01',
+        },
+      ],
+      categories: {
+        'open-source-framework': {
+          label: 'Open Source Frameworks',
+          description: 'Open source AI agent frameworks',
+          icon: 'framework-icon',
+        },
+        'commercial-platform': {
+          label: 'Commercial Platforms',
+          description: 'Commercial AI agent platforms',
+          icon: 'commercial-icon',
+        },
+        'enterprise-solution': {
+          label: 'Enterprise Solutions',
+          description: 'Enterprise AI agent solutions',
+          icon: 'enterprise-icon',
+        },
+        'workflow-automation': {
+          label: 'Workflow Automation',
+          description: 'Workflow automation platforms',
+          icon: 'workflow-icon',
+        },
+        'multi-agent-system': {
+          label: 'Multi-Agent Systems',
+          description: 'Multi-agent system platforms',
+          icon: 'multi-agent-icon',
+        },
+        'autonomous-agent': {
+          label: 'Autonomous Agents',
+          description: 'Autonomous agent platforms',
+          icon: 'autonomous-icon',
+        },
+      },
+      metadata: {
+        lastUpdated: '2024-01-01',
+        totalPlatforms: 1,
+        dataSource: 'test-source',
+      },
+    };
+
+    it('should return true for valid agent platforms data', () => {
+      expect(isAgentPlatformsData(validAgentPlatformsData)).toBe(true);
+    });
+
+    it('should return false for invalid agent platforms data', () => {
+      expect(isAgentPlatformsData(null)).toBe(false);
+      expect(isAgentPlatformsData(undefined)).toBe(false);
+      expect(isAgentPlatformsData({})).toBe(false);
+      expect(isAgentPlatformsData('string')).toBe(false);
+      expect(isAgentPlatformsData(123)).toBe(false);
+    });
+
+    it('should return false when platforms array is invalid', () => {
+      const invalidPlatforms = {
+        ...validAgentPlatformsData,
+        platforms: [
+          {
+            id: 'invalid-platform',
+            // Missing required fields
+          },
+        ],
+      };
+      expect(isAgentPlatformsData(invalidPlatforms)).toBe(false);
+
+      const nonArrayPlatforms = {
+        ...validAgentPlatformsData,
+        platforms: 'not-an-array',
+      };
+      expect(isAgentPlatformsData(nonArrayPlatforms)).toBe(false);
+    });
+
+    it('should return false when categories object is invalid', () => {
+      const invalidCategories = {
+        ...validAgentPlatformsData,
+        categories: {
+          'invalid-category': {
+            label: 'Invalid Category',
+            description: 'Invalid category description',
+            icon: 'invalid-icon',
+          },
+        },
+      };
+      expect(isAgentPlatformsData(invalidCategories)).toBe(false);
+
+      const missingCategoryFields = {
+        ...validAgentPlatformsData,
+        categories: {
+          'open-source-framework': {
+            label: 'Open Source Frameworks',
+            // Missing description and icon
+          },
+        },
+      };
+      expect(isAgentPlatformsData(missingCategoryFields)).toBe(false);
+    });
+
+    it('should return false when metadata is invalid', () => {
+      const invalidMetadata = {
+        ...validAgentPlatformsData,
+        metadata: {
+          lastUpdated: '2024-01-01',
+          totalPlatforms: 'not-a-number', // Should be number
+          dataSource: 'test-source',
+        },
+      };
+      expect(isAgentPlatformsData(invalidMetadata)).toBe(false);
+
+      const missingMetadataFields = {
+        ...validAgentPlatformsData,
+        metadata: {
+          lastUpdated: '2024-01-01',
+          // Missing totalPlatforms and dataSource
+        },
+      };
+      expect(isAgentPlatformsData(missingMetadataFields)).toBe(false);
     });
   });
 });

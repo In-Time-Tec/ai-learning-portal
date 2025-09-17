@@ -147,6 +147,85 @@ export interface IntroductionContent {
     next?: { label: string; destination: 'glossary' | 'quiz' | 'home' };
   };
 }
+
+/**
+ * AI Agent Platform categories for organization and filtering
+ */
+export type PlatformCategory = 
+  | 'open-source-framework'
+  | 'commercial-platform' 
+  | 'enterprise-solution'
+  | 'workflow-automation'
+  | 'multi-agent-system'
+  | 'autonomous-agent';
+
+/**
+ * Represents an AI agent platform with comprehensive information
+ */
+export interface AgentPlatform {
+  id: string;
+  name: string;
+  category: PlatformCategory;
+  type: 'open-source' | 'commercial' | 'enterprise';
+  description: string;
+  detailedDescription: string;
+  
+  // Strengths and weaknesses
+  strengths: string[];
+  weaknesses: string[];
+  
+  // Use cases and features
+  primaryUseCases: string[];
+  keyFeatures: string[];
+  
+  // Links and resources
+  officialWebsite?: string;
+  documentation?: string;
+  githubRepository?: string;
+  pricing?: string;
+  
+  // Technical details
+  supportedLanguages?: string[];
+  integrations?: string[];
+  deploymentOptions?: string[];
+  
+  // Market positioning
+  targetAudience: string[];
+  competitorComparison?: string;
+  
+  // Additional metadata
+  maturityLevel: 'experimental' | 'beta' | 'stable' | 'enterprise';
+  lastUpdated: string;
+}
+
+/**
+ * Complete agent platforms data structure with categories and metadata
+ */
+export interface AgentPlatformsData {
+  platforms: AgentPlatform[];
+  categories: {
+    [key in PlatformCategory]: {
+      label: string;
+      description: string;
+      icon: string;
+      capabilities?: string[];
+    };
+  };
+  metadata: {
+    lastUpdated: string;
+    totalPlatforms: number;
+    dataSource: string;
+    platformVsToolsExplanation?: {
+      title: string;
+      description: string;
+      keyDifferences: Array<{
+        aspect: string;
+        platform: string;
+        tool: string;
+      }>;
+    };
+  };
+}
 /**
  *
  Type guards for runtime data validation
@@ -416,4 +495,122 @@ function isValidCategoriesObject(obj: unknown): obj is AIToolsData['categories']
       typeof (categoryData as Record<string, unknown>).description === 'string'
     );
   });
+}
+
+/**
+ * Type guard to check if a value is a valid PlatformCategory
+ */
+export function isPlatformCategory(value: unknown): value is PlatformCategory {
+  return typeof value === 'string' && 
+    ['open-source-framework', 'commercial-platform', 'enterprise-solution', 
+     'workflow-automation', 'multi-agent-system', 'autonomous-agent'].includes(value);
+}
+
+/**
+ * Type guard to check if an object is a valid AgentPlatform
+ */
+export function isAgentPlatform(obj: unknown): obj is AgentPlatform {
+  if (typeof obj !== 'object' || obj === null) {
+    return false;
+  }
+
+  const platform = obj as Record<string, unknown>;
+  
+  return (
+    typeof platform.id === 'string' &&
+    typeof platform.name === 'string' &&
+    isPlatformCategory(platform.category) &&
+    typeof platform.type === 'string' &&
+    ['open-source', 'commercial', 'enterprise'].includes(platform.type as string) &&
+    typeof platform.description === 'string' &&
+    typeof platform.detailedDescription === 'string' &&
+    Array.isArray(platform.strengths) &&
+    platform.strengths.every(strength => typeof strength === 'string') &&
+    Array.isArray(platform.weaknesses) &&
+    platform.weaknesses.every(weakness => typeof weakness === 'string') &&
+    Array.isArray(platform.primaryUseCases) &&
+    platform.primaryUseCases.every(useCase => typeof useCase === 'string') &&
+    Array.isArray(platform.keyFeatures) &&
+    platform.keyFeatures.every(feature => typeof feature === 'string') &&
+    (platform.officialWebsite === undefined || typeof platform.officialWebsite === 'string') &&
+    (platform.documentation === undefined || typeof platform.documentation === 'string') &&
+    (platform.githubRepository === undefined || typeof platform.githubRepository === 'string') &&
+    (platform.pricing === undefined || typeof platform.pricing === 'string') &&
+    (platform.supportedLanguages === undefined || (Array.isArray(platform.supportedLanguages) && 
+      platform.supportedLanguages.every(lang => typeof lang === 'string'))) &&
+    (platform.integrations === undefined || (Array.isArray(platform.integrations) && 
+      platform.integrations.every(integration => typeof integration === 'string'))) &&
+    (platform.deploymentOptions === undefined || (Array.isArray(platform.deploymentOptions) && 
+      platform.deploymentOptions.every(option => typeof option === 'string'))) &&
+    Array.isArray(platform.targetAudience) &&
+    platform.targetAudience.every(audience => typeof audience === 'string') &&
+    (platform.competitorComparison === undefined || typeof platform.competitorComparison === 'string') &&
+    typeof platform.maturityLevel === 'string' &&
+    ['experimental', 'beta', 'stable', 'enterprise'].includes(platform.maturityLevel as string) &&
+    typeof platform.lastUpdated === 'string'
+  );
+}
+
+/**
+ * Type guard to check if an object is a valid AgentPlatformsData
+ */
+export function isAgentPlatformsData(obj: unknown): obj is AgentPlatformsData {
+  if (typeof obj !== 'object' || obj === null) {
+    return false;
+  }
+
+  const data = obj as Record<string, unknown>;
+  
+  return (
+    Array.isArray(data.platforms) &&
+    data.platforms.every(platform => isAgentPlatform(platform)) &&
+    typeof data.categories === 'object' &&
+    data.categories !== null &&
+    isValidPlatformCategoriesObject(data.categories) &&
+    typeof data.metadata === 'object' &&
+    data.metadata !== null &&
+    isValidPlatformMetadata(data.metadata)
+  );
+}
+
+/**
+ * Helper function to validate platform categories object
+ */
+function isValidPlatformCategoriesObject(obj: unknown): obj is AgentPlatformsData['categories'] {
+  if (typeof obj !== 'object' || obj === null) {
+    return false;
+  }
+
+  const categories = obj as Record<string, unknown>;
+  
+  // Validate that each category in the data has the correct structure
+  // and that the category key is a valid PlatformCategory
+  return Object.entries(categories).every(([categoryKey, categoryData]) => {
+    return (
+      isPlatformCategory(categoryKey) &&
+      typeof categoryData === 'object' &&
+      categoryData !== null &&
+      typeof (categoryData as Record<string, unknown>).label === 'string' &&
+      typeof (categoryData as Record<string, unknown>).description === 'string' &&
+      typeof (categoryData as Record<string, unknown>).icon === 'string'
+    );
+  });
+}
+
+/**
+ * Helper function to validate platform metadata object
+ */
+function isValidPlatformMetadata(obj: unknown): obj is AgentPlatformsData['metadata'] {
+  if (typeof obj !== 'object' || obj === null) {
+    return false;
+  }
+
+  const metadata = obj as Record<string, unknown>;
+  
+  return (
+    typeof metadata.lastUpdated === 'string' &&
+    typeof metadata.totalPlatforms === 'number' &&
+    metadata.totalPlatforms >= 0 &&
+    typeof metadata.dataSource === 'string'
+  );
 }

@@ -1,0 +1,479 @@
+.ai-agent-platforms-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+/* Header Section */
+/* Enhanced Header Section */
+.platforms-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  padding: 2rem 0;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.platforms-title {
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 1.25rem;
+  line-height: 1.1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.platforms-description {
+  font-size: 1.2rem;
+  color: #4a4a4a;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.platforms-metadata {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  padding-top: 1rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.platform-count {
+  font-size: 1rem;
+  color: #666666;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  background: #f8f9fa;
+  border-radius: 20px;
+  border: 1px solid #e9ecef;
+  font-weight: 500;
+}
+
+/* Controls Section */
+.platforms-controls {
+  margin-bottom: 2rem;
+}
+
+/* Loading State */
+.platforms-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+}
+
+.loading-message {
+  margin-top: 1rem;
+  font-size: 1.125rem;
+  color: #666;
+}
+
+/* Error State */
+.retry-info {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: #888;
+}
+
+.max-retries-reached {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: #dc3545;
+  font-weight: 500;
+}
+
+/* Content Section */
+.platforms-content {
+  min-height: 400px;
+}
+
+.platforms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+  align-items: start;
+}
+
+/* Enhanced responsive grid system */
+@media (min-width: 1400px) {
+  .platforms-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .platforms-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1199px) {
+  .platforms-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 899px) {
+  .platforms-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+/* Empty State */
+.platforms-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  min-height: 400px;
+}
+
+.empty-state-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.5;
+}
+
+.empty-state-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.empty-state-message {
+  font-size: 1rem;
+  color: #666;
+  max-width: 400px;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.clear-filters-button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.clear-filters-button:hover {
+  background: #0056b3;
+}
+
+.clear-filters-button:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Enhanced Mobile Responsive Design */
+@media (max-width: 768px) {
+  .ai-agent-platforms-container {
+    padding: 1rem 0.75rem;
+  }
+
+  .platforms-title {
+    font-size: 2rem;
+    line-height: 1.1;
+  }
+
+  .platforms-description {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .platforms-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .platforms-metadata {
+    gap: 1rem;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .empty-state-icon {
+    font-size: 3rem;
+  }
+
+  .empty-state-title {
+    font-size: 1.25rem;
+  }
+
+  .platforms-empty-state {
+    padding: 3rem 1rem;
+  }
+
+  /* Touch-friendly controls */
+  .clear-filters-button {
+    min-height: 44px;
+    padding: 0.875rem 1.75rem;
+    font-size: 1rem;
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 599px) {
+  .platforms-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .platforms-skeleton-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ai-agent-platforms-container {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .platforms-title {
+    font-size: 1.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .platforms-description {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .platforms-grid {
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .platforms-header {
+    margin-bottom: 2rem;
+  }
+
+  .platforms-controls {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Enhanced touch targets */
+  .clear-filters-button {
+    width: 100%;
+    min-height: 48px;
+    font-size: 1rem;
+  }
+
+  .empty-state-title {
+    font-size: 1.125rem;
+  }
+
+  .empty-state-message {
+    font-size: 0.9rem;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 360px) {
+  .ai-agent-platforms-container {
+    padding: 0.5rem 0.25rem;
+  }
+
+  .platforms-title {
+    font-size: 1.5rem;
+  }
+
+  .platforms-description {
+    font-size: 0.875rem;
+  }
+
+  .platforms-empty-state {
+    padding: 2rem 0.5rem;
+  }
+}
+
+/* Enhanced WCAG AAA Compliance */
+.platforms-title {
+  color: #1a1a1a; /* Enhanced contrast ratio */
+}
+
+.platforms-description {
+  color: #4a4a4a; /* Improved contrast for AAA compliance */
+}
+
+.platform-count {
+  color: #666666; /* Better contrast ratio */
+}
+
+.loading-message {
+  color: #4a4a4a; /* Improved contrast */
+}
+
+.empty-state-title {
+  color: #1a1a1a; /* Enhanced contrast */
+}
+
+.empty-state-message {
+  color: #4a4a4a; /* Better contrast for readability */
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .platforms-title {
+    color: #000000;
+    font-weight: 800;
+  }
+
+  .platforms-description {
+    color: #1a1a1a;
+    font-weight: 500;
+  }
+
+  .platform-count {
+    color: #333333;
+    font-weight: 600;
+  }
+
+  .empty-state-title {
+    color: #000000;
+    font-weight: 700;
+  }
+
+  .empty-state-message {
+    color: #1a1a1a;
+    font-weight: 500;
+  }
+
+  .loading-message {
+    color: #1a1a1a;
+    font-weight: 500;
+  }
+
+  .clear-filters-button {
+    border-width: 2px;
+    font-weight: 600;
+  }
+
+  .ai-agent-platforms-container {
+    border: 1px solid #000000;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .clear-filters-button {
+    transition: none;
+  }
+}
+
+/* Focus management */
+.ai-agent-platforms-container:focus-within .platform-card {
+  transition: opacity 0.2s ease;
+}
+
+.ai-agent-platforms-container:focus-within .platform-card:not(:focus-within) {
+  opacity: 0.8;
+}
+
+/* Custom styling for skeleton loader in platforms context */
+.platforms-skeleton-loader {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+/* Accessibility Features */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #000000;
+  color: #ffffff;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+  z-index: 9999;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 6px;
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Enhanced focus indicators for WCAG AAA compliance */
+.ai-agent-platforms-container *:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* High contrast focus indicators */
+@media (prefers-contrast: high) {
+  .ai-agent-platforms-container *:focus-visible {
+    outline: 4px solid #000000;
+    outline-offset: 3px;
+  }
+  
+  .skip-link {
+    background: #000000;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+  }
+  
+  .skip-link:focus {
+    outline: 4px solid #ffffff;
+    outline-offset: 3px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .ai-agent-platforms-container {
+    max-width: none;
+    padding: 0;
+  }
+
+  .platforms-controls {
+    display: none;
+  }
+
+  .platforms-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .skip-link {
+    display: none;
+  }
+}

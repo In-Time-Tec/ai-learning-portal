@@ -287,6 +287,31 @@ describe('App Component Integration Tests', () => {
         });
       }
     });
+
+    it('should navigate to agent-platforms view correctly', async () => {
+      render(<App />);
+      
+      await waitFor(() => {
+        expect(screen.getAllByText('AI Learning Portal')).toHaveLength(2);
+      });
+      
+      // Should start on home view
+      expect(screen.getByRole('button', { name: 'Home' })).toHaveAttribute('aria-current', 'page');
+      
+      // Click Agent Platforms button
+      await act(async () => {
+        fireEvent.click(screen.getByRole('button', { name: 'Agent Platforms' }));
+      });
+      
+      // Should navigate to agent-platforms view
+      expect(screen.getByRole('button', { name: 'Agent Platforms' })).toHaveAttribute('aria-current', 'page');
+      expect(screen.getByRole('button', { name: 'Home' })).not.toHaveAttribute('aria-current', 'page');
+      
+      // Should render agent platforms content
+      await waitFor(() => {
+        expect(screen.getByRole('heading', { level: 1, name: /AI Agent Platforms/i })).toBeInTheDocument();
+      });
+    });
   });
 
   describe('State Management', () => {
