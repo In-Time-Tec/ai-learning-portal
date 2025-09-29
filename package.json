@@ -45,7 +45,7 @@
     "@axe-core/cli": "^4.8.2",
     "@axe-core/react": "^4.10.2",
     "@types/jest-axe": "^3.5.9",
-    "@typescript-eslint/eslint-plugin": "^5.33.0",
+    "@typescript-eslint/eslint-plugin": "^8.44.1",
     "@typescript-eslint/parser": "^5.33.0",
     "audit-ci": "^6.6.1",
     "eslint-plugin-jsx-a11y": "^6.6.1",
